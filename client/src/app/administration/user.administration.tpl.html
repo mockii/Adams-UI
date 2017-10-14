@@ -1,0 +1,429 @@
+<div class="row profile-page">
+    <div class="col-lg-5 col-md-12 col-sm-12">
+        <div class="portlet light" block-ui="blockui_grid_portlet">
+            <div class="portlet-title">
+                <div class="caption no-padding caption-full-width">
+                    <span class="caption-subject font-blue uppercase bold"> Select User </span>
+                    <a class="pull-right small-font-size" ng_click="userAdministrationController.clearAll()">Clear All</a>
+                </div>
+            </div>
+            <!-- My update-->
+            <table class="tbl-user-access">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4"><label class="caption-subject">Application</label>
+                        <div class="form-group">
+                            <select load-select-picker data-live-search="true" class="user-bootstrap-select"
+                                    ng-model="userAdministrationController.gridApplication"
+                                    ng-change="userAdministrationController.applicationFilterChanged()"
+                                    ng-options="application.name for application in userAdministrationController.gridApplications track by application.name">
+                                <option style="display:none;" value="">- Select -</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4"><label class="caption-subject">Role </label>
+                        <div class="form-group">
+                            <select load-select-picker data-live-search="true" class="user-bootstrap-select selected-role"
+                                    ng-model="userAdministrationController.gridRole"
+                                    ng-change="userAdministrationController.roleFilterChanged()"
+                                    ng-options="loginRole.name for loginRole in userAdministrationController.gridRoles | orderBy: 'name' track by loginRole.name">
+                                <option style="display:none;" value="">- Select -</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <label class="caption-subject">Team<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-text-box" placeholder="- Select -" onkeydown="return false"
+                                   ng-click="userAdministrationController.openTeamUserModal()"
+                                   ng-model="userAdministrationController.gridTeamName">
+                            <span class="input-group-addon" ng-click="userAdministrationController.openTeamUserModal()"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+            </table>
+
+            <!------------------------------------->
+
+            <br>
+
+            <div class="portlet-body">
+
+                <div class="user-admin-grid"
+                     stg-ui-grid get-grid-options="userAdministrationController.gridOptions"
+                     get-grid-data="userAdministrationController.getGridData">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container col-lg-7 col-md-12 col-sm-12 no-left-padding" block-ui="blockui_user_details_container">
+        <div class="portlet light" block-ui="blockui_user_details_portlet">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-blue uppercase bold"> {{userAdministrationController.displayName}} </span>
+                </div>
+                <div class="tools">
+                    <button type="button" class="btn btn-default" ng-click="userAdministrationController.showHistoryModal()">History <i class="fa fa-history"></i></button>
+                    <a class="expand" data-original-title title ng-click="userAdministrationController.isCollapsed != userAdministrationController.isCollapsed"></a>
+                </div>
+            </div>
+            <div class="portlet-body portlet-collapse" uib-collapse="userAdministrationController.isCollapsed">
+                <div>
+                    <div class="table table-bordered table-style">
+                        <div class="row">
+
+                            <div class="col-sm-9 col-xs-12 table-cell-right-border">
+
+                                <div class="table-head">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12 table-head-bottom-border" >
+                                            <div class="table-title-padding">
+                                                <span class="caption-subject font-blue" > Personal Information </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row padding-top">
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.firstName" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Middle Name</label>
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.middleName" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.lastName" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>User ID</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.userName" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Cost Center</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.costCenter" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Gender</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.gender" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Active</label><br />
+                                            <input type="checkbox" value="Active" class="input-control" ng-model="userAdministrationController.active" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Job</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.job_description" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Sector</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.sector" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Division</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.division" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div> <!-- end of col-sm-9 -->
+
+                            <div class="col-sm-3 col-xs-12">
+
+                                <div class="table-head">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12 table-head-bottom-border table-head-top-border-3">
+                                            <div class="table-title-padding">
+                                                <span class="caption-subject font-blue"> Contact Details </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row padding-top">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Work Phone</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.workPhone" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Mobile Phone</label><br />
+                                            <input type="text" class="form-control" ng-model="userAdministrationController.mobilePhone" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Email Address</label><br />
+                                            <!--<div>-->
+                                            <a class="mailto-anchor form-control" ng-href="mailto:{{userAdministrationController.emailAddress}}">{{userAdministrationController.emailAddress}}</a>
+                                            <!--<input type="email" class="mailto-anchor form-control" ng-href="mailto:{{userAdministrationController.emailAddress}}" ></input>-->
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div> <!-- end of col-sm-3 -->
+
+                        </div> <!-- end of enclosing row -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end of user personal info and contact details -->
+
+        <div class="portlet light" block-ui="blockui_user_access_portlet">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue uppercase bold"> Application Assignments </span>
+                </div>
+                <div class="actions">
+                    <button class="btn blue"
+                            stg-secured-object="User Administration"
+                            ng-click="userAdministrationController.openAddUserModal()">
+                        Add <i class="fa fa-plus"></i> </button>
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="app-assignments">
+                    <div class="tabbable-line">
+                        <ul class="nav nav-tabs">
+                            <li ng-class="{'active' : userAdministrationController.activeTab === $index}"
+                                ng-repeat="application in userAdministrationController.applications track by $index"
+                                ng-show="userAdministrationController.applications.length > 0">
+
+                                <a ng-click="userAdministrationController.setActiveTab($index, application.name)"> {{ application.name }} </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="app-assignments-col2">
+                                        <div class="caption">
+                                            <span class="caption-subject font-blue"> Role </span>
+                                        </div>
+                                    </th>
+                                    <th class="app-assignments-col3">
+                                        <div class="caption">
+                                            <span class="caption-subject font-blue"> Team </span>
+                                        </div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <div class="alert alert-info alert-dismissable"
+                                         ng-show="userAdministrationController.applications.length > 0 && !userAdministrationController.applicationAuthorizedForLoginUser">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                        Appropriate access to <strong>{{userAdministrationController.application}}</strong> is required to make changes
+                                    </div>
+                                </tr>
+                                <tr ng-repeat="role in userAdministrationController.roles track by $index" ng-show="userAdministrationController.roles.length > 0">
+                                    <td data-th="Role">
+                                        <div class="user-roles-section">
+
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    stg-secured-object="User Administration"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser && role.default_role"
+                                                    ng-click="userAdministrationController.roleChecked(role.name)">
+                                                <i class="fa fa-check-circle check-circle"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser && role.default_role"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser && role.default_role">
+                                                <i class="fa fa-check-circle check-circle cursor-default"></i>
+                                            </button>
+
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    stg-secured-object="User Administration"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser && !role.default_role"
+                                                    ng-click="userAdministrationController.roleChecked(role.name)">
+                                                <i class="fa fa-circle-thin circle-thin"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser && !role.default_role"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser && !role.default_role">
+                                                <i class="fa fa-circle-thin circle-thin cursor-default"></i>
+                                            </button>
+
+                                            <div class="user-details-btn-group">
+                                                <select load-select-picker data-live-search="true" class="user-bootstrap-select"
+                                                        stg-secured-object="User Administration"
+                                                        ng-show="userAdministrationController.applicationAuthorizedForLoginUser"
+                                                        ng-model="role.name"
+                                                        ng-change="userAdministrationController.itemSelected(role.name, '{{ role.name }}')"
+                                                        ng-options="loginRole.name for loginRole in userAdministrationController.loginRoles | orderBy: 'name' track by loginRole.name">
+                                                    <option style="display:none" value="">{{ role.name }}</option>
+                                                </select>
+                                                <select load-select-picker data-live-search="true" class="user-bootstrap-select"
+                                                        ng-show="!userAdministrationController.applicationAuthorizedForLoginUser"
+                                                        ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser"
+                                                        ng-model="role.name"
+                                                        ng-options="loginRole.name for loginRole in userAdministrationController.loginRoles | orderBy: 'name' track by loginRole.name">
+                                                    <option style="display:none" value="">{{ role.name }}</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    stg-secured-object="User Administration"
+                                                    ng-click="userAdministrationController.roleIndex($index, role.name)"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser">
+                                                <i class="fa fa-times-circle del-btn-color"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser">
+                                                <i class="fa fa-times-circle del-btn-color cursor-default"></i>
+                                            </button>
+
+                                            <div class="secured-objects-link" ng-show="userAdministrationController.applicationAuthorizedForLoginUser">
+                                                <a class="font-blue" ng-click="userAdministrationController.viewSecuredObjects(userAdministrationController.application, role.name)">View Secured Objects <i class="fa fa-arrow-circle-o-right"></i></a>
+                                            </div>
+                                            <div class="secured-objects-link secured-objects-link-disabled" ng-show="!userAdministrationController.applicationAuthorizedForLoginUser">
+                                                <a class="font-blue" href="#" disabled>View Secured Objects <i class="fa fa-arrow-circle-o-right cursor-default" disabled></i></a>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                    <td data-th="Teams">
+                                        <div class="user-teams-section" ng-repeat="team in role.teams track by $index" ng-show="role.teams.length > 0">
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    stg-secured-object="User Administration"
+                                                    ng-click="userAdministrationController.teamChecked(role.name ,team.team_name, team.source_system_id)"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser && team.default_team">
+                                                <i class="fa fa-check-circle check-circle"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser && team.default_team"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser && team.default_team">
+                                                <i class="fa fa-check-circle check-circle cursor-default"></i>
+                                            </button>
+
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    stg-secured-object="User Administration"
+                                                    ng-click="userAdministrationController.teamChecked(role.name ,team.team_name, team.source_system_id)"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser && !team.default_team">
+                                                <i class="fa fa-circle-thin circle-thin"></i>
+                                            </button>
+                                            <button class="btn btn-link user-access-icon-button"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser && !team.default_team"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser && !team.default_team">
+                                                <i class="fa fa-circle-thin circle-thin cursor-default"></i>
+                                            </button>
+
+                                            <div class="input-icon team-input-icon">
+                                                <input type="text" class="form-control form-control-text-box"
+                                                       value="{{team.team_type + ': ' + team.team_name + ' - ' + team.team_description}}" readonly>
+                                            </div>
+
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    stg-secured-object="User Administration"
+                                                    ng-click="userAdministrationController.teamIndex($index, $parent.$index, team)"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser">
+                                                <i class="fa fa-times-circle del-btn-color"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-link user-access-icon-button"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser">
+                                                <i class="fa fa-times-circle del-btn-color cursor-default"></i>
+                                            </button>
+
+                                            <button type="button" class="btn btn-default btn-add-team"
+                                                    stg-secured-object="User Administration"
+                                                    ng-click="userAdministrationController.openAddUserModal(role.name)"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser && $index === 0">Add Team <i class="fa fa-plus"></i></button>
+                                            <button type="button" class="btn btn-default btn-add-team cursor-default"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser && $index === 0"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser">Add Team <i class="fa fa-plus cursor-default" disabled></i></button>
+
+                                            <button type="button" class="btn btn-default btn-small-add-team"
+                                                    stg-secured-object="User Administration"
+                                                    ng-click="userAdministrationController.openAddUserModal(role.name)"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser && $index === 0">Add <i class="fa fa-plus"></i></button>
+                                            <button type="button" class="btn btn-default btn-small-add-team cursor-default"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser && $index === 0"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser && $index === 0">Add <i class="fa fa-plus cursor-default" disabled"></i></button>
+                                        </div>
+
+                                        <div class="user-teams-section" ng-show="role.teams.length === 0">
+                                            <button type="button" class="btn btn-default btn-add-team"
+                                                    stg-secured-object="User Administration"
+                                                    ng-click="userAdministrationController.openAddUserModal(role.name)"
+                                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser">Add Team <i class="fa fa-plus"></i></button>
+                                            <button type="button" class="btn btn-default btn-add-team cursor-default"
+                                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser"
+                                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser">Add Team <i class="fa fa-plus cursor-default" disabled"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fa fa-check-circle app-assignments-circle" ng-show="userAdministrationController.applicationAuthorizedForLoginUser"></i>
+
+                        <i class="fa fa-check-circle app-assignments-circle cursor-default" ng-show="!userAdministrationController.applicationAuthorizedForLoginUser"></i>
+                        <p class="app-assignments-text">Indicates Default role and team for specified application</p>
+                        <div class="app-delete pull-right" ng-show="userAdministrationController.applications.length > 0">
+                            <button type="button" class="btn btn-default"
+                                    stg-secured-object="User Administration"
+                                    ng-click="userAdministrationController.deleteApp()"
+                                    ng-show="userAdministrationController.applicationAuthorizedForLoginUser">
+                                Remove All {{ userAdministrationController.application }} Access
+                            </button>
+                            <button type="button" class="btn btn-default cursor-default"
+                                    ng-show="!userAdministrationController.applicationAuthorizedForLoginUser"
+                                    ng-disabled="!userAdministrationController.applicationAuthorizedForLoginUser">
+                                Remove All {{ userAdministrationController.application }} Access
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

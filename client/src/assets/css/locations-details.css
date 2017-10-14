@@ -1,0 +1,425 @@
+.switch {
+    position: relative;
+    display: block;
+    vertical-align: top;
+    width: 100px;
+    height: 30px;
+    padding: 3px;
+    margin: 0 10px 10px 0;
+    cursor: pointer;
+}
+
+.switch-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    display: none;
+}
+
+.switch-label {
+    position: relative;
+    display: block;
+    height: 35px;
+    font-size: 10px;
+    text-transform: uppercase;
+    background: #eceeef;
+}
+
+.switch-label:before, .switch-label:after {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5em;
+    line-height: 1;
+    -webkit-transition: inherit;
+    -moz-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+}
+
+.switch-label:before {
+    content: attr(data-off);
+    right: 11px;
+}
+
+.switch-label:after {
+    content: attr(data-on);
+    left: 11px;
+    color: #FFFFFF;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+}
+
+.switch-input:checked ~ .switch-label {
+    background: #357ebd;
+
+}
+
+.switch-input:checked ~ .switch-label:before {
+    opacity: 0;
+}
+
+.switch-input:checked ~ .switch-label:after {
+    opacity: 1;
+}
+
+.switch-handle {
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 44px;
+    height: 32px;
+    background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+    margin-top: .5px;
+}
+
+.switch-handle:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -6px 0 0 -6px;
+    width: 12px;
+    height: 12px;
+}
+
+.switch-input:checked ~ .switch-handle {
+    left: 50px;
+}
+
+.switch-input ~ .switch-label {
+    background: #C1C1C1;
+}
+
+.switchClass {
+    background-color: white !important;
+    width: 100px;
+}
+
+/* Transition
+========================== */
+.switch-label, .switch-handle {
+    transition: All 0.3s ease;
+    -webkit-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
+}
+
+.btn-group.bootstrap-select.state-selector {
+    width: 60px !important;
+}
+
+.address-verification-box {
+    height: 50px;
+    background-color: #ededed;
+    width: 60%;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    /*margin-right: 15px;*/
+}
+
+.map-container {
+    top: 15px;
+}
+
+.map-marker-icon {
+    font-size: 30px !important;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    color: #999999;
+}
+
+.address-verification-label {
+    margin-bottom: 0 !important;
+}
+
+.status-verify-address-box {
+    top: 15px;
+    margin-bottom: 25px;
+}
+
+.verify-address-button {
+    top: 5px;
+    right: -30px;
+}
+
+label.checkbox-inline{
+    padding-left: 0 !important;
+}
+
+.checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline {
+    margin-left: 0 !important;
+}
+
+.location-operating-hours-modal .modal-dialog {
+    width: 500px;
+}
+
+.show-location-operating-hours-modal .modal-dialog {
+    width: 300px;
+}
+
+.form-horizontal .form-group {
+    margin-left: 0;
+}
+
+.ui-grid-height > .grid .ui-grid-row, .grid .ui-grid-cell, .grid .ui-grid-cell .ui-grid-vertical-bar {
+    height: 41px !important;
+}
+
+.hyperlink-cell {
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+.ui-grid-header-cell:last-child {
+    position: relative;
+    border-right: solid;
+    border-width: 1px;
+    border-color: #ccc;
+}
+
+.selected-cost-centers-header {
+    height: 50px;
+    display:table;
+    font-weight:bold;
+    line-height: 50px;
+    padding-left: 15px;
+    border: 1px;
+    border-bottom-style: groove;
+    width: 100%;
+}
+
+.selected-cost-centers-header > div {
+    display:table-cell;
+}
+
+.selected-cost-centers-content-wrapper {
+    line-height: 35px;
+    overflow: auto;
+    height: 325px;
+}
+
+.selected-cost-center {
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: darkgrey;
+    padding-left: 15px;
+}
+
+.selected-cost-center.right>i {
+    margin-top: 10px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.cost-center-name {
+    max-width: 210px;
+    ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.add-cost-center-mapping-account-details-div {
+    padding-right: 5px;
+    padding-left: 1px;
+}
+
+.add-cost-center-mapping-cost-center-div {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.add-cost-center-mapping-move-arrow-div {
+    padding-left: 15px;
+    padding-top:180px;
+    align-content: center;
+    text-align: center;
+}
+
+.add-cost-center-mapping-selected-cost-center-div {
+    padding-left: 0px;
+    padding-right: 0px;
+    height: 380px;
+    border: 1px solid lightgray;
+}
+
+.add-available-cost-centers-grid .ui-grid-row:nth-child(odd) .ui-grid-cell {
+    border-top: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    min-width: 385px;
+    background-color: inherit;
+}
+
+.add-available-cost-centers-grid .ui-grid-row:nth-child(even) .ui-grid-cell {
+    border-top: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    min-width: 385px;
+    background-color: inherit;
+}
+
+.add-available-cost-centers-grid .ui-grid-cell-contents {
+    cursor: pointer;
+}
+
+.add-stations-grid .ui-grid-row:nth-child(odd) .ui-grid-cell {
+    border-top: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    min-width: 385px;
+    background-color: inherit;
+}
+
+.add-stations-grid .ui-grid-row:nth-child(even) .ui-grid-cell {
+    border-top: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    min-width: 385px;
+    background-color: inherit;
+}
+
+.add-stations-grid .ui-grid-cell-contents {
+    cursor: pointer;
+}
+
+.add-stations-grid .ui-grid-header {
+    height: 40px;
+}
+
+.add-stations-grid .ui-grid-header-cell-wrapper {
+    float: right;
+    width: 98%;
+}
+
+.add-stations-grid .ui-grid-header-cell {
+    border-right: none;
+}
+
+.add-stations-grid .ui-grid-cell-contents.ui-grid-header-cell-primary-focus {
+    display: none;
+}
+
+.add-stations-grid .ui-grid-filter-container {
+    padding: 0;
+    border-top: none;
+}
+
+.add-stations-grid input[type=text].ui-grid-filter-input {
+    height: 40px;
+    border-bottom: 1px solid #d4d4d4;
+    background-size: 16px;
+}
+
+.add-stations-grid .ui-grid-filter-container .ui-grid-filter-button [class^=ui-grid-icon]{
+    font-size: 16px;
+    height: 25px;
+}
+
+.add-available-cost-centers-grid .ui-grid-filter-container .ui-grid-filter-button [class^=ui-grid-icon]{
+    font-size: 16px;
+    height: 25px;
+}
+
+.add-stations-grid .ui-grid-filter-container .ui-grid-filter-button{
+    right: -5px;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.add-cost-center-grid .ui-grid-viewport {
+    border-right: 1px solid #d4d4d4;
+}
+.location-code-not-available-wrapper{
+    position: relative;
+}
+
+.location-code-not-available{
+    width: 96%;
+    height: 370px;
+    background-color: #000000;
+    opacity: .75;
+    color: #ffffff;
+    text-align: center;
+    font-size: large;
+    position: absolute;
+    z-index: 10;
+    transition: all linear 1s;
+}
+
+.location-code-not-available p {
+    margin-top: 150px;
+}
+
+.location-cost-center-not-available{
+    width: 98%;
+    height: 430px;
+    background-color: #000000;
+    opacity: .75;
+    color: #ffffff;
+    text-align: center;
+    font-size: large;
+    position: absolute;
+    z-index: 10;
+    transition: all linear 1s;
+}
+
+.location-cost-center-not-available p {
+    margin-top: 200px;
+}
+/*
+.col-md-4.no-padding.add-cost-center-mapping-selected-cost-center-div table {
+    display: block;
+    border-collapse: collapse;
+    border-style: none;
+}
+
+.add-cost-center-mapping-selected-cost-center-div table thead, tbody {
+    display: block;
+}
+
+.add-cost-center-mapping-selected-cost-center-div table thead {
+    border-bottom-style: solid;
+    border-bottom-color: rgba(211, 211, 211, 0.50);
+}
+
+.add-cost-center-mapping-selected-cost-center-div table thead tr th {
+    width: 260px;
+    border-left-style: hidden;
+}
+
+.add-cost-center-mapping-selected-cost-center-div table tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 340px;
+    display: block;
+}
+
+.add-cost-center-mapping-selected-cost-center-div table tbody tr:first-child {
+    border-top-style: hidden;
+}
+
+.add-cost-center-mapping-selected-cost-center-div table tbody tr {
+    border-right-style: hidden;
+    border-left-style: hidden;
+}
+
+.add-cost-center-mapping-selected-cost-center-div table tbody tr td div {
+    width: 260px;
+    border-style: hidden;
+}*/
+
+.move-arrow {
+    font-size: 28px !important;
+    color: lightgrey;
+}
+
+.add-cost-center-grid > .ui-grid {
+    height: 378px !important;
+}
+
+.status-bootstrap-select {
+    width: 100% !important;
+}

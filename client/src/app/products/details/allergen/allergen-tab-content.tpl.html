@@ -1,0 +1,145 @@
+<div class="tab-pane active" block-ui="allergens">
+    <div class="row">
+        <div class="col-md-8 col-sm-12 col-xs-12 div-padding-left">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Allergens / Intolerance / Sensitivities Data </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+
+                        <!--Major Allergens-->
+                        <div class="col-md-12" style="margin-bottom: 30px;">
+                            <div class="table-scrollable">
+                                <table class="table table-striped distributor-data-table allergen-table">
+                                    <thead>
+                                        <tr>
+                                            <td class="bold">Major Allergens</td>
+                                            <td class="bold">Contains</td>
+                                            <td class="bold">Free From</td>
+                                            <td class="bold">May Contain</td>
+                                            <td class="bold">Derived From</td>
+                                            <td class="bold">Not Derived From</td>
+                                            <td class="bold">Not intentionally nor inherently included</td>
+                                            <td class="bold">Undeclared</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-hide="allergenController.hasBigEigthAllergens">
+                                            <td class="data-not-found" colspan="50"> No major allergen information available to be displayed </td>
+                                        </tr>
+                                        <tr ng-repeat="allergen in allergenController.bigEightAllergensData | orderBy: 'allergen' track by $index">
+                                            <td class="allergen-name">{{allergen.allergen}}</td>
+                                            <td><i ng-class="allergen.contains ? 'fa fa-check-circle alert-danger' : ''" aria-hidden="true"></i></td>
+                                            <td><i ng-class="allergen.allergen_built_with_relevant_data ? 'fa fa-check-circle-o alert-success' : (allergen.free_from ? 'fa fa-check-circle alert-success' : '')"
+                                                   aria-hidden="true"></i></td>
+                                            <td><i ng-class="allergen.may_contain ? 'fa fa-check-circle alert-warning' : ''" aria-hidden="true"></i></td>
+                                            <td><i ng-class="allergen.derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                            <td><i ng-class="allergen.not_derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                            <td><i ng-class="allergen.not_intentionally_nor_inherently_included ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                            <td><i ng-class="allergen.undeclared ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-show="allergenController.hasBeenBuiltWithRelevantData">
+                                <div class="allergen-legend">
+                                    <i class="fa fa-check-circle alert-success provided" aria-hidden="true"></i> - Provided
+                                    <i class="fa fa-check-circle-o alert-success derived" aria-hidden="true"></i> - Derived
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!--Other Allergens-->
+                        <div class="col-md-12">
+                            <div class="table-scrollable">
+                                <table class="table table-striped distributor-data-table allergen-table">
+                                        <thead>
+                                            <tr>
+                                                <td class="bold">Other Allergens</td>
+                                                <td class="bold">Contains</td>
+                                                <td class="bold">Free From</td>
+                                                <td class="bold">May Contain</td>
+                                                <td class="bold">Derived From</td>
+                                                <td class="bold">Not Derived From</td>
+                                                <td class="bold">Not intentionally nor inherently included</td>
+                                                <td class="bold">Undeclared</td>
+                                            </tr>
+                                        </thead>
+                                    <tbody>
+                                        <tr ng-hide="allergenController.hasOtherAllergens">
+                                            <td class="data-not-found" colspan="50"> No other allergen information available to be displayed </td>
+                                        </tr>
+                                            <tr ng-repeat="allergen in allergenController.otherAllergensData | orderBy: 'allergen' track by $index">
+                                                <td class="allergen-name">{{allergen.allergen}}</td>
+                                                <td><i ng-class="allergen.contains ? 'fa fa-check-circle alert-danger' : ''" aria-hidden="true"></i></td>
+                                                <td><i ng-class="allergen.free_from ? 'fa fa-check-circle alert-success' : ''" aria-hidden="true"></i></td>
+                                                <td><i ng-class="allergen.may_contain ? 'fa fa-check-circle alert-warning' : ''" aria-hidden="true"></i></td>
+                                                <td><i ng-class="allergen.derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                                <td><i ng-class="allergen.not_derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                                <td><i ng-class="allergen.not_intentionally_nor_inherently_included ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                                <td><i ng-class="allergen.undeclared ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="portlet light">
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="note note-info">
+                            <h4> Disclaimer </h4>
+                            <br>
+                            <h5> Important. Please Read. </h5>
+                            <p>The nutritional and intolerance data for this item may be incomplete. Comapass Group USA cannot accept any responsibility for the accuracy of this data, nor can it be held responsible for any resultant effect from the usage of this incomplete information provided.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="col-md-4">
+            <div class="portlet light">
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="note note-info">
+                            <h4> Legend </h4>
+                            <br>
+                            <i class="fa fa-check-circle alert-success" aria-hidden="true"></i> - Provided Allergen Data
+                            <br>
+                            <i class="fa fa-check-circle-o alert-success" aria-hidden="true"></i> - Derived Allergen Data
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="col-md-4" ng-show="allergenController.hasUnmappedAllergens">
+            <div class="portlet light">
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="note note-warning">
+                            <h4> Unmapped Allergen Codes </h4>
+                            <p>
+                                This product contain allergen information for allergen codes that are not mapped to a specific allergen.
+                            </p>
+                            <br>
+                            <h5> Allergen Codes:</h5>
+                            <div ng-repeat="unMappedAllergen in allergenController.unMappedAllergens | orderBy: 'allergen_type_code' track by $index">
+                                <div> {{unMappedAllergen.allergen_type_code}} </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

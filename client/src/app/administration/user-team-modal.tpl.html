@@ -1,0 +1,44 @@
+<!-- Team -->
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="userTeamAccessController.close()"></button>
+        <h4 class="modal-title">Team Search</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="tbl-user-access">
+
+                    <div class="col-sm-12 col-md-12 no-right-padding">
+                        <div class="portlet light team-search-hierarchy">
+                            <div class="portlet-body">
+                                <div stg-ui-grid get-grid-options="userTeamAccessController.gridOptions" get-grid-data="userTeamAccessController.getGridData">
+                                    <style>
+                                        .ui-grid-row, .ui-grid-cell, .ui-grid-vertical-bar {
+                                            height: 41px !important;
+                                        }
+                                    </style>
+                                    <div class="load-mask" ng-hide="!userTeamAccessController.showLoading">
+                                        <div class="loading-animation"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="userTeamAccessController.close()">Close</button>
+        <button type="button" class="btn blue"
+                ng-click="userTeamAccessController.submit()"
+                ng-disabled="(userTeamAccessController.teams.length === 0 )"
+                analytics-on="click" analytics-category="Message Administration Modal" analytics-event="Submit Message">OK
+        </button>
+    </div>
+</div>
+<!-- END Team Modal -->

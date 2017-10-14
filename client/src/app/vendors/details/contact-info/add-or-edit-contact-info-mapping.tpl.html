@@ -1,0 +1,122 @@
+<div class="modal-content" block-ui="add-or-edit-contact-info-mapping">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="addOrEditContactInfoMappingController.close()"></button>
+        <h4 class="modal-title font-blue bold">{{addOrEditContactInfoMappingController.title}}</h4>
+    </div>
+    <div class="portlet-body">
+        <div class="form-horizontal">
+            <form role="form" name="contactForm" novalidate>
+                <div class="form-body vendor-details-page">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-11">
+                            <div class="row col-md-12">
+                                <label class="control-label control-label-required col-md-4">First Name</label>
+                                <div class="form-group">
+                                    <div class="col-md-8 input-icon right">
+                                        <input type="text" class="form-control" required name="firstName"
+                                               ng-model="addOrEditContactInfoMappingController.firstName"
+                                               stg-form-validation validation-type="required">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <label class="control-label control-label-required col-md-4">Last Name</label>
+                                <div class="form-group">
+                                    <div class="col-md-8 input-icon right">
+                                        <input type="text" class="form-control" required name="lastName"
+                                               ng-model="addOrEditContactInfoMappingController.lastName"
+                                               stg-form-validation validation-type="required">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <label class="control-label control-label-required col-md-4">Phone Number</label>
+                                <div class="form-group">
+                                    <div class="col-md-8 input-icon right">
+                                        <input type="text" class="form-control" required name="phone"
+                                               stg-form-validation validation-type="phone"
+                                               ng-model="addOrEditContactInfoMappingController.phoneNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <label class="control-label col-md-4">Alternate Phone Number</label>
+                                <div class="form-group">
+                                    <div class="col-md-8 input-icon right">
+                                        <input type="text" class="form-control" name="altPhone"
+                                               stg-form-validation validation-type="phone"
+                                               ng-model="addOrEditContactInfoMappingController.alternatePhoneNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <label class="control-label col-md-4">Fax Number</label>
+                                <div class="form-group">
+                                    <div class="col-md-8 input-icon right">
+                                        <input type="text" class="form-control" maxlength="10" name="fax"
+                                               stg-form-validation validation-type="phone"
+                                               ng-model="addOrEditContactInfoMappingController.faxNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <label class="control-label control-label-required col-md-4">Email Address</label>
+                                <div class="form-group">
+                                    <div class="col-md-8 input-icon right">
+                                        <input type="email" class="form-control" maxLength="100" name="email"
+                                               stg-form-validation validation-type="email" required
+                                               ng-model="addOrEditContactInfoMappingController.emailAddress">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <label class="control-label col-md-4">Title</label>
+                                <div class="form-group">
+                                    <div class="col-md-8 input-icon right">
+                                    <textarea class="form-control" maxlength="50" name="description"
+                                              ng-model="addOrEditContactInfoMappingController.description">
+                                    </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <label class="control-label col-md-4">Notify for openings/closings</label>
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        <label class="switch">
+                                            <input class="switch-input" name="notify"
+                                                   ng-checked="addOrEditContactInfoMappingController.notifyForOpeningsOrClosings"
+                                                   ng-click="addOrEditContactInfoMappingController.notifyForOpeningsOrClosings = !addOrEditContactInfoMappingController.notifyForOpeningsOrClosings;
+                                                         contactForm.$pristine = contactForm.notify.$pristine;
+                                                         addOrEditContactInfoMappingController.dirtyCheck(originalController.notifyForOpeningsOrClosings, addOrEditContactInfoMappingController.notifyForOpeningsOrClosings)"
+                                                   type="checkbox"/>
+                                            <span class="switch-label" data-on="YES" data-off="NO"></span>
+                                            <span class="switch-handle"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addOrEditContactInfoMappingController.close()">Cancel
+        </button>
+        <button type="button" class="btn blue" ng-click="addOrEditContactInfoMappingController.save(contactForm)"
+                ng-disabled="contactForm.$invalid || contactForm.$pristine"
+                analytics-on="click"
+                analytics-category="Message Administration Modal" analytics-event="Submit Message">Save
+        </button>
+    </div>
+</div>

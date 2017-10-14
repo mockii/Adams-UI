@@ -1,0 +1,52 @@
+<div class="modal-content" block-ui="add-market-mapping">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="costCenterAddMarketMappingController.cancel()"></button>
+        <h4 class="modal-title">Add Market Mapping</h4>
+    </div>
+
+    <!-- ADD COST CENTER MARKET MAPPING MODAL -->
+
+    <div class="portlet-body">
+        <div class="row add-market-mapping-div-padding">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">
+                                Select Market
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="add-market-mapping-background add-market-mapping-overflow-y">
+                                <div class="add-market-mapping-tree-div">
+                                    <market-hierarchy-tree
+                                            ref-id="costCenterAddMarketMappingController.marketMappingRefId"
+                                            fetch-children-every-time="false"
+                                            enable-multi-select="true"
+                                            broadcast-empty-selection="true"
+                                            sync-global-market-selection-on-close="false"
+                                            onscroll="true"
+                                            expand-to-depth="3"
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="costCenterAddMarketMappingController.cancel()">Cancel
+        </button>
+        <button type="button" class="btn blue" ng-click="costCenterAddMarketMappingController.select()"
+                ng-disabled="costCenterAddMarketMappingController.disableSelectButton" analytics-on="click"
+                analytics-category="Add Market Mapping Modal" analytics-event="Select Market Mapping">Select
+        </button>
+    </div>
+
+</div>
+<!-- END ADD MARKET MAPPING MODAL -->

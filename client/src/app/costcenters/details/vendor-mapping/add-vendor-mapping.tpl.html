@@ -1,0 +1,48 @@
+<div class="modal-content col-md-12" block-ui="add-vendor">
+    <div class="modal-header addVendorMappingModalHeader">
+        <div class="row">
+            <div class="container col-sm-12 no-left-padding">
+                <button type="button" class="close" ng-click="addVendorMappingController.close()"></button>
+                <h4 class="modal-title">Add Vendor Mapping</h4>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body no-top-padding-for-model">
+        <div class="row">
+            <div class="col-md-12 no-padding">
+                <div class="col-md-7 no-padding add-vendor-mapping-cost-center-div" block-ui="add-vendor-ui-grid">
+                    <!-- ADD Vendor MAPPING MODAL -->
+                    <div class="vendorAccountDetailsGrid grid" stg-ui-grid get-grid-options="addVendorMappingController.gridOptions" get-grid-data="addVendorMappingController.getGridData">
+                    </div>
+                    <div class="portlet-body">
+                        Note: List includes cost centers not assigned to vendors but available to vendor's market
+                        and team.
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding visible-lg visible-md hidden-sm hidden-xs add-vendor-mapping-move-arrow-div">
+                    <i class="fa fa-arrow-circle-right move-arrow"></i>
+                </div>
+
+                <div class="visible-sm hidden-md hidden-lg"><br><br></div>
+
+                <div class="col-md-4 no-padding add-vendor-mapping-selected-cost-center-div">
+                    <div class="selected-vendors-header">Selected Vendors</div>
+                    <div class="selected-vendors-content-wrapper">
+                        <div class="selected-vendor right" ng-repeat="vendor in addVendorMappingController.vendors">
+                            <span class="vendor-name">{{vendor.vendor_number +' - '+ vendor.vendor_name_1}}</span>
+                            <i class="fa fa-times-circle del-btn-color pull-right"
+                               ng-click="addVendorMappingController.vendorIndex($index)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addVendorMappingController.close()">Cancel</button>
+        <button type="button" class="btn blue" ng-click="addVendorMappingController.select()"
+                ng-disabled="addVendorMappingController.vendors.length === 0" analytics-on="click"
+                analytics-category="Message Administration Modal" analytics-event="Submit Message">Select
+        </button>
+    </div>
+</div>

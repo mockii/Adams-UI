@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue bold uppercase"> Cost Center Information </span>
+                </div>
+                <div class="tools">
+                    <a class="expand" data-original-title title
+                       ng-click="costCenterDetailsController.isCollapsed = !costCenterDetailsController.isCollapsed"></a>
+                </div>
+            </div>
+
+            <div uib-collapse="!costCenterDetailsController.isCollapsed" style="width: 100%">
+                <div class="form-horizontal">
+                    <div class="form-body costcenter-details-page">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Cost Center Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control"
+                                               value="{{costCenterDetailsController.costCenterSearchData.cost_center}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Short Description</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control"
+                                               value="{{costCenterDetailsController.costCenterSearchData.cost_center_description}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Long Description</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control"
+                                               value="{{costCenterDetailsController.costCenterSearchData.cost_center_long_description}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Status</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control"
+                                               value="{{costCenterDetailsController.costCenterSearchData.status_description}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet light" style="padding-right: 5px;padding-left: 1px;">
+            <div class="portlet-body">
+                <div class="tabbable-line" style="padding-left: 10px ">
+                    <ul class="nav nav-tabs">
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('costcenterdetails.accountmapping')}">
+                            <a ui-sref="costcenterdetails.accountmapping({'costCenterSearchData': costCenterDetailsController.costCenterSearchData})">Account Details </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('costcenterdetails.marketmapping')}">
+                            <a ui-sref="costcenterdetails.marketmapping({'costCenterSearchData': costCenterDetailsController.costCenterSearchData})">Market Mapping </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('costcenterdetails.vendormapping')}">
+                            <a ui-sref="costcenterdetails.vendormapping({'costCenterSearchData': costCenterDetailsController.costCenterSearchData})">Vendor Mapping </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div ui-view class="fade-in-up"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

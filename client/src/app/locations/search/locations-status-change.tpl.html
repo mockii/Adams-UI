@@ -1,0 +1,17 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="locationsStatusChangeController.cancel()"></button>
+        <h4 class="modal-title">Location Status Change Reason</h4>
+    </div>
+
+    <div class="modal-body">
+        Please confirm if you would like to chage the location status.
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="locationsStatusChangeController.cancel()">Cancel
+        </button>
+        <button type="button" class="btn blue" ng-click="locationsStatusChangeController.submit()" analytics-on="click"
+                analytics-category="Location Status Change Modal" analytics-event="Submit Message">Yes
+        </button>
+    </div>
+</div>

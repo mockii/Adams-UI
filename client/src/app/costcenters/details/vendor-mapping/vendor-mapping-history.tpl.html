@@ -1,0 +1,24 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vendorMappingHistoryController.close()"></button>
+        <h4 class="modal-title">Vendor History - {{vendorMappingHistoryController.vendorRowData.vendor_number}} - {{vendorMappingHistoryController.vendorRowData.vendor_name_1}}</h4>
+
+    </div>
+    <!-- ADD MARKET MAPPING MODAL -->
+    <div class="portlet-body">
+        <div class="row profile-page">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="portlet light">
+                    <div class="portlet-body">
+                        <div stg-ui-grid get-grid-options="vendorMappingHistoryController.gridOptions"
+                             get-grid-data="vendorMappingHistoryController.getGridData" class="grid pop-up-ui-grid-height">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="vendorMappingHistoryController.close()">Close</button>
+    </div>
+</div>

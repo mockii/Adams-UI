@@ -1,0 +1,57 @@
+
+.products .portlet-body .table-scrollable {
+    margin-top: 0px !important;
+}
+
+.distributor-data-table .header-column,
+.supplier-data-table .header-column {
+    width: 225px;
+}
+
+.products td:not(:first-child) {
+    text-align: center;
+}
+
+.products td {
+    border-left-color: #ddd;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-top-width: 0px !important;
+}
+
+.products thead {
+    border-bottom-color: #ddd;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.allergen-table .alert-danger,
+.allergen-table .alert-success,
+.allergen-table .alert-warning {
+    background-color: transparent !important;
+    font-size: 16px !important;
+    line-height: 16px !important;
+}
+
+.allergen-table .alert-warning{
+    color: #f2ae38 !important;
+    line-height: 16px !important;
+}
+
+.allergen-table .allergen-name {
+    width: 175px;
+}
+
+.allergen-legend {
+    float: left;
+}
+
+.allergen-legend i {
+    background-color: transparent !important;
+    font-size: 16px !important;
+    line-height: 16px !important;
+}
+
+.allergen-legend .derived{
+    margin-left: 10px;
+}

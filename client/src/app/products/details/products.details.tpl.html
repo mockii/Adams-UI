@@ -1,0 +1,30 @@
+<div class="row products">
+    <div class="col-md-12">
+
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div class="tabbable-line" >
+                    <ul class="nav nav-tabs">
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('productdetails.productmapping')}">
+                            <a ui-sref="productsdetails.productmapping({'productNumber': productsDetailsController.productNumber})">
+                                Product Details </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('productdetails.nutrition')}">
+                            <a ui-sref="productsdetails.nutrition({'productNumber': productsDetailsController.productNumber})">
+                                Nutritional Information </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('productdetails.allergenn')}">
+                            <a ui-sref="productsdetails.allergen({'productNumber': productsDetailsController.productNumber})">
+                                Allergen Information </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div ui-view class="fade-in-up"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

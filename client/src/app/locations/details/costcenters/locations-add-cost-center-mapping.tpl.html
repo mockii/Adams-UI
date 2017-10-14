@@ -1,0 +1,46 @@
+<div class="modal-content col-md-12" block-ui="add-cost-center">
+    <div class="modal-header">
+        <div class="row">
+            <div class="container col-sm-12 no-left-padding">
+                <button type="button" class="close" ng-click="locationsAddCostCenterMappingController.close()"></button>
+                <h4 class="modal-title">Select Cost Center</h4>
+            </div>
+        </div>
+    </div><br>
+    <div class="modal-body no-top-padding-for-model">
+        <div class="row">
+
+            <div class="col-md-12 no-padding">
+                <div class="col-md-7 no-padding add-cost-center-mapping-cost-center-div" block-ui="add-cost-center-ui-grid">
+                    <!-- ADD COST CENTER MAPPING MODAL -->
+                    <div class="add-cost-center-grid" stg-ui-grid get-grid-options="locationsAddCostCenterMappingController.gridOptions"
+                         get-grid-data="locationsAddCostCenterMappingController.getGridData">
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding visible-lg visible-md hidden-sm hidden-xs add-cost-center-mapping-move-arrow-div">
+                    <i class="fa fa-arrow-circle-right move-arrow"></i>
+                </div>
+
+                <div class="visible-sm hidden-md hidden-lg"><br><br></div>
+
+                <div class="col-md-4 no-padding add-cost-center-mapping-selected-cost-center-div">
+                    <div class="selected-cost-centers-header">Selected Cost Centers</div>
+                    <div class="selected-cost-centers-content-wrapper">
+                        <div class="selected-cost-center right" ng-repeat="costCenter in locationsAddCostCenterMappingController.costCenters">
+                            <span class="cost-center-name">{{costCenter.cost_center_name +' - '+ costCenter.cost_center_description}}</span>
+                            <i class="fa fa-times-circle del-btn-color pull-right"
+                               ng-click="locationsAddCostCenterMappingController.costCenterIndex($index)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="locationsAddCostCenterMappingController.close()">Cancel</button>
+        <button type="button" class="btn blue" ng-click="locationsAddCostCenterMappingController.select()"
+                ng-disabled="locationsAddCostCenterMappingController.costCenters.length === 0" analytics-on="click"
+                analytics-category="Message Administration Modal" analytics-event="Submit Message">Select
+        </button>
+    </div>
+</div>

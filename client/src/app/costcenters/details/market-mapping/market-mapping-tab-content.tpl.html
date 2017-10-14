@@ -1,0 +1,18 @@
+<div class="row profile-page">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h2 style="padding-left: 20px">{{costCenterMarketMappingController.defaultMarket.market_description}}</h2>
+        <div style="padding-left: 20px">{{costCenterMarketMappingController.defaultMarket.market_display_path}}</div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="portlet light" block-ui="costcenter-market-mapping-ui-grid">
+
+            <a class="btn blue" ng-click="costCenterMarketMappingController.openAddUserMapping()">
+                Add <i class="fa fa-plus"></i>
+            </a>
+            <div class="portlet-body">
+                <div stg-ui-grid get-grid-options="costCenterMarketMappingController.gridOptions" get-grid-data="costCenterMarketMappingController.getGridData">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

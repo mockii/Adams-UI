@@ -1,0 +1,354 @@
+.vendor-details-page .nav-tabs li.active {
+    border-bottom: 4px solid #F3565D;
+    position: relative;
+}
+.vendor-details-page .nav-tabs li a {
+    border: 0;
+    margin-right: 0;
+    color: #737373;
+}
+.vendor-details-page .detail-column{
+    margin: 5px 0px;
+}
+.vendor-details-page {
+    background-color: #fff;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+.vendor-details-page button {
+    background-color: #fff;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    margin: 10px 5px 20px 5px;
+    padding: 7px;
+    color: #737373;
+}
+.vendor-details-page button i {
+    font-weight: bold;
+    color: #000;
+}
+.add-market-mapping-div-padding {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.add-market-mapping-background {
+    background-color: #fff;
+}
+.add-market-mapping-overflow-y {
+    overflow: auto;
+}
+.add-market-mapping-tree-div {
+    width: 350px;
+    height: 300px;
+}
+.add-market-mapping-div-md-6-padding{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.div-padding-top {
+     padding-top: 10px
+ }
+.div-padding-left {
+    padding-left: 10px
+}
+.market-mapping-ui-grid-height{
+    height: 760px;
+}
+.pop-up-ui-grid-height{
+    height: 350px;
+}
+.selected-cost-center {
+    padding: 5px;
+}
+.del-btn-color {
+    color: lightgray;
+    cursor: pointer;
+}
+.cost-center-header {
+    border-style: solid;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+.move-arrow {
+    font-size: 28px !important;
+    color: lightgrey;
+}
+.portlet>.portlet-title>.tools>a.collapse {
+    background-image: url(../images/portlet-collapse-icon.png);
+    width: 14px;
+    visibility: visible;
+}
+.portlet > .portlet-title > .tools > a.expand {
+    background-image: url(../images/portlet-expand-icon.png);
+    width: 14px;
+    visibility: visible;
+}
+.portlet-collapse {
+    height: auto !important;
+}
+.contact-info-message {
+    padding-left: 5px;
+    padding-top: 10px;
+}
+.add-cost-center-mapping-account-details-div {
+    padding-right: 5px;
+    padding-left: 1px;
+}
+.add-cost-center-mapping-cost-center-div {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.add-cost-center-mapping-move-arrow-div {
+    padding-left: 15px;
+    padding-top:180px;
+    align-content: center;
+    text-align: center;
+}
+.add-cost-center-mapping-selected-cost-center-div {
+    padding-left: 0px;
+    padding-right: 0px;
+    height: 380px;
+    border: 1px solid lightgray;
+}
+.col-md-4.no-padding.add-cost-center-mapping-selected-cost-center-div table {
+    display: block;
+    border-collapse: collapse;
+    border-style: none;
+}
+.add-cost-center-mapping-selected-cost-center-div table thead, tbody {
+    display: block;
+}
+.add-cost-center-mapping-selected-cost-center-div table thead {
+    border-bottom-style: solid;
+    border-bottom-color: rgba(211, 211, 211, 0.50);
+}
+
+.add-cost-center-mapping-selected-cost-center-div table thead tr th {
+    width: 260px;
+    border-left-style: hidden;
+}
+.add-cost-center-mapping-selected-cost-center-div table tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 340px;
+    display: block;
+}
+.add-cost-center-mapping-selected-cost-center-div table tbody tr:first-child {
+    border-top-style: hidden;
+}
+.add-cost-center-mapping-selected-cost-center-div table tbody tr {
+    border-right-style: hidden;
+    border-left-style: hidden;
+}
+.add-cost-center-mapping-selected-cost-center-div table tbody tr td div {
+    width: 260px;
+    border-style: hidden;
+}
+
+.no-left-right-padding-portlet-div {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.no-top-padding-for-model {
+    padding-top: 0px;
+}
+.highlight-nodelabel {
+    background-color: #CADEF9;
+}
+.twistie {
+    background-color: white;
+    display: inline-block;
+}
+/*-- Specific UI Grid Pagination for User Administration Page--*/
+.costCenterAccountDetailsGrid .ui-grid-pager-count {
+    display: none;
+}
+
+.costCenterAccountDetailsGrid .ui-grid-pager-panel {
+    text-align: center;
+}
+.input-icon.right>i {
+    right: 20px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+}
+
+
+/* Firefox Related*/
+_:-moz-tree-row(hover), .btn {
+    white-space: inherit;
+}
+
+.switch {
+    position: relative;
+    display: block;
+    vertical-align: top;
+    width: 100px;
+    height: 30px;
+    padding: 3px;
+    margin: 0 10px 10px 0;
+    cursor: pointer;
+}
+.switch-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    display: none;
+}
+.switch-label {
+    position: relative;
+    display: block;
+    height: 35px;
+    font-size: 10px;
+    text-transform: uppercase;
+    background: #eceeef;
+}
+.switch-label:before, .switch-label:after {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5em;
+    line-height: 1;
+    -webkit-transition: inherit;
+    -moz-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+}
+.switch-label:before {
+    content: attr(data-off);
+    right: 11px;
+}
+.switch-label:after {
+    content: attr(data-on);
+    left: 11px;
+    color: #FFFFFF;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+}
+.switch-input:checked ~ .switch-label {
+    background: #357ebd;
+
+}
+.switch-input:checked ~ .switch-label:before {
+    opacity: 0;
+}
+.switch-input:checked ~ .switch-label:after {
+    opacity: 1;
+}
+.switch-handle {
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 44px;
+    height: 32px;
+    background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+    margin-top: .5px;
+}
+.switch-handle:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -6px 0 0 -6px;
+    width: 12px;
+    height: 12px;
+}
+.switch-input:checked ~ .switch-handle {
+    left: 50px;
+}
+.switch-input ~ .switch-label {
+    background: #C1C1C1;
+}
+.switchClass {
+    background-color: white !important;
+    width: 100px;
+}
+
+/* Transition
+========================== */
+.switch-label, .switch-handle {
+    transition: All 0.3s ease;
+    -webkit-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
+}
+.add-market-mapping-div-md-6-padding .table-scrollable  table thead, tbody {
+    display: table-row-group;
+}
+
+.selectionHeader {
+    border-right-style: none;
+}
+
+.hyperlink-cell {
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+@-moz-document url-prefix() {
+    .add-market-mapping-div-md-6-padding .table-scrollable  table thead, tbody {
+        display: block;
+        overflow-y: auto;
+    }
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        border-top: 0 !important;
+    }
+    .table-bordered > thead {
+        border-bottom: 1px solid #ddd;
+    }
+}
+
+.ui-grid-height > .grid .ui-grid-row, .grid .ui-grid-cell, .grid .ui-grid-cell .ui-grid-vertical-bar {
+    height: 41px !important;
+}
+
+.market-mapping-grid {
+    padding-left: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    user-select: initial;
+    cursor: text;
+}
+
+.selected-cost-centers-header {
+    height: 50px;
+    display:table;
+    font-weight:bold;
+    line-height: 50px;
+    padding-left: 15px;
+    border: 1px;
+    border-bottom-style: groove;
+    width: 100%;
+}
+
+.selected-cost-centers-header > div {
+    display:table-cell;
+}
+
+.selected-cost-centers-content-wrapper {
+    line-height: 35px;
+    overflow: auto;
+    height: 325px;
+}
+
+.selected-cost-center {
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: darkgrey;
+    padding-left: 15px;
+}
+
+.selected-cost-center.right>i {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.cost-center-name {
+    max-width: 210px;
+    ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

@@ -1,0 +1,27 @@
+.application-bootstrap-select {
+    width: 100% !important;
+}
+
+.no-padding {
+   padding: 0px !important;
+}
+
+#roleGridId .ui-grid-pager-row-count-picker {
+    display: none;
+}
+
+.role-grid > .ui-grid{
+    height:400px !important;
+}
+
+.role-grid .ui-grid-filter-container .ui-grid-filter-button [class^=ui-grid-icon] {
+    padding-right: 4px;
+}
+
+.permission-grid > .ui-grid{
+    height:450px !important;
+}
+
+.permission-grid .ui-grid-filter-container .ui-grid-filter-button [class^=ui-grid-icon] {
+    padding-right: 4px;
+}

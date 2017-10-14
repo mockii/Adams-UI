@@ -1,0 +1,398 @@
+<div block-ui="add-temp-associate">
+
+    <div class="row profile-page">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+            <form name="addTempAssociate" role="form" action="#">
+                <!-- Personal Info -->
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject font-blue uppercase bold"> Personal Info</span>
+                        </div>
+                        <a class="pull-right" ng-hide="addAssociatesController.priorEngagements" ng_click="addAssociatesController.clearPersonalInfo()">Clear</a>
+
+                        <div class="row associate-row history-row" ng-show="addAssociatesController.associateSearchDataLength > 0">
+                            <div class="input-group history-group pull-right">
+                                <button type="button" class="btn btn-default" ng-click="addAssociatesController.showHistory()">Audit Info <i class="fa fa-history"></i></button>
+                            </div>
+                            <div class="col-xs-12" ng-show="addAssociatesController.showHistoryInfo">
+                                <div class="history-group-info">
+                                    <div class="history-group-addon" ng-show="addAssociatesController.userInfo">
+                                        <i>
+                                            <label>Created by <a href="#" ng-click="addAssociatesController.openUserInfo(addAssociatesController.associateInfo.created_by)">{{ addAssociatesController.associateInfo.created_by }}</a> on {{ addAssociatesController.associateInfo.createdDate }}  </label>
+                                            <i class="fa fa-times pull-right history-fa-times" ng-click="addAssociatesController.showHistory()"></i>
+                                        </i><br />
+                                        <i><label>Modified by <a href="#" ng-click="addAssociatesController.openUserInfo(addAssociatesController.associateInfo.modified_by)">{{ addAssociatesController.associateInfo.modified_by }}</a> on {{ addAssociatesController.associateInfo.modifiedDate }}  </label></i>
+                                    </div>
+                                </div>
+                                <div class="history-group-info" ng-show="addAssociatesController.userDetails" block-ui="blockui_user_details_container">
+                                    <span class="input-group-addon">{{ addAssociatesController.selectedUser }} User Profile <i class="fa fa-times pull-right" ng-click="addAssociatesController.showHistory()"></i></span>
+
+                                    <table class="history-group-addon">
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>User Name</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedUserName }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>First Name</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedFirstName }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Last Name</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedLastName }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Email Address</label><br /></td>
+                                            <td class="history-group-cell-value"><label><a style="font-size: 11px !important; word-break: break-all;" ng-href="mailto:{{addAssociatesController.selectedEmail}}">{{ addAssociatesController.selectedEmail }}</a></label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Telephone</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedWorkPhone }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Cost Center</label></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedCostCenter }}</label></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row" >
+                            <div class="col-lg-5">
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label>User ID</label>
+                                        <span class="info-group-addon sm-info-group-addon" uib-tooltip="Select the username of the user to be created if a Compass Network ID has already been created for this user." tooltip-placement="bottom" tooltip-class="user-name-info-icon">
+                                            <i class="fa fa-info-circle font-gray"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="form-group associate-form-group">
+                                            <div class="input-group input-icon right" ng-click="addAssociatesController.openGrid()">
+                                                <input type="text" class="form-control input-associate-details" ng-model="addAssociatesController.associateInfo.user_name" onkeydown="return false;">
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 info-group">
+                                        <span class="info-group-addon" uib-tooltip="Select the username of the user to be created if a Compass Network ID has already been created for this user." tooltip-placement="bottom" tooltip-class="user-name-info-icon">
+                                            <i class="fa fa-info-circle font-gray"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label">First Name<span class="required" aria-required="true">*</span></label>
+                                    </div>
+                                    <div class="col-lg-7 input-icon right">
+                                        <input stg-form-validation validation-type="required" type="text" class="form-control input-associate-details"
+                                               ng-model="addAssociatesController.associateInfo.first_name" maxlength="50" required>
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label>Middle Name</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control input-associate-details" ng-model="addAssociatesController.associateInfo.middle_name"
+                                               maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label">Last Name<span class="required" aria-required="true">*</span></label>
+                                    </div>
+                                    <div class="col-lg-7 input-icon right">
+                                        <input stg-form-validation validation-type="required" type="text" class="form-control input-associate-details"
+                                               ng-model="addAssociatesController.associateInfo.last_name" maxlength="50" required>
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label>Personal Number</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" class="form-control input-associate-details" ng-model="addAssociatesController.associateInfo.personnel_number" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Date of Birth</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group associate-form-group">
+                                            <div class="input-group input-date-picker input-icon right">
+                                                <input stg-form-validation validation-type="date" lookup-field="true" type="text" placeholder="mm/dd/yyyy" class="form-control"
+                                                       ng-model="addAssociatesController.associateInfo.birthdate" uib-datepicker-popup="MM/dd/yyyy" is-open="addAssociatesController.birthDatePopup.opened"
+                                                       close-text="Close" required maxlength="10" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default form-control" ng-click="addAssociatesController.openBirthDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Last Four SSN</label>
+                                    </div>
+                                    <div class="col-lg-8 input-icon right">
+                                        <input type="text" class="form-control input-associate-details"
+                                               stg-form-validation validation-type="ssn"
+                                               ng-model="addAssociatesController.associateInfo.last_four_ssn"
+                                               pattern="\d+" maxlength="4"
+                                               onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" required>
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label">Email Address</label>
+                                    </div>
+                                    <div class="col-lg-8 input-icon right">
+                                        <input stg-form-validation validation-type="email" not-required="true" validation-message="Please enter a valid email address." type="email"
+                                               class="form-control input-associate-details" ng-model="addAssociatesController.associateInfo.email" maxlength="100">
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label>Phone Number</label>
+                                    </div>
+                                    <div class="col-lg-8 input-icon right">
+                                        <input type="text" class="form-control input-associate-details" ng-model="addAssociatesController.associateInfo.phone_number" maxlength="30">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engagement -->
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject font-blue uppercase bold" ng-hide="addAssociatesController.priorEngagements"> Engagement</span>
+                            <span class="caption-subject font-blue uppercase bold" ng-show="addAssociatesController.priorEngagements"> Current Engagement</span>
+                        </div>
+                        <a class="pull-right" ng-hide="addAssociatesController.priorEngagements" ng_click="addAssociatesController.clearEngagement()">Clear</a>
+
+                        <div class="row associate-row history-row" ng-show="addAssociatesController.priorEngagements && addAssociatesController.associateSearchDataLength > 0">
+                            <div class="input-group history-group pull-right">
+                                <button type="button" class="btn btn-default" ng-show="addAssociatesController.associateInfo.active_engagement"
+                                        ng-click="addAssociatesController.showEngagementHistory()">Audit Info <i class="fa fa-history"></i></button>
+                            </div>
+
+                            <button type="button" class="btn blue pull-right btn-engagement" ng-click="addAssociatesController.endEngagement();"
+                                    ng-disabled="!addAssociatesController.associateInfo.active_engagement"
+                                    ng-show="addAssociatesController.priorEngagements">End Engagement</button>
+
+                            <div class="col-xs-12" ng-show="addAssociatesController.showEngagementHistoryInfo">
+                                <div class="history-group-info">
+                                    <div class="history-group-addon" ng-show="addAssociatesController.engagementInfo">
+                                        <i>
+                                           <label>Created by <a href="#" ng-click="addAssociatesController.openEngagementsInfo(addAssociatesController.associateInfo.engagement_created_by)">{{ addAssociatesController.associateInfo.engagement_created_by }}</a> on {{ addAssociatesController.associateInfo.engagementCreatedDate }}  </label>
+                                           <i class="fa fa-times pull-right history-fa-times" ng-click="addAssociatesController.showEngagementHistory()"></i>
+                                        </i><br />
+                                        <i><label>Modified by <a href="#" ng-click="addAssociatesController.openEngagementsInfo(addAssociatesController.associateInfo.engagement_modified_by)">{{ addAssociatesController.associateInfo.engagement_modified_by }}</a> on {{ addAssociatesController.associateInfo.engagementModifiedDate }}  </label></i>
+                                    </div>
+                                </div>
+                                <div class="history-group-info" ng-show="addAssociatesController.engagementDetails" block-ui="blockui_engagement_details_container">
+                                    <span class="input-group-addon">{{ addAssociatesController.selectedUser }} User Profile<i class="fa fa-times pull-right" ng-click="addAssociatesController.showEngagementHistory()"></i></span>
+
+                                    <table class="history-group-addon">
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>User Name</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedUserName }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>First Name</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedFirstName }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Last Name</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedLastName }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Email Address</label><br /></td>
+                                            <td class="history-group-cell-value"><label><a style="font-size: 11px !important; word-break: break-all;" ng-href="mailto:{{addAssociatesController.selectedEmail}}">{{ addAssociatesController.selectedEmail }}</a></label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Telephone</label><br /></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedWorkPhone }}</label><br /></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="history-group-cell-label"><label>Cost Center</label></td>
+                                            <td class="history-group-cell-value"><label>{{ addAssociatesController.selectedCostCenter }}</label></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row" >
+                            <div class="col-lg-5">
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Time Tracking System</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <select load-select-picker class="dropdown-selector time-tracking"
+                                                ng-disabled="addAssociatesController.timeTrackingDefault"
+                                                ng-model="addAssociatesController.timeTracking"
+                                                ng-options="systems.time_tracking_system for systems in addAssociatesController.timeTrackingSystems | orderBy: 'time_tracking_system' track by systems.time_tracking_system" required>
+                                            <option style="display:none" value=""> </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Start Date</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="form-group associate-form-group">
+                                            <div class="input-group input-date-picker input-icon right">
+                                                <input stg-form-validation validation-type="date" lookup-field="true" type="text" placeholder="mm/dd/yyyy" class="form-control"
+                                                       ng-model="addAssociatesController.associateInfo.start_date" ng-readonly="addAssociatesController.associateInfo.active_engagement" uib-datepicker-popup="MM/dd/yyyy"
+                                                       is-open="addAssociatesController.startDatePopup.opened" close-text="Close" required maxlength="10" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default form-control" ng-disabled="addAssociatesController.associateInfo.active_engagement" ng-click="addAssociatesController.openStartDatePopup()">
+                                                <i class="glyphicon glyphicon-calendar" ng-disabled="addAssociatesController.associateInfo.active_engagement"></i>
+                                            </button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label">End Date</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="form-group associate-form-group">
+                                            <div class="input-group input-date-picker input-icon right">
+                                                <input stg-form-validation validation-type="date" lookup-field="true" not-required="true" type="text" placeholder="mm/dd/yyyy" class="form-control"
+                                                       ng-readonly="addAssociatesController.associateInfo.active_engagement" ng-model="addAssociatesController.associateInfo.end_date" uib-datepicker-popup="MM/dd/yyyy"
+                                                       is-open="addAssociatesController.endDatePopup.opened" close-text="Close" maxlength="10" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default form-control" ng-disabled="addAssociatesController.associateInfo.active_engagement" ng-click="addAssociatesController.openEndDatePopup()">
+                                                <i class="glyphicon glyphicon-calendar" ng-disabled="addAssociatesController.associateInfo.active_engagement"></i>
+                                            </button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Cost Center</label>
+                                    </div>
+
+                                    <div class="col-lg-7">
+                                        <div class="form-group associate-form-group">
+                                            <div class="input-group input-icon right" ng-click="addAssociatesController.associateInfo.active_engagement || addAssociatesController.openCostCenterGrid()">
+                                                <input stg-form-validation validation-type="required" lookup-field="true" type="text" class="form-control input-associate-details" ng-readonly="addAssociatesController.associateInfo.active_engagement" ng-disabled="addAssociatesController.associateInfo.active_engagement"
+                                                       ng-model="addAssociatesController.costCenterFullName" onkeydown="return false;" required>
+                                                <span class="input-group-addon" ng-disabled="addAssociatesController.associateInfo.active_engagement">
+                                                    <i class="fa fa-search" ng-disabled="addAssociatesController.associateInfo.active_engagement"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Agency</label>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        {{ addAssociatesController.agency.agency_name }}
+                                        <select load-select-picker data-live-search="true" class="dropdown-selector agency-selector" ng-disabled="addAssociatesController.associateInfo.active_engagement"
+                                                ng-model="addAssociatesController.agency" ng-options="agency.vendor_number + ' - ' + agency.vendor_name_1 for agency in addAssociatesController.agencies | orderBy: 'vendor_number' track by agency.vendor_number" required>
+                                            <option style="display:none" value=""> </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Bill Rate</label>
+                                    </div>
+                                    <div class="col-lg-8 input-icon right">
+                                        <input stg-form-validation validation-type="currency"
+                                               type="text" class="form-control input-associate-details"
+                                               ng-readonly="addAssociatesController.associateInfo.active_engagement"
+                                               ng-model="addAssociatesController.associateInfo.base_rate"
+                                               onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 190 || event.charCode == 46"
+                                               maxlength="7" required>
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label class="control-label control-label-required">Job</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group associate-form-group">
+                                            <div class="input-group input-icon right" ng-click="addAssociatesController.associateInfo.active_engagement || addAssociatesController.openJobsGrid()">
+                                                <input stg-form-validation validation-type="required" lookup-field="true"
+                                                       type="text" class="form-control input-associate-details"
+                                                       ng-readonly="addAssociatesController.associateInfo.active_engagement" ng-disabled="addAssociatesController.associateInfo.active_engagement"
+                                                       ng-model="addAssociatesController.jobFullName" onkeydown="return false;" required>
+                                                <span class="input-group-addon" ng-disabled="addAssociatesController.associateInfo.active_engagement">
+                                                    <i class="fa fa-search" ng-disabled="addAssociatesController.associateInfo.active_engagement"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row associate-row">
+                                    <div class="col-lg-4 associate-label">
+                                        <label>Comments</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control autosizeme" rows="6" ng-readonly="addAssociatesController.associateInfo.active_engagement" ng-model="addAssociatesController.associateInfo.comments" maxlength="100"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Prior Engagement -->
+            <div class="portlet light" ng-if="addAssociatesController.priorEngagements">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Prior Engagements</span>
+                    </div>
+                    <div class="tools">
+                        <a class="expand" data-original-title title ng-click="addAssociatesController.isCollapsed != addAssociatesController.isCollapsed"></a>
+                    </div>
+                </div>
+                <div class="portlet-body prior-engagement" uib-collapse="addAssociatesController.isCollapsed">
+                    <div stg-ui-grid get-grid-options="addAssociatesController.gridOptions" get-grid-data="addAssociatesController.getGridData"></div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-default" ng-click="addAssociatesController.go('tempAssociates')">Cancel</button>
+            <button type="button" class="btn blue" ng-click="addAssociatesController.submit()"
+                    ng-disabled="(addTempAssociate.$invalid || addAssociatesController.agency === ' ' || addAssociatesController.timeTracking === ' ') ? true : false">Save</button>
+            <button type="button" class="btn blue" ng-click="addAssociatesController.submit('tempAssociates')"
+                    ng-disabled="(addTempAssociate.$invalid || addAssociatesController.agency === ' ' || addAssociatesController.timeTracking === ' ') ? true : false">Save and Return</button>
+
+        </div>
+    </div>
+</div>

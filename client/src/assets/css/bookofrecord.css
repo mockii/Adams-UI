@@ -1,0 +1,41 @@
+.info-group {
+    float: right;
+    padding-right: 0;
+    padding-left: 0;
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    margin-top: 12px;
+}
+
+.info-group-addon {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    padding-left: 0px !important;
+    padding: 6px 12px;
+    min-width: 39px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+}
+
+.info-group-addon > i {
+    font-size: 18px !important;
+}
+
+.user-name-info-icon .tooltip-inner {
+    background-color: #e5e5e5;
+    min-width: 275px;
+    color: #333;
+    text-align: left;
+}
+
+.user-name-info-icon .tooltip-arrow,
+.sm-info-group-addon {
+    display: none;
+}
+
+.bookofrecords-grid .ui-grid {
+    height: 65vh !important;
+}

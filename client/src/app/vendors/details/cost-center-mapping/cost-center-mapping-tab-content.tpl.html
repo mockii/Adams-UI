@@ -1,0 +1,11 @@
+<div class="row profile-page">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="portlet light" block-ui="cost-center-mapping-grid">
+            <a class="btn blue" ng-click="costCenterMappingController.openAddCostCenterMapping()"> Add <i class="fa fa-plus"></i> </a>
+            <div class="portlet-body">
+                <div stg-ui-grid get-grid-options="costCenterMappingController.gridOptions" get-grid-data="costCenterMappingController.getGridData" class="grid ui-grid-height">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

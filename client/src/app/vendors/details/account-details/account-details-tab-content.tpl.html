@@ -1,0 +1,541 @@
+<div class="form-horizontal">
+    <div class="form-body div-padding-left">
+        <!-- ACCOUNT DETAILS -->
+        <div class="portlet light" style="padding-left: 0px">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue bold uppercase">Vendor Details</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">AP Category Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.category_code}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">AP Term Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.ap_term_code}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">AP Category Description</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.category_description}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">AP Term Description</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.ap_term_description}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Address</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.address}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">AP Term Key</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.ap_term_key}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">City</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.city}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Telephone 1</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.telephone_number_1}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">State</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.state}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Telephone 2</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.telephone_number_2}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Zip</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.zipcode}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Fax</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.fax_number}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Country</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.country}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END ACCOUNT DETAILS -->
+
+        <!-- STATUSES -->
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue bold uppercase">Statuses</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Central Posting Block</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.central_posting_block}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Excluded</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.excluded}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Company Code Posting Block</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.company_code_posting_block}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Business Type</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.business_type}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Imposed Purchase Block</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.imposed_purchase_block}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Train Station</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.train_station}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row div-padding-top">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Payment Block</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.payment_block}}" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- END STATUSES -->
+
+        <!-- TAX AND ACCOUNTING -->
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue bold uppercase">Tax and Accounting</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tax 1</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.tax_1}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">District</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.district}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tax 2</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.tax_2}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Company Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.company_code}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tax Jurisdiction Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.tax_jurisdiction}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END TAX AND ACCOUNTING -->
+
+        <!-- OTHER DETAILS -->
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue bold uppercase">Other Information</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Expense Personal Number</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.expense_personal_number}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">One Time Account</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.one_time_account_ind}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Account Group</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.account_group}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Industry Key</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.industry_key}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Group Key</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.group_key}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Telebox</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.telebox}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Customer Number</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.customer_number}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Clerk</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.clerk}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Nominated Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.nominated_code}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Source System ID</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.source_system_id}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Nominated Description</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.nominated_description}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Training Partner Id</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.training_partner_id}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Parent Record By</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.parent_record_by}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Child Record By</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.child_record_by}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Consolidation Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.consolidation_code}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Child Record Created DT</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.child_record_created_date}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Consolidation Description</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.consolidation_description}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Terms Payment Key</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.terms_payment_key}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Child Record Date</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.child_record_date}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Child Record Created By</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.child_record_created_by}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Diversity Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.diversity_code}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Parent Record Created Date</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.parent_record_created_date}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Parent Record Created By</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.parent_record_created_by}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Account Number Alternate Payee</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.account_number_alt_payee}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Master Record Delete Flat</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.master_record_delete_flag}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">One Time Account Indicator</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.one_time_account_ind}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row div-padding-top">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Account Number</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.account_number}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Personnel Number</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.personnel_number}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="portlet light">
+        <div class="portlet-body">
+            <i> Created by {{vendorDetailsController.vendorSearchData.created_by}} on {{vendorDetailsController.vendorSearchData.created_date | date:'yyyy-MM-dd hh:mm a'}}
+                <br><br>
+                Last modified by {{vendorDetailsController.vendorSearchData.modified_by}} on {{vendorDetailsController.vendorSearchData.modified_date}}</i>
+            <br>
+        </div>
+    </div>
+</div>

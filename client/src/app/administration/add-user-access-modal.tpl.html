@@ -1,0 +1,111 @@
+
+<!-- ADD MESSAGE MODAL -->
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="addUserAccessModalController.close()"></button>
+        <h4 class="modal-title">Add User Access</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="row add-user-access-modal">
+            <div class="col-lg-12 col-md-12">
+                <div class="row">
+                    <div class="col-lg-1 col-md-1 user-access-modal-label-padding">
+                        <label class="control-label">Application</label>
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div class="user-details-btn-group">
+                            <select load-select-picker data-live-search="true" class="user-bootstrap-select"
+                                    ng-disabled="addUserAccessModalController.roleName.length !== 0"
+                                    ng-model="addUserAccessModalController.application" ng-change="addUserAccessModalController.itemSelected(1)"
+                                    ng-options="application.name for application in addUserAccessModalController.applications | orderBy: 'name' track by application.name">
+                                <option style="display:none" value="">{{ addUserAccessModalController.application }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1 col-md-1 user-access-modal-label-padding">
+                        <label class="control-label">Role</label>
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div class="user-details-btn-group">
+                            <select load-select-picker data-live-search="true" class="user-bootstrap-select"
+                                    ng-disabled="addUserAccessModalController.roleName.length !== 0"
+                                    ng-model="addUserAccessModalController.role"
+                                    ng-change="addUserAccessModalController.itemSelected(2)"
+                                    ng-options="role.name for role in addUserAccessModalController.loginRoles | orderBy:'name' track by role.name"
+                                    ng-show="addUserAccessModalController.loginRoles.length > 0">
+                                <option style="display:none" value="">{{ addUserAccessModalController.role }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1 col-md-1 user-access-modal-label-padding">
+                        <label class="control-label">Team</label>
+                    </div>
+                    <div class="col-lg-5 col-md-5 user-access-modal-no-right-padding">
+                        <div class="portlet light team-search-hierarchy">
+                            <div class="portlet-body">
+                                <div class="tabbable tabs-right">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a ng-click="addUserAccessModalController.switchTab('searchTeam')" data-toggle="tab">Search </a>
+                                        </li>
+                                        <li>
+                                            <a ng-click="addUserAccessModalController.switchTab('hierarchyTeam')" data-toggle="tab">Hierarchy </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane" id="searchTeam" ng-class="addUserAccessModalController.hierarchyTeam ? 'fade' : 'active'">
+
+                                            <div stg-ui-grid get-grid-options="addUserAccessModalController.gridOptions" get-grid-data="addUserAccessModalController.getGridData"></div>
+
+                                        </div>
+                                        <div class="tab-pane" id="hierarchyTeam" ng-class="addUserAccessModalController.hierarchyTeam ? 'active' : 'fade'">
+                                            <div class="table-bordered select-teams">
+                                                <stg-hierarchy-tree
+                                                        ref-id="teamHierarchyTree"
+                                                        fetch-children-every-time="false"
+                                                        enable-multi-select="false"
+                                                        select-global-selected-team-by-default="false"
+                                                        disable-tree-toggle="false"
+                                                        expand-to-depth="1"
+                                                        sync-global-team-selection-on-close="false">
+                                                </stg-hierarchy-tree>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 no-padding team-selection-right-arrow">
+                        <div class="team-selection-inner-div">
+                            <i class="fa fa-arrow-circle-right team-arrow"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5 no-padding col-selected-teams">
+                        <div class="table-bordered selected-teams">
+                            <p><strong>Selected Team(s)</strong></p>
+                            <div class="selected-team" ng-repeat="team in addUserAccessModalController.teams track by $index">
+                                <div>{{team.team_type_name + ': ' + team.team_display_name}}</div>
+                                <i class="fa fa-times-circle del-btn-color pull-right" ng-click="addUserAccessModalController.teamIndex($index)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addUserAccessModalController.close()">Close</button>
+        <button type="button" class="btn blue" ng-click="addUserAccessModalController.submit()"
+                ng-disabled="(addUserAccessModalController.teams.length === 0 || addUserAccessModalController.role === ' ') ? true : false"
+                analytics-on="click" analytics-category="Message Administration Modal" analytics-event="Submit Message">Submit
+        </button>
+    </div>
+</div>
+<!-- END ADD MESSAGE MODAL -->

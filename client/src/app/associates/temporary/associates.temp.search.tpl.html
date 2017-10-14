@@ -1,0 +1,20 @@
+<div class="row profile-page">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div>
+                    <div class="associate-btn-grp">
+                        <button type="button" class="btn blue" ng-click="associatesSearchController.go('addTempAssociates')">Create Associate <i class="fa fa-plus"></i></button>
+                        <select load-select-picker class="search-resource-selector pull-right" ng-change="associatesSearchController.resourceSelected(associatesSearchController.resource)"
+                                ng-model="associatesSearchController.resource" ng-options="resource for resource in associatesSearchController.resources">
+                            <option style="display:none" value="">{{ associatesSearchController.resource }}</option>
+                        </select>
+                    </div>
+
+                    <div class="temp-associate-grid" stg-ui-grid get-grid-options="associatesSearchController.gridOptions" get-grid-data="associatesSearchController.getGridData"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

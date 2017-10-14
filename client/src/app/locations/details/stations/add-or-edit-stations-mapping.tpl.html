@@ -1,0 +1,49 @@
+<div class="modal-content col-md-12" block-ui="add-station">
+    <div class="modal-header">
+        <div class="row">
+            <div class="container col-sm-12 no-left-padding">
+                <button type="button" class="close" ng-click="addOrEditStationsMappingController.close()"></button>
+                <h4 class="modal-title">Add Station</h4>
+            </div>
+        </div>
+    </div><br>
+    <div class="modal-body no-top-padding-for-model">
+        <div class="row">
+
+            <div class="col-md-12 no-padding">
+                <div class="col-md-6 no-padding" block-ui="add-stations-ui-grid">
+                    <!-- ADD COST CENTER MAPPING MODAL -->
+                    <div class="add-stations-grid" stg-ui-grid
+                         ref-id="addOrEditStationsMappingController.stationRefId"
+                         get-grid-options="addOrEditStationsMappingController.gridStationsOptions"
+                         get-grid-data="addOrEditStationsMappingController.getStationsGridData">
+                    </div>
+                </div>
+                <!--<div class="col-md-1 no-padding visible-lg visible-md hidden-sm hidden-xs add-cost-center-mapping-move-arrow-div">
+                    <i class="fa fa-arrow-circle-right move-arrow"></i>
+                </div>
+
+                <div class="visible-sm hidden-md hidden-lg"><br><br></div>-->
+
+                <div class="col-md-6 no-padding">
+                    <div class="available-stations-content-wrapper">
+                        <div class="add-available-cost-centers-grid" stg-ui-grid
+                             ref-id="addOrEditStationsMappingController.costCenterRefId"
+                             get-grid-options="addOrEditStationsMappingController.gridCostCentersOptions"
+                             get-grid-data="addOrEditStationsMappingController.getCostCentersGridData">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addOrEditStationsMappingController.close()">Cancel</button>
+        <button type="button" class="btn blue" ng-click="addOrEditStationsMappingController.select()"
+                ng-disabled="addOrEditStationsMappingController.selectedCostCenters.length === 0 ||
+                        addOrEditStationsMappingController.selectedStations.length === 0"
+                analytics-on="click"
+                analytics-category="Message Administration Modal" analytics-event="Submit Message">Select
+        </button>
+    </div>
+</div>

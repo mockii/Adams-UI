@@ -1,0 +1,26 @@
+<div class="row profile-page">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="portlet light" block-ui="stations-mapping-grid">
+            <button type="button" class="btn blue"
+                    ng-disabled="!locationsStationsMappingController.hasLocationCode"
+                    ng-click="locationsStationsMappingController.openAddOrEditStationMapping()"> Add <i class="fa fa-plus"></i> </button>
+            <div class="form-inline pull-right">
+                <label class="caption-subject">Location Stations Status: </label>
+                <div class="form-group" style="margin-left: 10px;">
+                    <select load-select-picker class="search-resource-selector pull-right"
+                            ng-model="locationsStationsMappingController.locationStationStatus"
+                            ng-change="locationsStationsMappingController.statusFilterChanged(locationsStationsMappingController.locationStationStatus)"
+                            ng-options="status.name for status in locationsStationsMappingController.locationStationsStatuses track by status.name">
+                        <option style="display:none" value="">{{ locationsStationsMappingController.locationStationStatus }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div stg-ui-grid get-grid-options="locationsStationsMappingController.gridOptions"
+                     get-grid-data="locationsStationsMappingController.getGridData"
+                     class="grid ui-grid-height">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

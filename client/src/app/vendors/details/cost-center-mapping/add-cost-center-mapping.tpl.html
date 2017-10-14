@@ -1,0 +1,163 @@
+<div class="modal-content col-md-12" block-ui="add-cost-center">
+    <div class="modal-header">
+        <div class="row">
+            <div class="container col-sm-12 no-left-padding">
+                <button type="button" class="close" ng-click="addCostCenterMappingController.close()"></button>
+                <h4 class="modal-title">Add Cost Center Mapping</h4>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body no-top-padding-for-model">
+        <div class="row">
+
+            <div class="col-md-12 no-left-padding no-left-right-padding-portlet-div">
+                <div class="portlet light no-left-padding add-cost-center-mapping-account-details-div">
+                    <div class="portlet-title ">
+                        <div class="caption">
+                            <span class="caption-subject font-blue uppercase bold"> Account Details </span>
+                        </div>
+                        <div class="tools">
+                            <a class="expand" data-original-title title
+                               ng-click="addCostCenterMappingController.isCollapsed != addCostCenterMappingController.isCollapsed"></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body portlet-collapse" uib-collapse="addCostCenterMappingController.isCollapsed"
+                         style="width: 100%">
+
+
+                        <div class="form-horizontal">
+                            <div class="form-body">
+
+
+
+
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Number</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control"
+                                                       value="{{addCostCenterMappingController.vendorSearchData.vendor_number}}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Extraneous</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       value="{{addCostCenterMappingController.vendorSearchData.extraneous}}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 10px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Name 1</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control"
+                                                       value="{{addCostCenterMappingController.vendorSearchData.vendor_name_1}}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Category</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       value="{{addCostCenterMappingController.vendorSearchData.category_description}}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 10px">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Name 2</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control"
+                                                       value="{{addCostCenterMappingController.vendorSearchData.vendor_name_2}}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Model Market Classification</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       value="{{addCostCenterMappingController.vendorSearchData.model_market_classification}}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Name 3</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control"
+                                                       value="{{addCostCenterMappingController.vendorSearchData.vendor_name_3}}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 no-padding">
+                <div class="col-md-7 no-padding add-cost-center-mapping-cost-center-div" block-ui="add-cost-center-ui-grid">
+                    <!-- ADD COST CENTER MAPPING MODAL -->
+                    <div class="costCenterAccountDetailsGrid" stg-ui-grid get-grid-options="addCostCenterMappingController.gridOptions"
+                         get-grid-data="addCostCenterMappingController.getGridData">
+                    </div>
+                    <div class="portlet-body">
+                        Note: List includes cost centers not assigned to vendor but available to cost center's market
+                        and team.
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding visible-lg visible-md hidden-sm hidden-xs add-cost-center-mapping-move-arrow-div">
+                    <i class="fa fa-arrow-circle-right move-arrow"></i>
+                </div>
+
+                <div class="visible-sm hidden-md hidden-lg"><br><br></div>
+
+                <div class="col-md-4 no-padding add-cost-center-mapping-selected-cost-center-div">
+                    <div class="selected-cost-centers-header">Selected Cost Centers</div>
+                    <div class="selected-cost-centers-content-wrapper">
+                        <div class="selected-cost-center right" ng-repeat="costCenter in addCostCenterMappingController.costCenters">
+                            <span class="cost-center-name">{{costCenter.cost_center_name +' - '+ costCenter.cost_center_description}}</span>
+                            <i class="fa fa-times-circle del-btn-color pull-right"
+                               ng-click="addCostCenterMappingController.costCenterIndex($index)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addCostCenterMappingController.close()">Cancel</button>
+        <button type="button" class="btn blue" ng-click="addCostCenterMappingController.select()"
+                ng-disabled="addCostCenterMappingController.costCenters.length === 0" analytics-on="click"
+                analytics-category="Message Administration Modal" analytics-event="Submit Message">Select
+        </button>
+    </div>
+</div>

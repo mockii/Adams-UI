@@ -1,0 +1,25 @@
+
+<!-- ADD MESSAGE MODAL -->
+<div class="modal-content" block-ui="showHistory-ui-grid">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="showHistoryModalController.close()"></button>
+        <h4 class="modal-title">History</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div stg-ui-grid get-grid-options="showHistoryModalController.gridOptions" get-grid-data="showHistoryModalController.getGridData">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn blue" ng-click="showHistoryModalController.close()">Close</button>
+    </div>
+</div>
+<!-- END ADD MESSAGE MODAL -->
+

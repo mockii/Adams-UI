@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="locationsOperatingHoursController.cancel()"></button>
+    <h4 class="modal-title font-blue bold ng-binding">{{locationsOperatingHoursController.title}}</h4>
+</div>
+<div class="portlet-body">
+    <div class="form-horizontal" style="padding-top: 25px;padding-bottom: 25px;">
+        <form role="form" name="locationOperatingHoursForm" novalidate>
+            <div class="form-body location-details-page">
+                <div class="row">
+                    <div class="col-md-12 col-sm-6 col-xs-6">
+                        <div class="row col-md-12 col-sm-10 col-xs-10 pull-right">
+                            <label class="control-label control-label-required col-md-4 bold">Name</label>
+                            <div class="form-group">
+                                <div class="col-md-5 input-icon right">
+                                    <input type="text" class="form-control" required name="name"
+                                           ng-model="locationsOperatingHoursController.locationHourName"
+                                           ng-init="locationsOperatingHoursController.previousLocationHourName = ''"
+                                           ng-focus="locationsOperatingHoursController.previousLocationHourName = locationsOperatingHoursController.locationHourName"
+                                           ng-model-options="{updateOn:'blur'}"
+                                           stg-form-validation validation-type="required">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- START DATE -->
+                        <div class="row col-md-12 pull-right">
+                            <label class="control-label control-label-required col-md-4 bold">Open Time</label>
+                            <div class="form-group col-md-8">
+                                <uib-timepicker ng-model="locationsOperatingHoursController.locationOpenTimeHour"
+                                                minute-step="30" show-spinners="false" required></uib-timepicker>
+                            </div>
+                        </div>
+                        <!-- END START DATE -->
+
+                        <!-- END DATE -->
+                        <div class="row col-md-12 pull-right">
+                            <label class="control-label control-label-required col-md-4 bold">Close Time</label>
+                            <div class="form-group col-md-8">
+                                <uib-timepicker ng-model="locationsOperatingHoursController.locationCloseTimeHour"
+                                                minute-step="30" show-spinners="false" required></uib-timepicker>
+                            </div>
+                        </div>
+                        <!-- END END DATE -->
+
+                        <div class="row col-md-12 pull-right">
+                            <label class="control-label control-label-required col-md-4 bold">Days of the Week</label>
+                            <div class="col-md-8" style="display: grid;">
+                                <span style="line-height: 2;" ng-repeat="weekDay in locationsOperatingHoursController.weekDaysData">
+                                    <input  class="form-control"
+                                            type="checkbox"
+                                            name="selectedWeekDays[]"
+                                            value="{{weekDay}}"
+                                            ng-model="weekDay.selected"
+                                    > {{weekDay.day}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="locationsOperatingHoursController.cancel()">Cancel
+    </button>
+    <button type="button" class="btn blue" ng-click="locationsOperatingHoursController.saveLocationsOperatingHours()"
+            analytics-on="click"
+            analytics-category="Location Status Change Modal" analytics-event="Submit Message">Save
+    </button>
+</div>

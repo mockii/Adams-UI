@@ -1,0 +1,86 @@
+{
+	"data": [
+		{
+			"cost_center_name": "1000",
+			"cost_center_source_system_id": "1001",
+			"cost_center_description": "cc001 Description",
+			"market_area": "cc001 market area",
+			"market_state": "cc001 market state",
+			"zone": "cc001 zone",
+			"model_market": "cc001 model market",
+			"sub_market": "cc001 sub market",
+			"model_market_classification": "cc001 model market classification",
+			"vendor_number": "00000114",
+			"source_system_id": "1004",
+			"vendor_name_1": "cc001 vendor name 1",
+			"vendor_name_2": "cc001 vendor name 2",
+			"vendor_name_3": "cc001 vendor name 3",
+			"comments_for_bor": "cc001 comments for bor",
+			"category_code": "cc001 category code",
+			"category_description": "cc001 category description",
+			"mbe": "cc001 mbe",
+			"address": "cc001 address",
+			"city": "cc001 city",
+			"state": "cc001 state",
+			"zipcode": "cc001 zipcode"
+
+		},
+		{
+			"cost_center_name": "cc002",
+			"cost_center_source_system_id": "1234",
+			"cost_center_description": "cc002 Description",
+			"market_area": "cc002 market area",
+			"market_state": "cc002 market state",
+			"zone": "cc002 zone",
+			"model_market": "cc002 model market",
+			"sub_market": "cc002 sub market",
+			"model_market_classification": "cc002 model market classification",
+			"vendor_number": "00000259",
+			"source_system_id": "1004",
+			"vendor_name_1": "cc002 vendor name 1",
+			"vendor_name_2": "cc002 vendor name 2",
+			"vendor_name_3": "cc002 vendor name 3",
+			"comments_for_bor": "cc002 comments for bor",
+			"category_code": "cc002 category code",
+			"category_description": "cc002 category description",
+			"mbe": "cc002 mbe",
+			"address": "cc002 address",
+			"city": "cc002 city",
+			"state": "cc002 state",
+			"zipcode": "cc002 zipcode"
+
+		},
+		{
+			"cost_center_name": "cc003",
+			"cost_center_source_system_id": "1234",
+			"cost_center_description": "cc003 Description",
+			"market_area": "cc003 market area",
+			"market_state": "cc003 market state",
+			"zone": "cc003 zone",
+			"model_market": "cc003 model market",
+			"sub_market": "cc003 sub market",
+			"model_market_classification": "cc003 model market classification",
+			"vendor_number": "cc003 vendor number",
+			"source_system_id": "1008",
+			"vendor_name_1": "cc003 vendor name 1",
+			"vendor_name_2": "cc003 vendor name 2",
+			"vendor_name_3": "cc003 vendor name 3",
+			"comments_for_bor": "cc003 comments for bor",
+			"category_code": "cc003 category code",
+			"category_description": "cc003 category description",
+			"mbe": "cc003 mbe",
+			"address": "cc003 address",
+			"city": "cc003 city",
+			"state": "cc003 state",
+			"zipcode": "cc003 zipcode"
+
+		}
+	],
+	"metadata":
+	{
+		"resultCount": 3,
+		"status": "success",
+		"http_status_code": "200"
+	}
+
+}

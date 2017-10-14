@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue bold uppercase"> Vendor Information </span>
+                </div>
+                <div class="tools">
+                    <a class="expand" data-original-title title ng-click="vendorDetailsController.isCollapsed = !vendorDetailsController.isCollapsed"></a>
+                </div>
+            </div>
+
+            <div uib-collapse="!vendorDetailsController.isCollapsed" style="width: 100%">
+                <div class="form-horizontal">
+                    <div class="form-body vendor-details-page">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Vendor Number</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.vendor_number}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">AP Category</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.category_description}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Vendor Name 1</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.vendor_name_1}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Market Classification</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.model_market_classification}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Vendor Name 2</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.vendor_name_2}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Extraneous</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.extraneous}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Vendor Name 3</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{vendorDetailsController.vendorSearchData.vendor_name_3}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet light" style="padding-right: 5px;padding-left: 1px;">
+            <div class="portlet-body">
+                <div class="tabbable-line" style="padding-left: 10px ">
+                    <ul class="nav nav-tabs">
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('vendordetails.accountmapping')}">
+                            <a ui-sref="vendordetails.accountmapping({'vendorSearchData': vendorDetailsController.vendorSearchData})">Account Details </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('vendordetails.marketmapping')}">
+                            <a ui-sref="vendordetails.marketmapping({'vendorSearchData': vendorDetailsController.vendorSearchData})">Market Mapping </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('vendordetails.costCentermapping')}">
+                            <a ui-sref="vendordetails.costCentermapping({'vendorSearchData': vendorDetailsController.vendorSearchData})">Cost Center Mapping </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('vendordetails.contactInfo')}">
+                            <a ui-sref="vendordetails.contactInfo({'vendorSearchData': vendorDetailsController.vendorSearchData})">Contact Info </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('vendordetails.comments')}">
+                            <a ui-sref="vendordetails.comments({'vendorSearchData': vendorDetailsController.vendorSearchData})">Comments </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" >
+                        <div ui-view class="fade-in-up"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

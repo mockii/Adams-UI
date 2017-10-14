@@ -1,0 +1,294 @@
+<div class="tab-pane active">
+    <div class="row">
+
+        <div class="col-md-5 col-sm-12 col-xs-12">
+            <!-- LOCATION NAME & STATUS -->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Location Name & Status </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-horizontal">
+                        <form role="form" name="locationForm" novalidate>
+                            <div class="form-body location-details-page">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label control-label-required col-md-3">Name</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" required name="name"
+                                                       ng-model="locationsDetailsController.locationName">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label control-label-required col-md-3">Address</label>
+                                            <div class="col-md-9">
+                                                <!--<input type="text" id="Autocomplete" class="form-control"
+                                                       ng-autocomplete ng-model="result3" details="details3" mapElementById="map"/>-->
+                                                <input type="text" class="form-control" required name="address" stg-google-maps-autocomplete
+                                                       ng-model="locationsDetailsController.locationAddress"
+                                                       result-data="locationsDetailsController.autoCompleteData" mapElementById="map">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Address 2</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" required name="address2"
+                                                       ng-model="locationsDetailsController.locationAddress2">
+                                            </div>
+                                        </div>
+
+                                        <!--<div class="row col-md-12 pull-right">
+
+                                            <table>
+                                                <tbody>
+                                                <tr class="row col-md-12 pull-right">
+                                                    <td style="padding-left: 25px;">
+                                                        <label class="control-label control-label-required" style="width:35px;">City</label>
+                                                    </td>
+                                                    <td style="padding-left:30px">
+                                                        <input type="text" class="form-control" name="city" style="width: 115px;"
+                                                               ng-model="locationsDetailsController.locationCity">
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="control-label control-label-required" style="width: 50px;">State</label>
+                                                    </td>
+                                                    <td style="padding-left: 10px;">
+                                                        <input type="text" class="form-control" maxlength="10" name="state" style="width: 50px;"
+                                                               ng-model="locationsDetailsController.locationState">
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="control-label control-label-required" style="width: 40px;">Zip</label>
+                                                    </td>
+
+                                                    <td style="padding-left: 10px;">
+                                                        <input type="text" class="form-control" maxLength="5" name="zip" style="width: 60px;"
+                                                               ng-model="locationsDetailsController.locationZip">
+                                                    </td>
+
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>-->
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">City</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="city"
+                                                       ng-model="locationsDetailsController.locationCity">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">State</label>
+                                            <div class="col-md-9">
+                                                <select load-select-picker class="state-selector"
+                                                        ng-model="locationsDetailsController.locationState"
+                                                        ng-change="locationsDetailsController.stateFilterChanged(locationsDetailsController.locationState)"
+                                                        ng-options="states.abbreviation for states in locationsDetailsController.locationStates track by states.abbreviation">
+                                                    <option style="display:none" value="">{{
+                                                        locationsDetailsController.locationState }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Zip</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" maxLength="5" name="zip"
+                                                       style="width: 60px;"
+                                                       ng-model="locationsDetailsController.locationZip">
+                                            </div>
+                                        </div>
+
+
+                                        <!--<div class="container form-inline col-md-12">
+                                            <label class="control-label col-md-3">City</label>
+                                            <div class="col-md-9">
+                                                <div class="col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>State</label>
+                                                        <input type="text" class="form-control" ng-model="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>Zip</label>
+                                                        <input type="text" class="form-control" ng-model="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+
+
+                                        <!--<div class="container form-inline col-md-12">
+                                            <div class="form-group col-md-6">
+                                                <div class="row form-group col-md-12">
+                                                    <label class="control-label col-md-3">State</label>
+                                                    <div class="col-md-6">
+                                                        <select load-select-picker class="search-resource-selector pull-right"
+                                                                ng-model="locationsDetailsController.state"
+                                                                ng-change="locationsDetailsController.stateFilterChanged(locationsSearchController.state)"
+                                                                ng-options="state.name for states in locationsDetailsController.states track by state.name">
+                                                            <option style="display:none" value="">{{ locationsDetailsController.state }}</option>
+                                                        </select>
+                                                        &lt;!&ndash;<input type="text" class="form-control" maxlength="10" name="state" style="width: 50px;"
+                                                               ng-model="locationsDetailsController.locationState">&ndash;&gt;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <div class="row form-group col-md-12">
+                                                    <label class="control-label col-md-3">Zip</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" maxLength="5" name="zip" style="width: 60px;"
+                                                               ng-model="locationsDetailsController.locationZip">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+
+                                        <div class="container form-group col-md-12">
+                                            <label class="control-label col-md-3">Map</label>
+                                            <div class="row col-md-9" style="margin-left: 0px;">
+                                                <div class="col-sm-12 col-xs-12 map" id="map"
+                                                     style="width: 75px;height: 50px;"></div>
+                                                <div class="col-md-6 col-sm-12 col-xs-12 pull-right address-verification-box">
+                                                    <i class="fa fa-map-marker map-marker-icon" aria-hidden="true"></i>
+                                                    <label class="address-verification-label ng-binding">Address
+                                                        Verified</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="container row form-group col-md-12 status-verify-address-box">
+                                            <label class="control-label col-md-3">Active</label>
+                                            <div class="row col-md-9">
+                                                <div class="col-md-3 col-sm-12 col-xs-12"
+                                                     style="min-width: 129px;margin-left: 5px;">
+                                                    <label class="switch pull-right">
+                                                        <input class="switch-input" name="status"
+                                                               ng-checked="locationsDetailsController.locationStatus"
+                                                               ng-click="locationsDetailsController.locationStatus = !locationsDetailsController.locationStatus;
+                                                         locationForm.$pristine = locationForm.status.$pristine;
+                                                         locationsDetailsController.dirtyCheck(originalController.locationStatus, locationsDetailsController.locationStatus)"
+                                                               type="checkbox"/>
+                                                        <span class="switch-label" data-on="YES" data-off="NO"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12 col-xs-12 pull-right verify-address-button">
+                                                    <button type="button" class="btn blue pull-right"
+                                                            ng-click="locationsDetailsController.verifyAddress(locationForm)"
+                                                            ng-disabled="(locationForm.$invalid || locationForm.$pristine) && !locationsDetailsController.isLocationVerified">
+                                                        Verify Address
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-bottom: 0px;">
+                    <button type="button" class="btn btn-default"
+                            ng-click="locationsDetailsController.clearAndGoBack()">Cancel
+                    </button>
+                    <button type="button" class="btn blue"
+                            ng-click="locationsDetailsController.saveLocation(locationForm)"
+                            ng-disabled="locationForm.$invalid || locationForm.$pristine">Save
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 col-sm-12 col-xs-12">
+
+            <!-- LOCATION OPERATING HOURS -->
+            <div class="portlet light" block-ui="locations-operating-hours-grid">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Location Operating Hours </span>
+                    </div>
+                </div>
+                <div class="location-code-not-available" ng-show="!locationsDetailsController.hasLocationCode">
+                    <p> Location operating hours will be available after the location has been created and saved. </p>
+                </div>
+                <div class="portlet-body">
+                    <div class="location-add-button" style="padding-bottom: 17px;">
+                        <button type="button" class="btn blue"
+                                ng-disabled="!locationsDetailsController.hasLocationCode"
+                                ng-click="locationsDetailsController.addOrEditLocationsOperatingHours('add', $event, null)">
+                            Add <i class="fa fa-plus"></i></button>
+                    </div>
+                    <scrollable-table watch="locationsDetailsController.gridArray">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th col="edit">Edit</th>
+                                <th col="delete">Delete</th>
+                                <th col="name">Name</th>
+                                <th col="times">Times</th>
+                                <th col="days_of_week">Days of Week</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="locationHour in locationsDetailsController.gridArray track by $index">
+                                <td class="" style="vertical-align: middle;text-align: center;width: 50px;">
+                                    <i class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true"
+                                       ng-click="locationsDetailsController.addOrEditLocationsOperatingHours('edit', $event, locationHour)"></i>
+                                </td>
+                                <td class="" style="vertical-align: middle;text-align: center;width: 60px;">
+                                    <i class="fa fa-trash" style="cursor: pointer;" aria-hidden="true"
+                                       ng-click="locationsDetailsController.deleteLocationsOperatingHours(locationHour, $event)"></i>
+                                </td>
+                                <td class="" style="vertical-align: middle">{{locationHour.name}}</td>
+                                <td class="" style="vertical-align: middle;width: 135px;">{{locationHour.times}}</td>
+                                <td style="vertical-align: middle">{{locationHour.days_of_week}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </scrollable-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light" style="padding-right: 5px;padding-left: 1px;">
+            <div class="portlet-body">
+                <div class="tabbable-line" style="padding-left: 10px ">
+                    <ul class="nav nav-tabs">
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsdetails.costcenters')}">
+                            <a ui-sref="locationsdetails.costcenters()">Cost Centers</a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsdetails.stations')}">
+                            <a ui-sref="locationsdetails.stations()">Stations</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div ui-view class="fade-in-up"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

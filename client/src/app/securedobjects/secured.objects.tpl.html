@@ -1,0 +1,60 @@
+<div class="row profile-page">
+    <div class="col-lg-3 col-md-12 col-sm-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-full-width">
+                    <span class="caption-subject font-blue uppercase bold"> Select Applicaiton & Role </span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td class="col-sm-12 no-padding" style="border: 0px;">
+                            <div class="user-details-application-group">
+                                <select load-select-picker data-live-search="true" class="application-bootstrap-select"
+                                        ng-model="securedObjectController.application"
+                                        ng-change="securedObjectController.applicationChange()"
+                                        ng-options="application.name for application in securedObjectController.applications track by application.name">
+                                    <option ng-if="securedObjectController.preSelectRole" style="display:none;" value="">{{securedObjectController.default_application}}</option>
+                                    <option ng-if="!securedObjectController.preSelectRole" style="display:none;" value="">- Select -</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="table">
+                    <!--<div id="roleGridId" ui-grid="securedObjectController.rolesGridOptions"
+                         ui-grid-auto-resize ui-grid-pagination ui-grid-selection class="grid" style="height: 430px;">-->
+                    <div ref-id="securedObjectController.roleGridId" stg-ui-grid get-grid-options="securedObjectController.rolesGridOptions" get-grid-data="securedObjectController.getRoleGridData" class="role-grid" style="height: 430px;">
+                        <div class="load-mask" ng-hide="!securedObjectController.showRoleLoading">
+                            <div class="loading-animation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-9 col-md-12 col-sm-12 no-left-padding">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span ng-if="securedObjectController.role" class="caption-subject font-blue uppercase bold"> {{securedObjectController.role.name}} PERMISSIONS </span>
+                </div>
+            </div>
+            <div class="portlet-body portlet-collapse">
+                <!--<div id="permissionGridId" ui-grid="securedObjectController.permissionsGridOptions"
+                     ui-grid-auto-resize ui-grid-pagination ui-grid-selection class="grid" style="height: 493px;">-->
+                    <div ref-id="securedObjectController.permissionGridId" stg-ui-grid get-grid-options="securedObjectController.permissionsGridOptions" get-grid-data="securedObjectController.getPermissionGridData" class="permission-grid" style="height: 500px;">
+                    </div>
+                    <div class="load-mask" ng-hide="!securedObjectController.showPermissionLoading">
+                        <div class="loading-animation"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="tab-pane active">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-6 col-xs-12 div-padding-left" block-ui="nutrition-facts">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Nutritional Information </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="data-not-found" ng-hide="nutritionController.hasNutritionData"><p> Nutritional information is not available for this product </p></div>
+                            <div class="table-scrollable" ng-show="nutritionController.hasNutritionData">
+                                <table class="table table-striped distributor-data-table">
+                                    <thead>
+                                    <tr>
+                                        <td class="bold">Nutrient</td>
+                                        <td class="bold">Amount</td>
+                                        <td class="bold">%DV</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="fact in nutritionController.nutritionData | orderBy: 'order' track by $index">
+                                        <td>{{fact.nutrient_description}}</td>
+                                        <td>{{fact.nutrient_quantity}} {{fact.nutrient_quantity_type | lowercase}}</td>
+                                        <td>{{fact.percent_daily_intake}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12 nutrition-data div-padding-left" block-ui="diet-type">
+
+            <!-- INGREDIENTS -->
+            <div class="portlet light" block-ui="ingredients-list">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Ingredients </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="data-not-found" ng-hide="nutritionController.hasIngredientList"><p> Ingredient list is not available for this product </p></div>
+                    <p> {{nutritionController.productSearchData.ingredient_list}} </p>
+                </div>
+            </div>
+
+            <!-- DIET TYPE -->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Diet Type </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="data-not-found" ng-hide="nutritionController.hasDietTypeData"><p> Diet type information is not available for this product </p></div>
+                    <div ng-repeat="dietType in nutritionController.dietTypeData | orderBy: 'diet_type' track by $index">
+                        <p> {{dietType.diet_type}} </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- PREPARATION INSTRUCTIONS -->
+            <div class="portlet light" block-ui="preperation-instructions">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Preparation Instructions </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="data-not-found" ng-hide="nutritionController.hasMarketingData"><p> Preparation instructions are not available for this product </p></div>
+                    <p> {{nutritionController.marketingData.preparation_instructions}} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

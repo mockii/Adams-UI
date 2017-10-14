@@ -1,0 +1,409 @@
+
+<div class="tab-pane active">
+    <div class="row">
+
+        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+
+            <!-- DISTRIBUTOR PROVIDED DATA -->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Product Data </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable">
+                        <table class="table table-striped table-bordered distributor-data-table">
+                            <tbody>
+                                <tr>
+                                    <td class="header-column"> GTIN </td>
+                                    <td> {{productDetailsController.productSearchData.gtin}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Description </td>
+                                    <td> {{productDetailsController.productSearchData.description}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Long Description </td>
+                                    <td> {{productDetailsController.productSearchData.long_description}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Product Name </td>
+                                    <td> {{productDetailsController.productSearchData.product_name}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Provider GLN </td>
+                                    <td> {{productDetailsController.productSearchData.provider_gln}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> BO GLN </td>
+                                    <td> {{productDetailsController.productSearchData.bo_gln}} </td>
+                                    <!--<td> {{productDetailsController.productSearchData.price | currency}} </td>-->
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Manufacturer GLN </td>
+                                    <td> {{productDetailsController.productSearchData.manufacturer_gln}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Manufacturer Name </td>
+                                    <td> {{productDetailsController.productSearchData.manufacturer_name}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Brand Name </td>
+                                    <td> {{productDetailsController.productSearchData.brand_name}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Brand Owner </td>
+                                    <td> {{productDetailsController.productSearchData.brand_owner}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Packaging Hierarchy </td>
+                                    <td> {{productDetailsController.productSearchData.packaging_hierarchy}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Global Category Description </td>
+                                    <td> {{productDetailsController.productSearchData.global_category_description}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Global Category Code </td>
+                                    <td> {{productDetailsController.productSearchData.global_category_code}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Orderable Flag </td>
+                                    <td> {{productDetailsController.productSearchData.orderable_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Info Provider </td>
+                                    <td> {{productDetailsController.productSearchData.info_provider}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Expanded Description </td>
+                                    <td> {{productDetailsController.productSearchData.expanded_description}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Functional Name </td>
+                                    <td> {{productDetailsController.productSearchData.functional_name}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Target Market </td>
+                                    <td> {{productDetailsController.productSearchData.target_market}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIMENSIONS/TEMPERATURE DATA -->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Dimensions/Temperature Data </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable">
+                        <table class="table table-striped table-bordered distributor-data-table">
+                            <tbody>
+                                <tr>
+                                    <td class="header-column"> Minimum Temperature </td>
+                                    <td> {{productDetailsController.productSearchData.minimum_temperature}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Minimum Temperature UOM </td>
+                                    <td> {{productDetailsController.productSearchData.minimum_temperature_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Maximum Temperature </td>
+                                    <td> {{productDetailsController.productSearchData.maximum_temperature}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Maximum Temperature UOM </td>
+                                    <td> {{productDetailsController.productSearchData.maximum_temperature_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Gross Weight </td>
+                                    <td> {{productDetailsController.productSearchData.gross_weight}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Gross Weight UOM </td>
+                                    <td> {{productDetailsController.productSearchData.gross_weight_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Net Weight </td>
+                                    <td> {{productDetailsController.productSearchData.net_weight}} </td>
+                                <tr>
+                                    <td class="header-column"> Net Weight UOM </td>
+                                    <td> {{productDetailsController.productSearchData.net_weight_uom}} </td>
+                                </tr>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Catch Weight Flag </td>
+                                    <td> {{productDetailsController.productSearchData.catch_weight_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Height </td>
+                                    <td> {{productDetailsController.productSearchData.height}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Height UOM </td>
+                                    <td> {{productDetailsController.productSearchData.height_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Width </td>
+                                    <td> {{productDetailsController.productSearchData.width}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Width UOM </td>
+                                    <td> {{productDetailsController.productSearchData.width_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Depth </td>
+                                    <td> {{productDetailsController.productSearchData.depth}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Depth UOM </td>
+                                    <td> {{productDetailsController.productSearchData.depth_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Cube </td>
+                                    <td> {{productDetailsController.productSearchData.cube}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Cube UOM </td>
+                                    <td> {{productDetailsController.productSearchData.cube_uom}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- METRICS DATA -->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Supplier Metrics Data </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable supplier-data-table">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="header-column"> Shelf Life </td>
+                                    <td> {{productDetailsController.productSearchData.shelf_life}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Effective Date </td>
+                                    <td> {{productDetailsController.productSearchData.effective_date | date}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column">Container Contents </td>
+                                    <td> {{productDetailsController.productSearchData.container_contents}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Unit of Measure </td>
+                                    <td> {{productDetailsController.productSearchData.unit_of_measure}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Base Unit? </td>
+                                    <td> {{productDetailsController.productSearchData.base_unit_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Returnable? </td>
+                                    <td> {{productDetailsController.productSearchData.returnable_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Batch Num? </td>
+                                    <td> {{productDetailsController.productSearchData.batch_num_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Non Sold? </td>
+                                    <td> {{productDetailsController.productSearchData.non_sold_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Recyclable? </td>
+                                    <td> {{productDetailsController.productSearchData.recyclable_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Availability Date </td>
+                                    <td> {{productDetailsController.productSearchData.availability_date}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Consumer Unit? </td>
+                                    <td> {{productDetailsController.productSearchData.consumer_unit_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Shipping Unit? </td>
+                                    <td> {{productDetailsController.productSearchData.shipping_unit_flag}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Is Invoice Unit? </td>
+                                    <td> {{productDetailsController.productSearchData.invoice_unit_flag}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIT DATA -->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Unit Data </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable supplier-data-table">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="header-column"> Inner Pack Quantity No GTIN </td>
+                                    <td> {{productDetailsController.productSearchData.inner_pack_quantity_no_gtin}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Inner Pack Next Quantity No GTIN </td>
+                                    <td> {{productDetailsController.productSearchData.inner_pack_next_quantity_no_gtin}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Individual Unit Minimum </td>
+                                    <td> {{productDetailsController.productSearchData.individual_unit_minimum}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Individual Unit Minimum UOM </td>
+                                    <td> {{productDetailsController.productSearchData.individual_unit_minimum_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Individual Unit Maximum </td>
+                                    <td> {{productDetailsController.productSearchData.individual_unit_maximum}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Individual Unit Maximum UOM </td>
+                                    <td> {{productDetailsController.productSearchData.individual_unit_maximum_uom}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Storage Usage </td>
+                                    <td> {{productDetailsController.productSearchData.storage_usage}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Item benefits </td>
+                                    <td> {{productDetailsController.productSearchData.item_benefits}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Serving Suggestions </td>
+                                    <td> {{productDetailsController.productSearchData.serving_suggestions}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GTIN DATA -->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> GTIN Data </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable supplier-data-table">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="header-column"> GTIN Score is food </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_is_food}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GTIN Score Minimum </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_minimum}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GTIN Score Image </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_image}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GTIN Score Allergen </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_allergen}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GTIN Score Nutrient </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_nutrient}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GTIN Score Ingredient Statement </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_ingredient_statement}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GTIN Score Ingredient Sequence </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_ingredient_sequence}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GTIN Score Diet Type </td>
+                                    <td> {{productDetailsController.productSearchData.gtin_score_diet_type}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> ETL Run Number </td>
+                                    <td> {{productDetailsController.productSearchData.etl_run_number}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Create Date </td>
+                                    <td> {{productDetailsController.productSearchData.create_date | date}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> GDSN Status </td>
+                                    <td> {{productDetailsController.productSearchData.gdsn_status}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Inactivated Date </td>
+                                    <td> {{productDetailsController.productSearchData.inactivated_date}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Major Release </td>
+                                    <td> {{productDetailsController.productSearchData.major_release}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="header-column"> Major Release Indicator </td>
+                                    <td> {{productDetailsController.productSearchData.major_release_indicator}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Product Images </span>
+                    </div>
+                </div>
+                <div class="portlet-body product-images-body" >
+                    <div class="data-not-found" ng-hide="productDetailsController.hasProductImages">
+                        <p> No product images available for this product </p>
+                    </div>
+                    <div ng-show="productDetailsController.hasProductImages">
+                        <ng-image-gallery
+                                images="productDetailsController.productImages"
+                                methods="productDetailsController.methods"
+                                bubbles="true"
+                                bubble-size="10"
+                                img-bubbles="false"
+                                bg-close="false"
+                                img-anim="fadeup"
+                                on-open="productDetailsController.openGallery();"
+                                on-close="productDetailsController.closeGallery();"
+                        ></ng-image-gallery>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

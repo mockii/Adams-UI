@@ -1,0 +1,24 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="costCenterMappingHistoryController.close()"></button>
+        <h4 class="modal-title">Cost Center History - {{costCenterMappingHistoryController.costCenterRowData.cost_center_name}} - {{costCenterMappingHistoryController.costCenterRowData.cost_center_description}}</h4>
+
+    </div>
+    <!-- ADD MARKET MAPPING MODAL -->
+    <div class="portlet-body">
+        <div class="row profile-page">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="portlet light">
+                    <div class="portlet-body">
+                        <div stg-ui-grid get-grid-options="costCenterMappingHistoryController.gridOptions"
+                             get-grid-data="costCenterMappingHistoryController.getGridData" class="grid pop-up-ui-grid-height">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="costCenterMappingHistoryController.close()">Close</button>
+    </div>
+</div>
