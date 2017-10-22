@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "status": "Success",
+    "http_status_code": "OK",
+    "resultCount": "4"
+  },
+  "data": [
+    {
+      "object_name": "Administration",
+      "object_description": "Tip Tracker Administration",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Home",
+      "object_description": "Tip Tracker Home",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Home",
+      "object_description": "Tip Tracker Home",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "TipTracker Setup",
+      "object_description": "Tip Tracker Cost Center Setup",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    }
+  ],
+  "error": []
+}

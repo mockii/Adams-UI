@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "status": "Success",
+    "http_status_code": "OK",
+    "resultCount": "2"
+  },
+  "data": [
+    {
+      "criteria": "If this happens then that should happen",
+      "access_type": "Read"
+    },
+    {
+      "criteria": "If this happens then that should not happen",
+      "access_type": "Block"
+    }
+  ],
+  "error": []
+}

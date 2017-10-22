@@ -1,0 +1,165 @@
+<div class="row">
+    <div class="col-lg-4 col-md-12 col-xs-12">
+        <div class="portlet light">
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption caption-full-width">
+                        <span class="caption-subject font-blue uppercase bold"> Application </span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+
+                    <ui-select ng-model="accessControlController.application" on-select="accessControlController.applicationChange($item)">
+                        <ui-select-match placeholder="-- Select --">
+                            <div class="application-name">
+                                {{accessControlController.application.name}}
+                            </div>
+                        </ui-select-match>
+                        <ui-select-choices repeat="application in accessControlController.applications">
+                            <div class="application-name">
+                                {{application.name}}
+                            </div>
+                        </ui-select-choices>
+                    </ui-select>
+
+                </div>
+            </div>
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption caption-full-width">
+                        <span class="caption-subject font-blue uppercase bold"> Secured Objects </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div ref-id="accessControlController.securedObjectsGridId" stg-ui-grid
+                         get-grid-options="accessControlController.securedObjectsGridOptions"
+                         get-grid-data="accessControlController.getSecuredObjectsForApplication"
+                         class="access-control-secured-objects-grid">
+                    </div>
+                    <div class="load-mask" ng-hide="!accessControlController.showSecuredObjectsLoading">
+                        <div class="loading-animation"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-8 col-md-12 col-xs-12">
+        <div class="portlet light">
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption caption-full-width">
+                        <span class="caption-subject font-blue uppercase bold"> Secured Object </span>
+                    </div>
+                </div>
+
+                <!-- secured object table for tablets and desktops start -->
+
+                <div class="portlet-body hidden-xs" ng-show="accessControlController.applicationSelected">
+                    <div class="row secured-object-row">
+                        <div class="col-lg-4 col-md-4 col-xs-4 secured-object-table-header-cell">
+                            <span> Object Name </span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6 secured-object-table-header-cell">
+                            <span> Object Description </span>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2 secured-object-table-header-cell">
+                            <span> Object Type </span>
+                        </div>
+                    </div>
+
+                    <div class="row secured-object-row">
+                        <div class="col-lg-4 col-md-4 col-xs-4 secured-object-table-data-cell">
+                            <span> {{accessControlController.selectedSecuredObject.object_name}} </span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6 secured-object-table-data-cell">
+                            <span> {{accessControlController.selectedSecuredObject.object_description}} </span>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2 secured-object-table-data-cell">
+                            <span> {{accessControlController.selectedSecuredObject.object_type}} </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- secured object table for tablets and desktops end -->
+
+                <!-- secured object table for phones start -->
+
+                <div class="portlet-body hidden-sm hidden-md hidden-lg" ng-show="accessControlController.applicationSelected">
+                    <div class="row secured-object-row">
+                        <div class="col-xs-6 secured-object-table-header-cell">
+                            <span> Object Name </span>
+                        </div>
+                        <div class="col-xs-6 secured-object-table-data-cell">
+                            <span> {{accessControlController.selectedSecuredObject.object_name}} </span>
+                        </div>
+                    </div>
+
+                    <div class="row secured-object-row">
+                        <div class="col-xs-6 secured-object-table-header-cell">
+                            <span> Object Description </span>
+                        </div>
+                        <div class="col-xs-6 secured-object-table-data-cell">
+                            <span> {{accessControlController.selectedSecuredObject.object_description}} </span>
+                        </div>
+                    </div>
+
+                    <div class="row secured-object-row">
+                        <div class="col-xs-6 secured-object-table-header-cell">
+                            <span> Object Type </span>
+                        </div>
+                        <div class="col-xs-6 secured-object-table-data-cell">
+                            <span> {{accessControlController.selectedSecuredObject.object_type}} </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- secured object table for phones end -->
+
+            </div>
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption caption-full-width">
+                        <span class="caption-subject font-blue uppercase bold"> Role </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div ref-id="accessControlController.rolesGridId" stg-ui-grid
+                         get-grid-options="accessControlController.rolesGridOptions"
+                         get-grid-data="accessControlController.getRolesForSecuredObject"
+                         class="access-control-roles-grid">
+                    </div>
+                    <div class="load-mask" ng-hide="!accessControlController.showRolesLoading">
+                        <div class="loading-animation"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption caption-full-width">
+                        <span class="caption-subject font-blue uppercase bold"> Overrides & Exceptions </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div ref-id="accessControlController.overridesGridId" stg-ui-grid
+                         get-grid-options="accessControlController.overridesGridOptions"
+                         get-grid-data="accessControlController.getOverridesForSecuredObject"
+                         class="access-control-overrides-grid">
+                    </div>
+                    <div class="load-mask" ng-hide="!accessControlController.showOverridesLoading">
+                        <div class="loading-animation"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

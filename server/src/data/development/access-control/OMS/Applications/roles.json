@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "status": "Success",
+    "http_status_code": "OK",
+    "resultCount": "3"
+  },
+  "data": [
+    {
+      "role_name": "User",
+      "access_type": "Block"
+    },
+    {
+      "role_name": "Application Owner",
+      "access_type": "Read"
+    },
+    {
+      "role_name": "Sector Admin",
+      "access_type": "Write"
+    }
+  ],
+  "error": []
+}

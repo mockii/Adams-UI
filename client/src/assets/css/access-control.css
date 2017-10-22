@@ -1,0 +1,85 @@
+.access-control-application-bootstrap-select {
+    width: 100% !important;
+}
+
+.access-control-btn-group {
+    width: 100%;
+    display: inline-block;
+    padding-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.access-control-secured-objects-grid > .ui-grid{
+    height:70vh !important;
+}
+
+.access-control-secured-objects-grid .ui-grid-filter-container .ui-grid-filter-button [class^=ui-grid-icon] {
+    padding-right: 4px;
+}
+
+.access-control-roles-grid > .ui-grid{
+    height:40vh !important;
+}
+
+.access-control-roles-grid .ui-grid-filter-container .ui-grid-filter-button [class^=ui-grid-icon] {
+    padding-right: 4px;
+}
+
+.access-control-overrides-grid > .ui-grid{
+    height:40vh !important;
+}
+
+.access-control-overrides-grid .ui-grid-filter-container .ui-grid-filter-button [class^=ui-grid-icon] {
+    padding-right: 4px;
+}
+
+.secured-object-table-header-cell{
+    border: 1px solid #ccc;
+    padding: 5px 5px 5px 5px;
+    font-weight:bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.secured-object-table-data-cell{
+    border: 1px solid #ccc;
+    padding: 5px 5px 5px 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.secured-object-row{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.application-dropdown{
+    height: 40vh;
+    overflow-x: hidden;
+}
+
+.application-dropdown > .application-menu-item{
+    border: 1px solid #ccc;
+}
+
+.application-logo-container{
+    display: inline;
+}
+
+.application-logo{
+    height:25px;
+    width:50px;
+}
+
+.application-name{
+    padding-left: 15px;
+    max-width: fit-content;
+}
+
+.application-name-without-logo{
+    padding-left: 65px;
+    max-width: fit-content;
+}

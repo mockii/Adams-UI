@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "status": "Success",
+    "http_status_code": "OK",
+    "resultCount": "20"
+  },
+  "data": [
+    {
+      "object_name": "Actions",
+      "object_description": "MyAdmin Actions Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Administration",
+      "object_description": "MyAdmin Administration Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Business Rule Administration",
+      "object_description": "MyAdmin Business Rule Administration Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Cancel BPM Process",
+      "object_description": "Cancel BPM Process or Task",
+      "object_type": "Button",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Canteen Devices Configuration",
+      "object_description": "Canteen Devices Configuration Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Cell Phone Stipend Export",
+      "object_description": "MyAdmin Cell Phone Stipend Export Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "FIM Hierarchy",
+      "object_description": "MyAdmin FIM Hierarchy Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "FieldHR Hierarchy",
+      "object_description": "MyAdmin FieldHR Hierarchy Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Home",
+      "object_description": "MyAdmin Home Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "My Admin News Edit Button",
+      "object_description": "To be Edited By Admin",
+      "object_type": "Button",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Notification Configuration",
+      "object_description": "MyAdmin Notification Configuration Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Onboarding Spreadsheet SSN",
+      "object_description": "Onboarding Spreadsheet SSN",
+      "object_type": "Field",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Reports",
+      "object_description": "MyAdmin Reports Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Requests",
+      "object_description": "MyAdmin Requests Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Resend Notification Action Icon",
+      "object_description": "Resend Icon for Notification Tab Panel ",
+      "object_type": "Button",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "SSN Instance Variable",
+      "object_description": "BPM Instance Variable Managed SSN",
+      "object_type": "BPM Instance Variable",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "User Administration",
+      "object_description": "User Administration Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Vehicle Program Enrollment Fuel Card",
+      "object_description": "Fuel card combobox on the Vehicle Program Enrollment form",
+      "object_type": "Page Section",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Vehicle Requisition Fleet Team Fieldset",
+      "object_description": "To be completed by fleet team fieldset on the Vehicle Requisition form",
+      "object_type": "Page Section",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Vehicle Requisition Fuel Team Fieldset",
+      "object_description": "To be completed by fuel team fieldset on the Vehicle Requisition form",
+      "object_type": "Page Section",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": null
+    }
+  ],
+  "error": []
+}

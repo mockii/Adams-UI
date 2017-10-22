@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "status": "Success",
+    "http_status_code": "OK",
+    "resultCount": "1"
+  },
+  "data": [
+    {
+      "object_name": "User Administration",
+      "object_description": "User Administration Menu",
+      "object_type": "Menu",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    }
+  ],
+  "error": []
+}

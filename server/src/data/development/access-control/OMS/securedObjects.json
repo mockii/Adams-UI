@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "status": "Success",
+    "http_status_code": "OK",
+    "resultCount": "17"
+  },
+  "data": [
+    {
+      "object_name": "Applications",
+      "object_description": "OMS Applications Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": "Applications"
+    },
+    {
+      "object_name": "Button 1",
+      "object_description": "OMS Sample Button 1",
+      "object_type": "Button",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Button 2",
+      "object_description": "OMS Sample Button 2",
+      "object_type": "Button",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Button 3",
+      "object_description": "OMS Sample Button 3",
+      "object_type": "Button",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Dashboard",
+      "object_description": "OMS Dashboard Menu",
+      "object_type": "Menu",
+      "access_type": "READ",
+      "attributes": null,
+      "object_display_name": "Dashboard"
+    },
+    {
+      "object_name": "Featured Applications Administration",
+      "object_description": "Featured Applications Administration",
+      "object_type": "Menu",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Field 1",
+      "object_description": "OMS Sample Field 1",
+      "object_type": "Field",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Field 2",
+      "object_description": "OMS Sample Field 2",
+      "object_type": "Field",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Field 3",
+      "object_description": "OMS Sample Field 3",
+      "object_type": "Field",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Form 1",
+      "object_description": "OMS Sample Form 1",
+      "object_type": "Page Section",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Form 2",
+      "object_description": "OMS Sample Form 2",
+      "object_type": "Page Section",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Form 3",
+      "object_description": "OMS Sample Form 3",
+      "object_type": "Page Section",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Maintenance Administration",
+      "object_description": "Maintenance Administration",
+      "object_type": "Menu",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Messaging",
+      "object_description": "OMS Messaging Menu",
+      "object_type": "Menu",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": "Messaging"
+    },
+    {
+      "object_name": "News Administration",
+      "object_description": "News Administration",
+      "object_type": "Menu",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": null
+    },
+    {
+      "object_name": "Service Management",
+      "object_description": "OMS Service Management Menu",
+      "object_type": "Menu",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": "Service Management"
+    },
+    {
+      "object_name": "User Administration",
+      "object_description": "OMS User Administration Menu",
+      "object_type": "Menu",
+      "access_type": "WRITE",
+      "attributes": null,
+      "object_display_name": "User Administration"
+    }
+  ],
+  "error": []
+}
