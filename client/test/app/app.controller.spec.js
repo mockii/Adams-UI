@@ -23,7 +23,7 @@ describe("Adams Controller", function () {
 
         it('should exist', function() {
             expect(controller).toBeDefined();
-            expect(controller.menuItems.length).toEqual(9);
+            expect(controller.menuItems.length).toEqual(11);
         });
     });
 });

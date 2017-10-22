@@ -1,10 +1,26 @@
 (function () {
     angular.module('adams.locations.details.controller', [])
-        .controller('LocationsDetailsController', ['$state', '$scope', '$stateParams', '$location', 'action', 'LocationsDetailsService', 'Utils', 'CompassToastr', '$uibModal', '$q', 'WEEK_DAYS_ARRAY', 'ModalDialogService', 'LOCATIONS_STATES_CONSTANTS', 'StgStatesService', '$document', '$timeout',
-            function ($state, $scope, $stateParams, $location, action, LocationsDetailsService, Utils, CompassToastr, $uibModal, $q, WEEK_DAYS_ARRAY, ModalDialogService, LOCATIONS_STATES_CONSTANTS, StgStatesService, $document, $timeout) {
+        .controller('LocationsDetailsController', ['$rootScope', '$scope', '$stateParams', '$location', 'action', 'LocationsDetailsService', 'Utils', 'CompassToastr', '$uibModal', 'WEEK_DAYS_ARRAY', 'ModalDialogService', 'LOCATIONS_STATES_CONSTANTS', 'StgStatesService', '$log', 'StgGoogleMapsService', 'GOOGLEMAPS_CONSTANTS', 'locationRowData', 'locationsSearchData',
+            function ($rootScope, $scope, $stateParams, $location, action, LocationsDetailsService, Utils, CompassToastr, $uibModal, WEEK_DAYS_ARRAY, ModalDialogService, LOCATIONS_STATES_CONSTANTS, StgStatesService, $log, StgGoogleMapsService, GOOGLEMAPS_CONSTANTS, locationRowData, locationsSearchData) {
                 var locationsDetailsController = this,
                     locationsOperatingHoursPromise;
                 locationsDetailsController.action = action;
+                locationsDetailsController.locationRowData = locationRowData;
+                locationsDetailsController.locationsSearchData = locationsSearchData;
+                locationsDetailsController.lattitudeLongitude = '';
+                locationsDetailsController.addressChanged = false;
+
+                if(locationsDetailsController.locationRowData){
+                    locationsDetailsController.lattitudeLongitude = locationsDetailsController.locationRowData.longitude_latitude;
+                    locationsDetailsController.locationLattitude = Number(locationRowData.longitude_latitude.split(',')[0].match(/[-+]?\d*(\.(?=\d))?\d+/g));
+                    locationsDetailsController.locationLongitude = Number(locationRowData.longitude_latitude.split(',')[1].match(/[-+]?\d*(\.(?=\d))?\d+/g));
+                } else if(locationsDetailsController.locationsSearchData){
+                    locationsDetailsController.lattitudeLongitude = locationsDetailsController.locationsSearchData.longitude_latitude;
+                    locationsDetailsController.locationLattitude = locationsDetailsController.lattitudeLongitude !== '' ?
+                        Number(locationsDetailsController.lattitudeLongitude.split(',')[0].match(/[-+]?\d*(\.(?=\d))?\d+/g)) : NaN;
+                    locationsDetailsController.locationLongitude = locationsDetailsController.lattitudeLongitude !== '' ?
+                        Number(locationsDetailsController.lattitudeLongitude.split(',')[1].match(/[-+]?\d*(\.(?=\d))?\d+/g)) : NaN;
+                }
 
                 function initialize() {
                     var locationCode = $location.path().split('/')[2];
@@ -12,30 +28,14 @@
                     $scope.locationCode = locationsDetailsController.locationCode = locationCode;
                     locationsDetailsController.hasLocationCode = $scope.locationCode ? true : false;
                     if (locationsDetailsController.action === 'edit'){
-                        LocationsDetailsService.getLocationDetailsByLocationCode(locationCode)
-                            .then(function (response) {
-                                locationsDetailsController.locationsSearchData = response;
-                                locationsDetailsController.initializeLocationForm();
-                                $scope.locationsSearchData = locationsDetailsController.locationsSearchData;
-                                locationsDetailsController.gridArray = locationsDetailsController.buildOperatingHoursData();
-                            }, function (error) {
-                                locationsDetailsController.errorHandling(error);
-                            });
-                    } else {
-                        if(locationsDetailsController.action === 'add' &&
-                            ($location.path() === '/locations//costcenters' || $location.path() === '/locations/create/costcenters')){
-                            $location.replace().path('/locations/create');
-                            locationsDetailsController.initializeLocationForm();
+                        $scope.locationsSearchData = locationsDetailsController.locationsSearchData;
+                        locationsDetailsController.gridArray = locationsDetailsController.buildOperatingHoursData();
+                    } else if(locationsDetailsController.action === 'add'){
+                            locationsDetailsController.autoCompleteData = null;
                             locationsDetailsController.stateFilterChanged(locationsDetailsController.locationState);
                         }
-                    }
+                    locationsDetailsController.initializeLocationForm();
                 }
-
-                $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl, newState, oldState) {
-                    if(newUrl.split('#')[1] === '/locations/create'){
-                        event.preventDefault();
-                    }
-                });
 
                 locationsDetailsController.initializeLocationForm = function(){
                     locationsDetailsController.locationName = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.location_name : '';
@@ -43,16 +43,13 @@
                     locationsDetailsController.locationAddress2 = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.address2 : '';
                     locationsDetailsController.locationCity = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.city : '';
                     locationsDetailsController.locationZip = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.zip : '';
-                    // locationsDetailsController.addressStatus = false;
                     locationsDetailsController.locationStatus = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.active : true;
 
                     locationsDetailsController.locationStates = LOCATIONS_STATES_CONSTANTS;
                     locationsDetailsController.locationState = locationsDetailsController.locationsSearchData ?
                         LOCATIONS_STATES_CONSTANTS.find(function(state){return state.abbreviation === locationsDetailsController.locationsSearchData.state;}) :
                         locationsDetailsController.locationStates[0];
-                    $timeout(function() {
-                        $('.state-selector').selectpicker('refresh');
-                    }, 500);
+                    locationsDetailsController.lattitudeLongitude = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.longitude_latitude : '';
                 };
 
                 locationsDetailsController.stateFilterChanged = function(state){
@@ -60,7 +57,6 @@
                 };
 
                 locationsDetailsController.clearAndGoBack = function(){
-                    locationsDetailsController.initializeLocationForm();
                     if(locationsDetailsController.action === 'add'){
                         StgStatesService.goToBackState();
                     }
@@ -84,7 +80,7 @@
                           "address2": locationsDetailsController.locationAddress2,
                           "city": locationsDetailsController.locationCity,
                           "location_name": locationsDetailsController.locationName,
-                          "longitude_latitude": "",
+                          "longitude_latitude": locationsDetailsController.locationLattitude + "," + locationsDetailsController.locationLongitude,
                           "state": locationsDetailsController.locationState.abbreviation,
                           "zip": locationsDetailsController.locationZip,
                           "location_hours":locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.location_hours : []
@@ -100,7 +96,8 @@
                                 'locationSearchData': locationsDetailsController.locationsSearchData,
                                 'locationCode': locationsDetailsController.locationsSearchData.location_code,
                                 'action': locationsDetailsController.action,
-                                'backState': 'locations'
+                                'backState': 'locations',
+                                'locationRowData': null
                             });
                         }, function(error){
                             throw "An error occurred while adding locations " + error;
@@ -341,6 +338,57 @@
                         });
                     return locationsOperatingHoursPromise;
                 }
+
+                locationsDetailsController.addressChange = function(event){
+                    locationsDetailsController.addressChanged = true;
+                };
+
+                locationsDetailsController.onAddressFocusOut = function(event){
+                    if((locationsDetailsController.autoCompleteData || locationsDetailsController.lattitudeLongitude) && locationsDetailsController.addressChanged){
+                        locationsDetailsController.autoCompleteData = null;
+                        locationsDetailsController.lattitudeLongitude = '';
+                    }
+                };
+
+                $rootScope.$on('googleMapsAutoCompleteData', function ($event, autoCompleteData, formattedAddressData) {
+                    locationsDetailsController.autoCompleteData = autoCompleteData;
+                    if(locationsDetailsController.autoCompleteData && formattedAddressData){
+                        locationsDetailsController.locationAddress = ((formattedAddressData.streetNumber || '') + " " + (formattedAddressData.streetName || '') || '').trimLeft();
+                        locationsDetailsController.locationAddress2 = "";
+                        locationsDetailsController.locationCity = formattedAddressData.city || '';
+                        locationsDetailsController.locationCounty = formattedAddressData.county || '';
+                        locationsDetailsController.locationState = LOCATIONS_STATES_CONSTANTS.find(function(state){return state.abbreviation === formattedAddressData.state;}) ||
+                            locationsDetailsController.locationStates[0];
+                        locationsDetailsController.country = formattedAddressData.country || '';
+                        locationsDetailsController.locationZip = formattedAddressData.zip || '';
+                        locationsDetailsController.locationLattitude = locationsDetailsController.autoCompleteData.geometry.location.lat();
+                        locationsDetailsController.locationLongitude = locationsDetailsController.autoCompleteData.geometry.location.lng();
+                        $scope.$apply();
+                    }
+                });
+
+                locationsDetailsController.verifyAddress = function(locationForm){
+                    var address = (locationsDetailsController.locationAddress || ''),
+                        city = locationsDetailsController.locationCity || '',
+                        state = locationsDetailsController.locationState.abbreviation === '--' ? '' :
+                            (locationsDetailsController.locationState.abbreviation || ''),
+                        zip = locationsDetailsController.locationZip || '',
+                        completeAddress = [address, city, state, zip].join(" ");
+
+                    StgGoogleMapsService.getGeoCodeByAddress(completeAddress)
+                        .then(function(response){
+                            if(response === null || (response.results && response.results.length === 0) || response.status === GOOGLEMAPS_CONSTANTS.ZERO_RESULTS) {
+                                CompassToastr.warning("No addresses were found for the given address.");
+                                locationsDetailsController.autoCompleteData = null;
+                            } else {
+                                CompassToastr.success("Address has been verified.");
+                                locationsDetailsController.autoCompleteData = response;
+                            }
+                        }, function(error){
+                            CompassToastr.error("An error occurred while verifying the provided address." + address);
+                            $log.error("An error occurred while verifying the provided address.", address, error);
+                        });
+                };
 
                 initialize();
             }

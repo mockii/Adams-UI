@@ -115,7 +115,7 @@ describe('UserGridController', function() {
 
         mockUserAdministrationService.getApplicationsByUser = function(userName) {
             var deferred = $q.defer();
-            deferred.resolve([{"name": "ADAMS"}, {"name": "OMS"}]);
+            deferred.resolve([{"name": "ADAMS"}, {"name": "MyAdmin"}]);
             return deferred.promise;
         };
 

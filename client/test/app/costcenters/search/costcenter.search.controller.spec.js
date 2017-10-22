@@ -436,7 +436,7 @@ describe('CostCenterSearchController', function() {
         expect(statesService.goToState).toHaveBeenCalledWith('costcenterdetails', {
             costCenterSearchData: costCenterSearchData,
             costCenter_number: costCenterSearchData.cost_center,
-            source_system_id: costCenterSearchData.source_system_id
+            costCenter_source_system_id: costCenterSearchData.source_system_id
         });
         expect(Ctrl.showCostCenterSearchData).toHaveBeenCalled();
     });

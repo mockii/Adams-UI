@@ -15,13 +15,15 @@
     ])
         .config(['$stateProvider', function($stateProvider){
             $stateProvider
-                .state('locationsdetails', {
-                    url: "/locations/{locationCode}",
+                .state('locationsDetails', {
+                    url: "/locations/details/{locationCode}",
                     templateUrl: "locations/details/locations.details.tpl.html",
                     controller: "LocationsDetailsController as locationsDetailsController",
-                    redirectTo: 'locationsdetails.costcenters',
+                    redirectTo: 'locationsDetails.costCenters',
                     params: {
                         locationsSearchData: null,
+                        locationRowData: null,
+                        locationCode: '',
                         action:''
                     },
                     data: {
@@ -29,13 +31,11 @@
                         backState: 'locations'
                     },
                     resolve: {
-                        action: function($stateParams, $location) {
-                            // Default action would be edit , if page has been reloaded from details page
-                            if(($location.path() === '/locations/create/costcenters' || $location.path() === '/locations/create') &&
-                                $stateParams.locationCode === 'create'){
-                                $stateParams.action = 'add';
+                        action: function($stateParams) {
+                            if(!$stateParams.action){
+                                $stateParams.action = 'edit';
                             }
-                            return $stateParams.action || 'edit';
+                            return $stateParams.action;
                         },
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load({
@@ -45,10 +45,57 @@
                                     'css/locations-details.css'
                                 ]
                             });
-                        }]
+                        }],
+                        locationRowData: function($stateParams){
+                            return $stateParams.locationRowData;
+                        },
+                        locationsSearchData: function($stateParams, LocationsDetailsService){
+                            if($stateParams.action === 'edit'){
+                                return LocationsDetailsService.getLocationDetailsByLocationCode($stateParams.locationCode);
+                            }
+                        }
                     }
                 })
-                .state('locationsdetails.costcenters', {
+                .state('addLocation', {
+                    url: "/locations/create",
+                    templateUrl: "locations/details/locations.details.tpl.html",
+                    controller: "LocationsDetailsController as locationsDetailsController",
+                    // redirectTo: 'addLocationCostCenters',
+                    params: {
+                        locationsSearchData: null,
+                        locationRowData: null,
+                        locationCode: '',
+                        action:''
+                    },
+                    data: {
+                        pageTitle: "Locations",
+                        backState: 'locations'
+                    },
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'locationsDetails',
+                            insertBefore: '#ng_load_plugins_after',
+                            files: [
+                                'css/locations-details.css'
+                            ]
+                        });
+                    }],
+                    resolve: {
+                        action: function($stateParams) {
+                            if(!$stateParams.action){
+                                $stateParams.action = 'add';
+                            }
+                            return $stateParams.action;
+                        },
+                        locationRowData: function($stateParams){
+                            return $stateParams.locationRowData;
+                        },
+                        locationsSearchData: function($stateParams){
+                            return $stateParams.locationsSearchData;
+                        }
+                    }
+                })
+                .state('locationsDetails.costCenters', {
                     url: "/costcenters",
                     templateUrl: "locations/details/costcenters/locations-cost-center-mapping-tab-content.tpl.html",
                     controller: "LocationsCostCenterMappingController as locationsCostCenterMappingController",
@@ -61,16 +108,38 @@
                         backState: 'locations'
                     },
                     resolve: {
-                        action: function($stateParams, $location) {
-                            if(($location.path() === '/locations/create/costcenters' || $location.path() === '/locations/create') &&
-                                $stateParams.locationCode === 'create'){
-                                $stateParams.action = 'add';
+                        action: function($stateParams) {
+                            if(!$stateParams.action){
+                                $stateParams.action = 'edit';
                             }
-                            return $stateParams.action || 'edit';
+                            return $stateParams.action;
                         }
                     }
                 })
-                .state('locationsdetails.stations', {
+                /*.state('addLocationCostCenters', {
+                    url: "/locations/create",
+                    templateUrl: "locations/details/costcenters/locations-cost-center-mapping-tab-content.tpl.html",
+                    controller: "LocationsCostCenterMappingController as locationsCostCenterMappingController",
+                    params: {
+                        locationsSearchData: null,
+                        locationRowData: null,
+                        locationCode: '',
+                        action:''
+                    },
+                    data: {
+                        pageTitle: "Location Details",
+                        backState: 'locations'
+                    },
+                    resolve: {
+                        action: function($stateParams) {
+                            if(!$stateParams.action){
+                                $stateParams.action = 'edit';
+                            }
+                            return $stateParams.action;
+                        }
+                    }
+                })*/
+                .state('locationsDetails.stations', {
                     url: "/stations",
                     templateUrl: "locations/details/stations/locations-stations-mapping-tab-content.tpl.html",
                     controller: "LocationsStationsMappingController as locationsStationsMappingController",
@@ -83,12 +152,11 @@
                         backState: 'locations'
                     },
                     resolve: {
-                        action: function($stateParams, $location) {
-                            if(($location.path() === '/locations/create/costcenters' || $location.path() === '/locations/create') &&
-                                $stateParams.locationCode === 'create'){
-                                $stateParams.action = 'add';
+                        action: function($stateParams) {
+                            if(!$stateParams.action){
+                                $stateParams.action = 'edit';
                             }
-                            return $stateParams.action || 'edit';
+                            return $stateParams.action;
                         }
                     }
                 });

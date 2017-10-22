@@ -12,9 +12,9 @@ describe("Secured Objects Service Testing", function () {
 
     beforeEach(function() {
 
-        applications = JSON.parse('[{"name":"ADAMS"},{"name":"MyAdmin"},{"name":"Tip Tracker"},{"name":"OMS"}]');
+        applications = JSON.parse('[{"name":"ADAMS"},{"name":"MyAdmin"},{"name":"Tip Tracker"},{"name":"MyAdmin"}]');
 
-        roles = JSON.parse('[{"appname":"ADAMS","roles":[{"name":"ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]},{"appname":"MyAdmin","roles":[{"name":"MY ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]},{"appname":"Tip Tracker","roles":[{"name":"TIP ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]},{"appname":"OMS","roles":[{"name":"OMS ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]}]');
+        roles = JSON.parse('[{"appname":"ADAMS","roles":[{"name":"ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]},{"appname":"MyAdmin","roles":[{"name":"MY ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]},{"appname":"Tip Tracker","roles":[{"name":"TIP ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]},{"appname":"MyAdmin","roles":[{"name":"MyAdmin ADMIN"},{"name":"GLOBAL ADMIN"},{"name":"User"}]}]');
 
         secPermissions = JSON.parse('[{"name":"Admin","secobjects":[{"name":"ADMIN","desc":"ADMIN","type":"Menu","accesstype":"WRITE"},{"name":"ADMIN_USER","desc":"ADMIN USER","type":"Menu","accesstype":"WRITE"},{"name":"INGREDIENT","desc":"INGREDIENT E","type":"Menu","accesstype":"WRITE"}]},{"name":"Global Admin","secobjects":[{"name":"GLOBAL ADMIN","desc":"GLOBAL ADMIN","type":"Menu","accesstype":"WRITE"},{"name":"GLOBAL ADMIN_USER","desc":"GLOBAL DMIN USER","type":"Menu","accesstype":"WRITE"},{"name":"GLOBAL INGREDIENT","desc":"GLOBAL INGREDIENT E","type":"Menu","accesstype":"WRITE"}]},{"name":"NoAccess","secobjects":[{"name":"NO GLOBAL ADMIN","desc":"NO GLOBAL ADMIN","type":"Menu","accesstype":"WRITE"},{"name":"NO GLOBAL ADMIN_USER","desc":"NO GLOBAL DMIN USER","type":"Menu","accesstype":"WRITE"},{"name":"NO GLOBAL INGREDIENT","desc":"NO GLOBAL INGREDIENT E","type":"Menu","accesstype":"WRITE"}]},{"name":"User","secobjects":[{"name":"USER GLOBAL ADMIN","desc":"USER GLOBAL ADMIN","type":"Menu","accesstype":"WRITE"},{"name":"USER GLOBAL ADMIN_USER","desc":"USER GLOBAL DMIN USER","type":"Menu","accesstype":"WRITE"},{"name":"USER GLOBAL INGREDIENT","desc":"USER GLOBAL INGREDIENT E","type":"Menu","accesstype":"WRITE"}]}]');
 
@@ -129,6 +129,40 @@ describe("Secured Objects Service Testing", function () {
             url = urlSpace.urls.local.secObjects+ '?limit=' + limit + '&page=' + page+ '&application_name='+ application + '&role_name='+role;
         $httpBackend.expectGET(url).respond(400, {});
         mockedSecuredObjectsService.getSecuredObjectsForRole (limit, page, application, role).then(function(response) {
+            expect(response).toEqual([]);
+        });
+        $httpBackend.flush();
+        scope.$digest();
+    });
+
+    it('should getSecuredObjectsForApplication   ', function(){
+        var limit = 25,
+            page = 1,
+            application = '',
+            url = urlSpace.urls.local.secObjectsForApp.replace('{applicationName}', application)+ '?limit=' + limit + '&page=' + page;
+        $httpBackend.expectGET(url).respond(applications);
+        mockedSecuredObjectsService.getSecuredObjectsForApplication (limit, page, application).then(function(response) {
+            expect(response).toEqual(applications);
+        });
+        $httpBackend.flush();
+    });
+
+    it('should abort getSecuredObjectsForApplication promise', function(){
+        var limit = 25,
+            page = 1,
+            application = '',
+            url = urlSpace.urls.local.secObjectsForApp.replace('{applicationName}', application)+ '?limit=' + limit + '&page=' + page;
+        $httpBackend.expectGET(url).respond(applications);
+        mockedSecuredObjectsService.getSecuredObjectsForApplication (limit, page, application).abort();
+    });
+
+    it('should throw error getSecuredObjectsForApplication ', function(){
+        var limit = 25,
+            page = 1,
+            application = '',
+            url = urlSpace.urls.local.secObjectsForApp.replace('{applicationName}', application)+ '?limit=' + limit + '&page=' + page;
+        $httpBackend.expectGET(url).respond(400, {});
+        mockedSecuredObjectsService.getSecuredObjectsForApplication (limit, page, application).then(function(response) {
             expect(response).toEqual([]);
         });
         $httpBackend.flush();

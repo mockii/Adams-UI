@@ -80,6 +80,7 @@ var userAdminRouter = require('./routes/useradmin-routes')(config, stgAuth),
 	tempAssociatesRoutes = require('./routes/tempassociates-routes')(config, stgAuth),
 	productsRoutes = require('./routes/products-routes')(config, stgAuth),
     bookOfRecordRoutes = require('./routes/book-of-record-routes')(config, stgAuth),
+    accessControlRoutes = require('./routes/access-control-routes')(config, stgAuth),
     locationsRoutes = require('./routes/locations-routes')(config, stgAuth);
 
 
@@ -90,6 +91,7 @@ app.use(config.server.rootContext, costCenterRoutes);
 app.use(config.server.rootContext, tempAssociatesRoutes);
 app.use(config.server.rootContext, productsRoutes);
 app.use(config.server.rootContext, bookOfRecordRoutes);
+app.use(config.server.rootContext, accessControlRoutes);
 app.use(config.server.rootContext, locationsRoutes);
 
 // catch whichever file needs to contain "common.settings.oauth"

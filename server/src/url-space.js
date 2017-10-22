@@ -46,6 +46,12 @@ var urlSpace = (function () {
                 secObjects: '/api/secured_objects',
                 userHistory: '/api/users/:userName/history',
 
+                // access control
+                secObjectsForApp: '/api/applications/:applicationName/secured_objects',
+                rolesForSecuredObject: '/api/applications/:applicationName/secured_objects/:securedObjectName/roles',
+                overridesForSecuredObject: '/api/applications/:applicationName/secured_objects/:securedObjectName/rules/permissions',
+
+
                 // Cost Center UI
                 costCenters: '/api/cost_centers',
                 costCenterDetails: '/api/cost_centers/details',
@@ -132,6 +138,10 @@ var urlSpace = (function () {
                 secRole: '/api/roles?limit={limit}&page={page}&application_name={application_name}',
                 secObjects: '/api/applications/{application_name}/roles/{role_name}/secured_objects?limit={limit}&page={page}',
                 userHistory: '/api/users/{userName}/history?limit={limit}&page={page}&sorts={sorts}&fields={fields}&search={search}',
+
+                // access control
+                secObjectsForApp: '/api/applications/{application_name}/secured_objects?limit={limit}&page={page}',
+                rolesForSecuredObject: '/api/applications/{application_name}/securedObjects/{securedObject_name}/roles?limit={limit}&page={page}',
 
                 // Cost Center UI
                 costCenters: '/api/cost_centers/?fields={fields}&limit={limit}&page={page}&sorts={sorts}&search={costCenterSearchInput}',

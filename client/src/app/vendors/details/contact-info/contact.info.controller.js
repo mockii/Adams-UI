@@ -7,8 +7,8 @@
                 deleteContactInfoPromise;
 
             $state.current.data.pageTitle = vendorSearchData.vendor_name_1 + ' (' + vendorSearchData.vendor_number + ')';
-            contactInfoController.vendorSourceSystemId = $state.params.source_system_id;
-            contactInfoController.vendorNumber = $scope.vendorNumber;
+            contactInfoController.vendorSourceSystemId = $state.params.vendor_source_system_id;
+            contactInfoController.vendorNumber = $state.params.vendor_number;
             $scope.vendorDetailsController.vendorSearchData = vendorSearchData;
 
             function initialize() {

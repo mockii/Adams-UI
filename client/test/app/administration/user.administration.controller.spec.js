@@ -331,7 +331,7 @@ describe('UserAdministrationController', function() {
 
         mockUserAdministrationService.getApplicationsByUser = function(userName) {
             var deferred = $q.defer();
-            deferred.resolve([{"name": "ADAMS"}, {"name": "OMS"}]);
+            deferred.resolve([{"name": "ADAMS"}, {"name": "MyAdmin"}]);
             return deferred.promise;
         };
 
@@ -398,10 +398,10 @@ describe('UserAdministrationController', function() {
         };
 
         userData = {user: "ZZAARONP01",
-                    userApplications: [{"name": "ADAMS"},{"name": "OMS"}]
+                    userApplications: [{"name": "ADAMS"},{"name": "MyAdmin"}]
                 };
 
-        selectApplicationOptions = [{name: "ADAMS"},{name: "MyAdmin"}, {name: "OMS"}];
+        selectApplicationOptions = [{name: "ADAMS"},{name: "MyAdmin"}, {name: "MyAdmin"}];
 
         selectRoleOptions = [{name: "Admin"}, {name: 'User"'}, {name: "Global Admin"}];
 
@@ -432,7 +432,7 @@ describe('UserAdministrationController', function() {
 
         var pageSize = 100;
         var pageNumber = 1;
-        var selectedApplicationName = 'OMS';
+        var selectedApplicationName = 'MyAdmin';
 
         //userAdministrationService = jasmine.createSpyObj('userAdministrationService', ['getSelectRoleOptions']);
         userAdministrationService.getSelectRoleOptions.and.callFake(function(selectedApplicationName, pageSize, pageNumber){
@@ -640,7 +640,7 @@ describe('UserAdministrationController', function() {
 
 
     it('should initialize the controller properly', function () {
-        var appData = '[{"data": [{"applications": [{"name": "ADAMS"},{"name": "OMS"}]}]}]';
+        var appData = '[{"data": [{"applications": [{"name": "ADAMS"},{"name": "MyAdmin"}]}]}]';
 
         appData = JSON.parse(appData);
         expect(Ctrl).not.toBeUndefined();
@@ -658,7 +658,7 @@ describe('UserAdministrationController', function() {
     });
     
     it('should get Apps', function () {
-        var appData = '[{"name": "ADAMS"},{"name": "OMS"}]';
+        var appData = '[{"name": "ADAMS"},{"name": "MyAdmin"}]';
         appData = JSON.parse(appData);        
         Ctrl.getApps();
         $scope.$apply();
@@ -743,7 +743,7 @@ describe('UserAdministrationController', function() {
         };
     
         var roleData = [],
-            appData = '[{"name": "ADAMS"},{"name": "OMS"}]';
+            appData = '[{"name": "ADAMS"},{"name": "MyAdmin"}]';
     
         appData = JSON.parse(appData);
         Ctrl.loginUserApps = appData;
@@ -1255,7 +1255,7 @@ describe('UserAdministrationController', function() {
 
     it('should set activetab', function () {
         mockUserAdministrationService.getApplicationsByUser(userName);
-        Ctrl.applications = [{"name": "ADAMS"},{"name": "OMS"}];
+        Ctrl.applications = [{"name": "ADAMS"},{"name": "MyAdmin"}];
         $scope.$apply();
         Ctrl.setActiveTab(index, appName);
         expect(Ctrl.appName).toEqual(appName);
@@ -1263,7 +1263,7 @@ describe('UserAdministrationController', function() {
 
     it('should set activetab - else', function () {
         mockUserAdministrationService.getApplicationsByUser(userName);
-        Ctrl.applications = [{"name": "ADAMS"},{"name": "OMS"}];
+        Ctrl.applications = [{"name": "ADAMS"},{"name": "MyAdmin"}];
         $scope.$apply();
         Ctrl.setActiveTab(index, "ADAMS1");
         expect(Ctrl.appName).toEqual(appName);
@@ -1370,12 +1370,12 @@ describe('UserAdministrationController', function() {
     });
     
     it('should check the value contains', function () {
-        var appData = '[{"name": "ADAMS"},{"name": "OMS"}]';
+        var appData = '[{"name": "ADAMS"},{"name": "MyAdmin"}]';
     
         appData = JSON.parse(appData);
         Ctrl.loginUserApps = appData;
         $scope.$apply();
-        expect(Ctrl.contains('OMS')).toEqual(true);
+        expect(Ctrl.contains('MyAdmin')).toEqual(true);
     });
 
     describe('Default values for application and role', function() {
@@ -1401,8 +1401,8 @@ describe('UserAdministrationController', function() {
             describe('set initial application', function () {
                 it('should set active based on query params in Url', function () {
 
-                    Ctrl1.applications = [{name: 'ADAMS'}, {name: 'Webtrition'}, {name: 'OMS'}];
-                    appName2 = 'OMS';
+                    Ctrl1.applications = [{name: 'ADAMS'}, {name: 'Webtrition'}, {name: 'MyAdmin'}];
+                    appName2 = 'MyAdmin';
                     Ctrl1.setActiveTabInit(appName2);
                     expect(Ctrl1.application).toEqual(appName2);
                     expect(Ctrl1.activeTab).toEqual(2);
@@ -1413,7 +1413,7 @@ describe('UserAdministrationController', function() {
             describe('set initial application', function () {
                 it('should set active based on no query params in Url', function () {
 
-                    Ctrl1.applications = [{name: 'ADAMS'}, {name: 'Webtrition'}, {name: 'OMS'}];
+                    Ctrl1.applications = [{name: 'ADAMS'}, {name: 'Webtrition'}, {name: 'MyAdmin'}];
                     appName2 = '';
                     Ctrl1.setActiveTabInit(Ctrl1.appName);
                     expect(Ctrl1.application).toEqual(Ctrl1.appName);
@@ -1436,9 +1436,9 @@ describe('UserAdministrationController', function() {
 
     describe('Application Filter Changed', function() {
         describe('role filter \'Global Admin\' has been selected', function() {
-            it('should return valid OMS app roles, since \'Global Admin\' is not a valid role for application \'OMS\'' , function () {
+            it('should return valid MyAdmin app roles, since \'Global Admin\' is not a valid role for application \'MyAdmin\'' , function () {
 
-                var selectedApplication = {name:'OMS'};
+                var selectedApplication = {name:'MyAdmin'};
 
                 var selectedRole = {name: 'Global Admin'};
                 var calculatedRoles = [{"name":"Admin"},{"name":"Application Owner"},{"name":"User"}];
@@ -1454,7 +1454,7 @@ describe('UserAdministrationController', function() {
                 expect(Ctrl1.gridRoles).toEqual(calculatedRoles);
             });
 
-            it('should return valid OMS app roles, since \'Global Admin\' is not a valid role for application \'OMS\' - error' , function () {
+            it('should return valid MyAdmin app roles, since \'Global Admin\' is not a valid role for application \'MyAdmin\' - error' , function () {
 
                 userAdministrationService.getSelectRoleOptions = function(selectedApplicationName, pageSize, pageNumber){
                     var deferred = $q.defer();
@@ -1462,7 +1462,7 @@ describe('UserAdministrationController', function() {
                     return deferred.promise;
                 };
 
-                var selectedApplication = {name:'OMS'};
+                var selectedApplication = {name:'MyAdmin'};
 
                 var selectedRole = {name: 'Global Admin'};
                 var calculatedRoles = [{"name":"Admin"},{"name":"Application Owner"},{"name":"User"}];
@@ -1480,9 +1480,9 @@ describe('UserAdministrationController', function() {
         });
 
         describe('role filter \'Admin\' has been selected', function() {
-            it('should return valid OMS app roles, since \'Admin\' is a valid role for application \'OMS\'' , function () {
+            it('should return valid MyAdmin app roles, since \'Admin\' is a valid role for application \'MyAdmin\'' , function () {
 
-                var selectedApplication = {name:'OMS'};
+                var selectedApplication = {name:'MyAdmin'};
 
                 var selectedRole = {name: 'Admin'};
                 var calculatedRoles = [{"name":"Admin"},{"name":"Application Owner"},{"name":"User"}];
@@ -1499,9 +1499,9 @@ describe('UserAdministrationController', function() {
         });
 
         describe('role filter not selected', function() {
-            it('should return valid OMS app roles' , function () {
+            it('should return valid MyAdmin app roles' , function () {
 
-                var selectedApplication = {name:'OMS'};
+                var selectedApplication = {name:'MyAdmin'};
 
                 var selectedRole = '';
                 var calculatedRoles = [{"name":"Admin"},{"name":"Application Owner"},{"name":"User"}];
@@ -1519,10 +1519,10 @@ describe('UserAdministrationController', function() {
     });
 
     describe('Role Filter Changed', function() {
-        describe('application filter \'OMS\' has been selected', function() {
-            it('should return valid OMS app roles' , function () {
+        describe('application filter \'MyAdmin\' has been selected', function() {
+            it('should return valid MyAdmin app roles' , function () {
 
-                var selectedApplication = {name:'OMS'};
+                var selectedApplication = {name:'MyAdmin'};
 
                 var selectedRole = {name: 'Admin'};
                 var calculatedRoles = [{"name":"Admin"},{"name":"Application Owner"},{"name":"User"}];
@@ -1540,7 +1540,7 @@ describe('UserAdministrationController', function() {
             });
 
 
-            it('should return valid OMS app roles -else' , function () {
+            it('should return valid MyAdmin app roles -else' , function () {
                 userAdministrationService.getSelectRoleOptions = function(selectedApplicationName, pageSize, pageNumber){
                     var deferred = $q.defer();
                     deferred.resolve([]);
@@ -1548,7 +1548,7 @@ describe('UserAdministrationController', function() {
                 };
 
 
-                var selectedApplication = {name:'OMS'};
+                var selectedApplication = {name:'MyAdmin'};
 
                 var selectedRole = {name: 'Admin'};
                 var calculatedRoles = [{"name":"Admin"},{"name":"Application Owner"},{"name":"User"}];
@@ -1566,7 +1566,7 @@ describe('UserAdministrationController', function() {
             });
 
 
-            it('should return valid OMS app roles - error' , function () {
+            it('should return valid MyAdmin app roles - error' , function () {
                 userAdministrationService.getSelectRoleOptions = function(selectedApplicationName, pageSize, pageNumber){
                     var deferred = $q.defer();
                     deferred.reject();
@@ -1574,7 +1574,7 @@ describe('UserAdministrationController', function() {
                 };
 
 
-                var selectedApplication = {name:'OMS'};
+                var selectedApplication = {name:'MyAdmin'};
 
                 var selectedRole = {name: 'Admin'};
                 var calculatedRoles = [{"name":"Admin"},{"name":"Application Owner"},{"name":"User"}];

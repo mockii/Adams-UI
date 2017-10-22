@@ -6,8 +6,8 @@
                     vendorUpdatePromise;
 
                 $state.current.data.pageTitle = costCenterSearchData.cost_center_description + ' (' + costCenterSearchData.cost_center + ')';
-                vendorMappingController.costCenterSourceSystemId = $state.params.source_system_id;
-                vendorMappingController.costCenterNumber = $scope.costCenterNumber;
+                vendorMappingController.costCenterSourceSystemId = $state.params.costCenter_source_system_id;
+                vendorMappingController.costCenterNumber = $state.params.costCenter_number;
                 $scope.costCenterDetailsController.costCenterSearchData = costCenterSearchData;
 
                 function initialize() {
@@ -85,7 +85,7 @@
                 vendorMappingController.navigateToVendorDetail = function(row) {
                     StgStatesService.goToState('vendordetails', {
                         vendor_number: row.entity.vendor_number,
-                        source_system_id: $state.params.source_system_id
+                        vendor_source_system_id: row.entity.vendor_source_system_id
                     });
                 };
 

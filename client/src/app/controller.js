@@ -51,6 +51,14 @@
                     {
                         state: "locations",
                         pageName: "Locations"
+                    },
+                    {
+                        state: "pointofsale",
+                        pageName: "POS"
+                    },
+                    {
+                        state: "accessControl",
+                        pageName: "Access Control"
                     }
                 ];
             }

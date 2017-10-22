@@ -24,7 +24,7 @@
                 StgStatesService.goToState('vendordetails', {
                     vendorSearchData: vendorSearchData,
                     vendor_number: vendorSearchData.vendor_number,
-                    source_system_id: vendorSearchData.source_system_id
+                    vendor_source_system_id: vendorSearchData.source_system_id
                 });
             };
 

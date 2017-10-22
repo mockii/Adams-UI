@@ -111,6 +111,39 @@
                 return( promise );
             };
 
+            securedObjectsService.getSecuredObjectsForApplication = function(limit, page, application) {
+                var securedObjectsDeferred = $q.defer(),
+                    url = ADAMS_URL_SPACE.urls.local.secObjectsForApp.replace('{applicationName}', application)+ '?limit=' + limit + '&page=' + page;
+
+                var request = $http({
+                    method: "get",
+                    url: url,
+                    timeout: securedObjectsDeferred.promise
+                });
+
+                var promise = request.then(
+                    function( response ) {
+                        return( response.data );
+                    },
+                    function() {
+                        return [];
+                    }
+                );
+
+                promise.abort = function() {
+                    securedObjectsDeferred.resolve();
+                };
+
+                promise.finally(
+                    function() {
+                        promise.abort = angular.noop;
+                        securedObjectsDeferred = request = promise = null;
+                    }
+                );
+
+                return( promise );
+            };
+
 
             return securedObjectsService;
 

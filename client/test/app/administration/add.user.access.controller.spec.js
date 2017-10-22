@@ -107,8 +107,8 @@ describe('AddUserAccessModalController', function() {
         searchTeamType = '';
         sort = '';
         index = 1;
-        applications = '[{"name": "ADAMS"},{"name": "OMS"}]';
-        target_applications = '[{"name": "ADAMS"},{"name": "OMS"}]';
+        applications = '[{"name": "ADAMS"},{"name": "MyAdmin"}]';
+        target_applications = '[{"name": "ADAMS"},{"name": "MyAdmin"}]';
         loginRoles = '[{"role": "NoAccess"}, {"role": "Global Admin"}, {"role": "Admin"}, {"role": "User"}]';
         userRoles = '[{"name": "User", "default_role": false, "teams": [{"team_name": "COMPASS","team_display_path": "/COMPASS","team_description": "Compass Group USA","source_system_id": "0","team_type": "BusinessType","default_team": false}]}, {"name": "Admin", "default_role": true, "teams": [{"team_name": "COMPASS","team_description": "Compass Group USA","team_display_path": "/COMPASS","source_system_id": "0","team_type": "BusinessType","default_team": false}]}]';
         // userRoles = '[{"name": "User", "default_role": false, "teams": [{"team_name": "COMPASS","team_description": "Compass Group USA","source_system_id": "0","team_type": "BusinessType","default_team": false}]}, {"name": "Admin", "default_role": true, "teams": [{"team_name": "COMPASS","team_description": "Compass Group USA","source_system_id": "0","team_type": "BusinessType","default_team": false}]}]';
@@ -316,7 +316,7 @@ describe('AddUserAccessModalController', function() {
     });
 
     it('should initialize the controller properly', function () {
-        var appData = '[{"name": "ADAMS"},{"name": "OMS"}]';
+        var appData = '[{"name": "ADAMS"},{"name": "MyAdmin"}]';
         
         appData = JSON.parse(appData);
         teams = JSON.parse(teams);

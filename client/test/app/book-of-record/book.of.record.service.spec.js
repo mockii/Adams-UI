@@ -16,7 +16,7 @@ describe("BookOfRecordService Service Testing", function () {
 
     beforeEach(function() {
 
-        bookOfRecords = JSON.parse('[{"name":"ADAMS"},{"name":"MyAdmin"},{"name":"Tip Tracker"},{"name":"OMS"}]');
+        bookOfRecords = JSON.parse('[{"name":"ADAMS"},{"name":"MyAdmin"},{"name":"Tip Tracker"},{"name":"MyAdmin"}]');
         roleName = 'Admin';
         appName = 'ADAMS';
         userName = 'TALEKO01';

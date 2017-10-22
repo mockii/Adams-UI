@@ -115,19 +115,15 @@
     width: 60%;
     align-items: center;
     display: inline-flex;
-    justify-content: center;
-    /*margin-right: 15px;*/
-}
-
-.map-container {
-    top: 15px;
+    /*justify-content: center;
+    margin-right: 15px;*/
 }
 
 .map-marker-icon {
     font-size: 30px !important;
     padding-right: 15px;
     padding-bottom: 5px;
-    color: #999999;
+    /*color: #999999;*/
 }
 
 .address-verification-label {
@@ -422,4 +418,33 @@ label.checkbox-inline{
 
 .status-bootstrap-select {
     width: 100% !important;
+}
+
+#map .gm-style > div:not(:first-child) {
+    display: none;
+}
+
+.map-address-not-found {
+    background: #ededed;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.map-pin {
+    color: dimgray;
+}
+
+#map {
+    width: 100px;
+    height: 50px;
+}
+
+.bootstrap-select >.dropdown-toggle.bs-placeholder {
+    color: black;
+}
+
+.zip-icon.input-icon.right>i {
+    right: 10px;
 }

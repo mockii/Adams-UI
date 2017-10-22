@@ -556,7 +556,7 @@ describe('CostCenterMappingController', function() {
         $scope.$apply();
         expect(statesService.goToState).toHaveBeenCalledWith('costcenterdetails', {
             costCenter_number: costCenterRow.entity.cost_center_name,
-            source_system_id: costCenterRow.entity.cost_center_source_system_id
+            costCenter_source_system_id: costCenterRow.entity.cost_center_source_system_id
         });
         expect(Ctrl.navigateToCostCenterDetail).toHaveBeenCalled();
     });

@@ -22,7 +22,7 @@
         .config(['$stateProvider', function($stateProvider){
             $stateProvider
                 .state('vendordetails', {
-                    url: "/vendors/{vendor_number}/?{source_system_id}",
+                    url: "/vendors/{vendor_number}/?{vendor_source_system_id}",
                     templateUrl: "vendors/details/vendor.details.tpl.html",
                     controller: "VendorDetailsController as vendorDetailsController",
                     redirectTo: 'vendordetails.accountmapping',
@@ -61,7 +61,7 @@
                         if($stateParams.vendorSearchData) {
                             return $stateParams.vendorSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.vendor_source_system_id || $location.search().vendor_source_system_id,
                                 vendorNumber = $stateParams.vendor_number || $location.path().split('/')[2];
                             return VendorDetailsService.getVendorDetails(vendorNumber, sourceSystemId);
                         }
@@ -85,7 +85,7 @@
                         if($stateParams.vendorSearchData) {
                             return $stateParams.vendorSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.vendor_source_system_id || $location.search().vendor_source_system_id,
                                 vendorNumber = $stateParams.vendor_number || $location.path().split('/')[2];
                             return VendorDetailsService.getVendorDetails(vendorNumber, sourceSystemId);
                         }
@@ -109,7 +109,7 @@
                         if($stateParams.vendorSearchData) {
                             return $stateParams.vendorSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.vendor_source_system_id || $location.search().vendor_source_system_id,
                                 vendorNumber = $stateParams.vendor_number || $location.path().split('/')[2];
                             return VendorDetailsService.getVendorDetails(vendorNumber, sourceSystemId);
                         }
@@ -132,7 +132,7 @@
                         if($stateParams.vendorSearchData) {
                             return $stateParams.vendorSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.vendor_source_system_id || $location.search().vendor_source_system_id,
                                 vendorNumber = $stateParams.vendor_number || $location.path().split('/')[2];
                             return VendorDetailsService.getVendorDetails(vendorNumber, sourceSystemId);
                         }
@@ -156,7 +156,7 @@
                         if($stateParams.vendorSearchData) {
                             return $stateParams.vendorSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.vendor_source_system_id || $location.search().vendor_source_system_id,
                                 vendorNumber = $stateParams.vendor_number || $location.path().split('/')[2];
                             return VendorDetailsService.getVendorDetails(vendorNumber, sourceSystemId);
                         }

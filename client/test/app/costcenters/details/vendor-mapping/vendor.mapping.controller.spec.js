@@ -556,7 +556,7 @@ describe('VendorMappingController', function() {
         $scope.$apply();
         expect(statesService.goToState).toHaveBeenCalledWith('vendordetails', {
             vendor_number: '0000000599',
-            source_system_id: '1008'
+            vendor_source_system_id: 1001
         });
         expect(Ctrl.navigateToVendorDetail).toHaveBeenCalled();
     });

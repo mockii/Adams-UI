@@ -29,7 +29,9 @@
         'thatisuday.ng-image-gallery',
         'adams.locations.search',
         'adams.locations.details',
-        'scrollable-table'
+        'scrollable-table',
+        'adams.access.control',
+        'adams.point.of.sale'
     ])
 
     .config(['$urlRouterProvider', '$httpProvider',

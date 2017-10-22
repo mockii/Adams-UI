@@ -7,7 +7,7 @@
             {
                 id: 0,
                 name: "Select State",
-                abbreviation: "--"
+                abbreviation: "-- Select State --"
             },
             {
                 id: 1,

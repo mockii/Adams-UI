@@ -17,7 +17,7 @@
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
                 .state('costcenterdetails', {
-                    url: "/costcenters/{costCenter_number}/?{source_system_id}",
+                    url: "/costcenters/{costCenter_number}/?{costCenter_source_system_id}",
                     templateUrl: "costcenters/details/costcenter.details.tpl.html",
                     controller: "CostCenterDetailsController as costCenterDetailsController",
                     redirectTo: 'costcenterdetails.accountmapping',
@@ -56,7 +56,7 @@
                         if($stateParams.costCenterSearchData) {
                             return $stateParams.costCenterSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.costCenter_source_system_id || $location.search().costCenter_source_system_id,
                                 costCenterNumber = $stateParams.costCenter_number || $location.path().split('/')[2];
                             return CostCenterDetailsService.getCostCenterDetails(costCenterNumber, sourceSystemId);
                         }
@@ -80,13 +80,13 @@
                         if($stateParams.costCenterSearchData) {
                             return $stateParams.costCenterSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.costCenter_source_system_id || $location.search().costCenter_source_system_id,
                                 costCenterNumber = $stateParams.costCenter_number || $location.path().split('/')[2];
                             return CostCenterDetailsService.getCostCenterDetails(costCenterNumber, sourceSystemId);
                         }
                     },
                     defaultMarket: function($stateParams, $location, CostCenterMarketMappingService) {
-                        var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                        var sourceSystemId = $stateParams.costCenter_source_system_id || $location.search().costCenter_source_system_id,
                             costCenterNumber = $stateParams.costCenter_number || $location.path().split('/')[2];
 
                         return CostCenterMarketMappingService.getDefaultMarket(costCenterNumber, sourceSystemId);
@@ -110,7 +110,7 @@
                         if($stateParams.costCenterSearchData) {
                             return $stateParams.costCenterSearchData;
                         } else {
-                            var sourceSystemId = $stateParams.source_system_id || $location.search().source_system_id,
+                            var sourceSystemId = $stateParams.costCenter_source_system_id || $location.search().costCenter_source_system_id,
                                 costCenterNumber = $stateParams.costCenter_number || $location.path().split('/')[2];
                             return CostCenterDetailsService.getCostCenterDetails(costCenterNumber, sourceSystemId);
                         }

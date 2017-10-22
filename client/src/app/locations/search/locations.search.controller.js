@@ -88,16 +88,20 @@
             };
 
             locationsSearchController.editLocationsSearchData = function (locationsRow, event) {
-                StgStatesService.goToState('locationsdetails', {
-                    locationsSearchData: locationsRow,
+                StgStatesService.goToState('locationsDetails', {
+                    locationRowData: locationsRow, // This row data does not have location_hours
                     locationCode: locationsRow.location_code,
-                    action: 'edit'
+                    action: 'edit',
+                    locationsSearchData: null
                 });
             };
 
             locationsSearchController.addLocations = function () {
-                StgStatesService.goToState('locationsdetails', {
-                    action: 'add'
+                StgStatesService.goToState('addLocation', {
+                    action: 'add',
+                    locationRowData: null,
+                    locationCode: '',
+                    locationsSearchData: null
                 });
             };
 

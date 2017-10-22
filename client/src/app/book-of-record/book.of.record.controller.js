@@ -37,7 +37,7 @@
 
                     bookOfRecordController.vendorNumber = searchData.vendor_number;
                     bookOfRecordController.vendorName = searchData.vendor_name_1;
-                    bookOfRecordController.vendorSourceSystemId = searchData.source_system_id;
+                    bookOfRecordController.vendorSourceSystemId = searchData.vendor_source_system_id;
 
                     bookOfRecordController.emailVendorContacts();
 
@@ -46,7 +46,7 @@
                 bookOfRecordController.showBORViewContactsSearchData = function (searchData) {
 
                     bookOfRecordController.vendorNumber = searchData.vendor_number;
-                    bookOfRecordController.vendorSourceSystemId = searchData.source_system_id;
+                    bookOfRecordController.vendorSourceSystemId = searchData.vendor_source_system_id;
 
                     bookOfRecordController.openViewContactInfo();
 
@@ -98,18 +98,16 @@
                 };
 
                 bookOfRecordController.navigateToVendorDetail = function(vendorSearchData) {
-                    StgStatesService.goToState('vendordetails', {vendorSearchData: vendorSearchData,
-                                                                 vendor_number: vendorSearchData.vendor_number,
-                                                                 source_system_id: vendorSearchData.source_system_id});
+                    StgStatesService.goToState('vendordetails', {vendor_number: vendorSearchData.vendor_number,
+                                                                 vendor_source_system_id: vendorSearchData.vendor_source_system_id});
 
                 };
 
                 bookOfRecordController.navigateToCostCenterDetail = function(costCenterSearchData) {
 
                     StgStatesService.goToState('costcenterdetails', {
-                        costCenterSearchData: costCenterSearchData,
-                        costCenter_number: costCenterSearchData.cost_center,
-                        source_system_id: costCenterSearchData.cost_center_source_system_id
+                        costCenter_number: costCenterSearchData.cost_center_name,
+                        costCenter_source_system_id: costCenterSearchData.cost_center_source_system_id
                     });
 
                 };
@@ -171,7 +169,7 @@
                                 cellTemplate: '<a href="#" ng-click="grid.appScope.navigateToCostCenterDetail(row.entity)">{{row.entity.cost_center_name}}</a>'
                             },
                             {
-                                field: 'cost_center_source_system_id', //TODO cost center ssid how to distinguish from vendor ssid?
+                                field: 'cost_center_source_system_id',
                                 visible: false,
                                 width: 160,
                                 filter: {
@@ -246,7 +244,7 @@
                                 cellTemplate: '<a href="#" ng-click="grid.appScope.navigateToVendorDetail(row.entity)">{{row.entity.vendor_number}}</a>'
                             },
                             {
-                                field: 'source_system_id', //TODO vendor_ssid
+                                field: 'vendor_source_system_id',
                                 visible: false,
                                 width: 150,
                                 filter: {

@@ -256,7 +256,7 @@ describe('VendorSearchController', function() {
         expect(statesService.goToState).toHaveBeenCalledWith('vendordetails', {
             vendorSearchData: vendorSearchData,
             vendor_number: vendorSearchData.vendor_number,
-            source_system_id: vendorSearchData.source_system_id
+            vendor_source_system_id: vendorSearchData.source_system_id
         });
         expect(Ctrl.showVendorSearchData).toHaveBeenCalled();
     });

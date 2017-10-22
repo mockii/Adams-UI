@@ -8,7 +8,7 @@
 
         $state.current.data.pageTitle = vendorSearchData.vendor_name_1 + ' (' + vendorSearchData.vendor_number + ')';
         marketMappingController.vendorSearchData = $state.params.vendorSearchData;
-        marketMappingController.vendorNumber = $scope.vendorNumber;
+        marketMappingController.vendorNumber = $state.params.vendor_number;
         $scope.vendorDetailsController.vendorSearchData = vendorSearchData;
 
         function initialize() {

@@ -64,7 +64,7 @@
                 locationsCostCenterMappingController.navigateToCostCenterDetail = function(row) {
                     $state.go('costcenterdetails', {
                         costCenter_number: row.entity.cost_center_name,
-                        source_system_id: row.entity.source_system_id
+                        costCenter_source_system_id: row.entity.source_system_id
                     });
                 };
 

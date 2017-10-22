@@ -185,7 +185,7 @@ describe('UserAdministrationService', function(){
 
     it('should get applications Info by user', function(){
         var userName = 'VASIRU01',
-            appData = '[{"data": [{"applications": [{"name": "ADAMS"},{"name": "OMS"}]}]}]',
+            appData = '[{"data": [{"applications": [{"name": "ADAMS"},{"name": "MyAdmin"}]}]}]',
             url = urlSpace.urls.local.applicationsByUser.replace('{userName}', userName);
 
         appData = JSON.parse(appData);
@@ -199,7 +199,7 @@ describe('UserAdministrationService', function(){
 
     it('should error out applications Info by user', function(){
         var userName = 'VASIRU01',
-            appData = '[{"data": [{"applications": [{"name": "ADAMS"},{"name": "OMS"}]}]}]',
+            appData = '[{"data": [{"applications": [{"name": "ADAMS"},{"name": "MyAdmin"}]}]}]',
             url = urlSpace.urls.local.applicationsByUser.replace('{userName}', userName);
 
         $httpBackend.expectGET(url).respond(400, {});
@@ -425,7 +425,7 @@ describe('UserAdministrationService', function(){
 
     it('should delete role by user', function(){
         var userName = 'ZZAARONP01',
-            application = 'OMS',
+            application = 'MyAdmin',
             role = 'Admin',
             message = "Success",
             url = urlSpace.urls.local.deleteRole.replace('{userName}', userName).replace('{application}', application).replace('{role}', role);
@@ -440,7 +440,7 @@ describe('UserAdministrationService', function(){
 
     it('should error role by user', function(){
         var userName = 'ZZAARONP01',
-            application = 'OMS',
+            application = 'MyAdmin',
             role = 'Admin',
             message = "Success",
             url = urlSpace.urls.local.deleteRole.replace('{userName}', userName).replace('{application}', application).replace('{role}', role);
@@ -455,7 +455,7 @@ describe('UserAdministrationService', function(){
 
     it('should delete team by user', function(){
         var userName = 'ZZAARONP01',
-            application = 'OMS',
+            application = 'MyAdmin',
             role = 'Admin',
             team = '100007',
             sourceSystemID = '1002',
@@ -472,7 +472,7 @@ describe('UserAdministrationService', function(){
 
     it('should error team by user', function(){
         var userName = 'ZZAARONP01',
-            application = 'OMS',
+            application = 'MyAdmin',
             role = 'Admin',
             team = '100007',
             sourceSystemID = '1002',
@@ -489,7 +489,7 @@ describe('UserAdministrationService', function(){
 
     it('should add team by user', function(){
         var userName = 'ZZAARONP01',
-            application = 'OMS',
+            application = 'MyAdmin',
             role = 'User',
             teams = '{"teams":[{"defaultTeam":null,"sourceSystemId":1009,"teamDescription":"Morrison Client Pay","teamDisplayPath":"GROUP~NA Group/COMPASS~Compass Group/100008~Morrison Client Pay/","teamName":"100008","teamPath":"GROUP/COMPASS/100008/","teamType":"SECTOR"}]}',
             message = "Success",
@@ -505,7 +505,7 @@ describe('UserAdministrationService', function(){
 
     it('should error team by user', function(){
         var userName = 'ZZAARONP01',
-            application = 'OMS',
+            application = 'MyAdmin',
             role = 'User',
             teams = '{"teams":[{"defaultTeam":null,"sourceSystemId":1009,"teamDescription":"Morrison Client Pay","teamDisplayPath":"GROUP~NA Group/COMPASS~Compass Group/100008~Morrison Client Pay/","teamName":"100008","teamPath":"GROUP/COMPASS/100008/","teamType":"SECTOR"}]}',
             message = "Success",

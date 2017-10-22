@@ -272,30 +272,28 @@ describe('Book Of Records Controller Testing', function() {
         spyOn(statesService, 'goToState');
         var data = {
             vendor_number: '0000000599',
-            vendorNumber: '0000000599',
-            source_system_id: '1008'
+            vendor_source_system_id: '1008'
         };
         spyOn(Ctrl, 'navigateToVendorDetail').and.callThrough();
         Ctrl.navigateToVendorDetail(data);
         $scope.$apply();
         expect(statesService.goToState).toHaveBeenCalledWith('vendordetails',
-            {vendorSearchData: data, vendor_number: '0000000599', source_system_id: '1008'});
+            {vendor_number: '0000000599', vendor_source_system_id: '1008'});
         expect(Ctrl.navigateToVendorDetail).toHaveBeenCalled();
     });
 
     it('should call navigateToCostCenterDetail if block', function() {
         spyOn(statesService, 'goToState');
         var data = {
-            cost_center: '1000',
+            cost_center_name: '1000',
             cost_center_source_system_id: 1000
         };
         spyOn(Ctrl, 'navigateToCostCenterDetail').and.callThrough();
         Ctrl.navigateToCostCenterDetail(data);
         $scope.$apply();
         expect(statesService.goToState).toHaveBeenCalledWith('costcenterdetails', {
-            costCenterSearchData: data,
             costCenter_number: '1000',
-            source_system_id: 1000
+            costCenter_source_system_id: 1000
         });
         expect(Ctrl.navigateToCostCenterDetail).toHaveBeenCalled();
     });

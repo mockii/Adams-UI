@@ -4,13 +4,12 @@
         function ($scope, CostCenterMarketMappingService, ModalDialogService, CompassToastr, $uibModal, $state, $location, costCenterSearchData, defaultMarket, $log) {
             var costCenterMarketMappingController = this;
 
-
             function initialize() {
                 $state.current.data.pageTitle = costCenterSearchData.cost_center_description + ' (' + costCenterSearchData.cost_center + ')';
                 costCenterMarketMappingController.costCenterSearchData = $state.params.costCenterSearchData;
-                costCenterMarketMappingController.costCenterNumber = $scope.costCenterNumber;
+                costCenterMarketMappingController.costCenterNumber = $state.params.costCenter_number;
                 $scope.costCenterDetailsController.costCenterSearchData = costCenterSearchData;
-                costCenterMarketMappingController.sourceSystemId = $location.search().source_system_id || costCenterMarketMappingController.costCenterSearchData.source_system_id;
+                costCenterMarketMappingController.sourceSystemId = $state.params.costCenter_source_system_id;
                 costCenterMarketMappingController.defaultMarket = defaultMarket || {};
 
                 costCenterMarketMappingController.gridOptions = defineMarketMappingGridOptions();
@@ -58,7 +57,7 @@
                     resolve: {
                         addMarketMappingData: {
                             'costCenterNumber': costCenterMarketMappingController.costCenterNumber,
-                            'costCenterSourceSystemId': costCenterMarketMappingController.costCenterSearchData === null ? $location.search().source_system_id : costCenterMarketMappingController.costCenterSearchData.source_system_id
+                            'costCenterSourceSystemId': costCenterMarketMappingController.costCenterSearchData === null ? $location.search().costCenter_source_system_id : costCenterMarketMappingController.costCenterSearchData.source_system_id
                         }
                     }
                 });

@@ -15,30 +15,43 @@
                             <div class="form-body location-details-page">
                                 <div class="row">
                                     <div class="col-md-12 col-xs-12">
-                                        <div class="row form-group col-md-12">
+                                        <div class="row col-md-12">
                                             <label class="control-label control-label-required col-md-3">Name</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" required name="name"
-                                                       ng-model="locationsDetailsController.locationName">
+                                            <div class="form-group">
+                                                <div class="col-md-9 input-icon right">
+                                                    <input type="text" class="form-control" required name="name"
+                                                       ng-model="locationsDetailsController.locationName"
+                                                       stg-form-validation validation-type="required">
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="row form-group col-md-12">
+                                        <div class="row col-md-12">
                                             <label class="control-label control-label-required col-md-3">Address</label>
-                                            <div class="col-md-9">
-                                                <!--<input type="text" id="Autocomplete" class="form-control"
-                                                       ng-autocomplete ng-model="result3" details="details3" mapElementById="map"/>-->
-                                                <input type="text" class="form-control" required name="address" stg-google-maps-autocomplete
-                                                       ng-model="locationsDetailsController.locationAddress"
-                                                       result-data="locationsDetailsController.autoCompleteData" mapElementById="map">
+                                            <div class="form-group">
+                                                <div class="col-md-9 input-icon right">
+                                                    <!--<input type="text" id="Autocomplete" class="form-control"
+                                                           ng-autocomplete ng-model="result3" details="details3" mapElementById="map"/>-->
+                                                    <input type="text" class="form-control" required name="address"
+                                                           stg-google-maps-autocomplete stg-form-validation validation-type="required"
+                                                           ng-model="locationsDetailsController.locationAddress"
+                                                           ng-change="locationsDetailsController.addressChange()"
+                                                           ng-blur="locationsDetailsController.onAddressFocusOut($event)"
+                                                           result-data="locationsDetailsController.autoCompleteData"
+                                                           mapElementById="map"
+                                                           lattitude="locationsDetailsController.locationLattitude"
+                                                           longitude="locationsDetailsController.locationLongitude">
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="row form-group col-md-12">
+                                        <div class="row col-md-12">
                                             <label class="control-label col-md-3">Address 2</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" required name="address2"
-                                                       ng-model="locationsDetailsController.locationAddress2">
+                                            <div class="form-group">
+                                                <div class="col-md-9 input-icon right">
+                                                    <input type="text" class="form-control" name="address2"
+                                                           ng-model="locationsDetailsController.locationAddress2">
+                                                </div>
                                             </div>
                                         </div>
 
@@ -77,34 +90,47 @@
                                             </table>
                                         </div>-->
 
-                                        <div class="row form-group col-md-12">
-                                            <label class="control-label col-md-3">City</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="city"
-                                                       ng-model="locationsDetailsController.locationCity">
+                                        <div class="row col-md-12">
+                                            <label class="control-label control-label-required col-md-3">City</label>
+                                            <div class="form-group">
+                                                <div class="col-md-9 input-icon right">
+                                                    <input type="text" class="form-control" name="city" required
+                                                           stg-form-validation validation-type="required"
+                                                           ng-change="locationsDetailsController.addressChange()"
+                                                           ng-blur="locationsDetailsController.onAddressFocusOut($event)"
+                                                           ng-model="locationsDetailsController.locationCity">
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="row form-group col-md-12">
-                                            <label class="control-label col-md-3">State</label>
-                                            <div class="col-md-9">
-                                                <select load-select-picker class="state-selector"
-                                                        ng-model="locationsDetailsController.locationState"
-                                                        ng-change="locationsDetailsController.stateFilterChanged(locationsDetailsController.locationState)"
-                                                        ng-options="states.abbreviation for states in locationsDetailsController.locationStates track by states.abbreviation">
-                                                    <option style="display:none" value="">{{
-                                                        locationsDetailsController.locationState }}
-                                                    </option>
-                                                </select>
+                                        <div class="row col-md-12">
+                                            <label class="control-label control-label-required col-md-3">State</label>
+                                            <div class="form-group">
+                                                <div class="col-md-9">
+                                                    <ui-select ng-model="locationsDetailsController.locationState"
+                                                               ng-change="locationsDetailsController.stateFilterChanged(locationsDetailsController.locationState);locationsDetailsController.addressChange();"
+                                                               ng-blur="locationsDetailsController.onAddressFocusOut($event)"
+                                                               theme="bootstrap">
+                                                        <ui-select-match placeholder=" -- Select State --">{{$select.selected.name}}</ui-select-match>
+                                                        <ui-select-choices
+                                                                repeat="state in locationsDetailsController.locationStates | filter: $select.search track by state.abbreviation">
+                                                            <div ng-bind-html="state.name + ' - ' + state.abbreviation | highlight: $select.search"></div>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="row form-group col-md-12">
-                                            <label class="control-label col-md-3">Zip</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" maxLength="5" name="zip"
-                                                       style="width: 60px;"
-                                                       ng-model="locationsDetailsController.locationZip">
+                                        <div class="row col-md-12">
+                                            <label class="control-label control-label-required col-md-3">Zip</label>
+                                            <div class="form-group">
+                                                <div class="col-md-2 zip-icon input-icon right">
+                                                    <input type="text" class="form-control" name="zip"
+                                                           ng-change="locationsDetailsController.addressChange()"
+                                                           ng-blur="locationsDetailsController.onAddressFocusOut($event)"
+                                                           style="width: 100px;" required stg-form-validation validation-type="zip"
+                                                           ng-model="locationsDetailsController.locationZip">
+                                                </div>
                                             </div>
                                         </div>
 
@@ -160,15 +186,27 @@
                                             </div>
                                         </div>-->
 
-                                        <div class="container form-group col-md-12">
+                                        <div class="row container col-md-12">
                                             <label class="control-label col-md-3">Map</label>
-                                            <div class="row col-md-9" style="margin-left: 0px;">
-                                                <div class="col-sm-12 col-xs-12 map" id="map"
-                                                     style="width: 75px;height: 50px;"></div>
-                                                <div class="col-md-6 col-sm-12 col-xs-12 pull-right address-verification-box">
-                                                    <i class="fa fa-map-marker map-marker-icon" aria-hidden="true"></i>
-                                                    <label class="address-verification-label ng-binding">Address
-                                                        Verified</label>
+                                            <div class="form-group">
+                                                <div class="row col-md-9" style="margin-left: 0px;">
+                                                    <div class="map-address-not-found col-sm-12 col-xs-12"
+                                                         ng-show="locationsDetailsController.autoCompleteData === null">
+                                                        <i ng-show="locationsDetailsController.autoCompleteData === null"
+                                                           class="fa fa-map-pin map-pin"
+                                                           aria-hidden="true"></i>
+                                                    </div>
+                                                    <!--<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>-->
+                                                    <div id="map"
+                                                         class="col-sm-12 col-xs-12 map"
+                                                         ng-show="locationsDetailsController.autoCompleteData !== null">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12 pull-right address-verification-box">
+                                                        <i ng-style="(locationsDetailsController.autoCompleteData || locationsDetailsController.lattitudeLongitude) ? {'color':'#30cc28'} : {'color':'#999999'}"
+                                                           class="fa fa-map-marker map-marker-icon" aria-hidden="true"></i>
+                                                        <label class="address-verification-label ng-binding">
+                                                            {{(locationsDetailsController.autoCompleteData  || locationsDetailsController.lattitudeLongitude)? 'Address Verified' : 'Address Not Verified'}}</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -192,13 +230,12 @@
                                                 <div class="col-md-3 col-sm-12 col-xs-12 pull-right verify-address-button">
                                                     <button type="button" class="btn blue pull-right"
                                                             ng-click="locationsDetailsController.verifyAddress(locationForm)"
-                                                            ng-disabled="(locationForm.$invalid || locationForm.$pristine) && !locationsDetailsController.isLocationVerified">
+                                                            ng-disabled="locationsDetailsController.autoCompleteData">
                                                         Verify Address
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -207,12 +244,14 @@
                 </div>
                 <div class="modal-footer" style="padding-bottom: 0px;">
                     <button type="button" class="btn btn-default"
+                            ng-show="locationsDetailsController.action === 'add'"
                             ng-click="locationsDetailsController.clearAndGoBack()">Cancel
                     </button>
                     <button type="button" class="btn blue"
                             ng-click="locationsDetailsController.saveLocation(locationForm)"
-                            ng-disabled="locationForm.$invalid || locationForm.$pristine">Save
+                            >Save
                     </button>
+                    <!--ng-disabled="locationForm.$invalid || locationForm.$pristine"-->
                 </div>
             </div>
         </div>
@@ -276,11 +315,11 @@
             <div class="portlet-body">
                 <div class="tabbable-line" style="padding-left: 10px ">
                     <ul class="nav nav-tabs">
-                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsdetails.costcenters')}">
-                            <a ui-sref="locationsdetails.costcenters()">Cost Centers</a>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsDetails.costCenters')}">
+                            <a ui-sref="locationsDetails.costCenters">Cost Centers</a>
                         </li>
-                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsdetails.stations')}">
-                            <a ui-sref="locationsdetails.stations()">Stations</a>
+                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsDetails.stations')}">
+                            <a ui-sref="locationsDetails.stations">Stations</a>
                         </li>
                     </ul>
                     <div class="tab-content">
