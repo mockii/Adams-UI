@@ -30,52 +30,29 @@
             NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED: 'Not intentionally nor inherently included',
             UNDECLARED: 'Undeclared'
         })
-        .constant('MAPPED_ALLERGEN_CODES', {
-            AC: 'Shellfish - Crustacean',
-            AE: 'Eggs',
-            AF: 'Fish',
-            AM: 'Milk',
-            AN: 'Tree Nuts',
-            AP: 'Peanuts',
-            AS: 'Sesame seeds',
-            AU: 'Sulphites',
-            AW: 'Gluten',
-            AY: 'Soybeans',
-            BC: 'Celery',
-            BM: 'Mustard',
-            NC: 'Cocoa',
-            NK: 'Coriander',
-            NL: 'Lupine',
-            NM: 'Corn',
-            NP: 'Pod fruits',
-            NR: 'Rye',
-            NW: 'Carrot',
-            UM: 'Shellfish - Crustacean',
-            UW: 'Wheat'
-        })
-        .constant('OTHER_ALLERGENS', {
-            AS: 'Sesame seeds',
-            AU: 'Sulphites',
-            AW: 'Gluten',
-            BC: 'Celery',
-            BM: 'Mustard',
-            NC: 'Cocoa',
-            NK: 'Coriander',
-            NL: 'Lupine',
-            NM: 'Corn',
-            NP: 'Pod fruits',
-            NR: 'Rye',
-            NW: 'Carrot'
-        })
         .constant('BIG_EIGHT_ALLERGENS', {
+            AC: 'Crustaceans',
             AE: 'Eggs',
             AF: 'Fish',
             AM: 'Milk',
+            AN: 'Nuts',
             AP: 'Peanuts',
-            UM: 'Shellfish - Crustacean',
+            AW: 'Gluten',
+            AX: 'Gluten',
             AY: 'Soybeans',
-            AN: 'Tree Nuts',
+            GK: 'Kamut',
+            ML: 'Lactose',
+            SA: 'Almond',
+            SC: 'Cashew',
+            SH: 'Hazelnut',
+            SM: 'Macadamia Nut',
+            SP: 'Pecan Nut',
+            SQ: 'Queenslan Nut',
+            SR: 'Brazil Nut',
+            ST: 'Pistachio',
+            SW: 'Walnut',
+            TN: 'Tree Nut',
+            UM: 'Molluscs',
             UW: 'Wheat'
-        })
-        .constant('UNMAPPED_ALLERGEN_CODES', ['AA','AD','AH','AI','AL','AX','BA','BB','BE','BI','BR','BS','CA','CL','CN','CO','CT','DA','EG','EP','EV','FA','GB','GE','GK','GL','GO','GS','HC','HP','HX','HY','MH','ML','MO','NE','ON','PS','SA','SC','SH','SM','SO','SP','SQ','SR','ST','SW','TN','UN','X99']);
+        });
 })();

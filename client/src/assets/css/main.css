@@ -138,3 +138,19 @@ and (min-width: 768px) {
     border-style: solid;
     border-width: thin;
 }
+
+
+
+.powered-by-footer {
+    width: 100%;
+    margin-bottom: 25px;
+    margin-top: -10px;
+}
+
+.powered-by-logo {
+    background-image: url("../images/powered-by-adams-logo.png");
+    width: 73px;
+    height: 25px;
+    float: right;
+    margin-right: 20px;
+}

@@ -1,7 +1,13 @@
 <div class="tab-pane fade active in margin-top-20">
     <div class="row">
         <div class="col-lg-12">
-            Welcome to pos item classes!
+            <div class="point-of-sale-item-btn-grp">
+                <button type="button" class="btn blue" ng-click="posItemClassesController.openAddEditItemClassesModal('Add')">Add Item Class <span class="fa fa-plus"></span></button>
+            </div>
+            <div class="point-of-sale-item-grid" stg-ui-grid
+                 get-grid-options="posItemClassesController.gridOptions"
+                 get-grid-data="posItemClassesController.getGridData">
+            </div>
         </div>
     </div>
 </div>

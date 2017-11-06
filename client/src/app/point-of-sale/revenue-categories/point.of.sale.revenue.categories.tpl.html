@@ -1,7 +1,13 @@
 <div class="tab-pane fade active in margin-top-20">
     <div class="row">
         <div class="col-lg-12">
-            Welcome to pos revenue categories!
+            <div class="point-of-sale-item-btn-grp">
+                <button type="button" class="btn blue" ng-click="posRevenueCategoriesController.openAddEditRevenueModal('Add')">Add Revenue Category <span class="fa fa-plus"></span></button>
+            </div>
+            <div class="point-of-sale-item-grid" stg-ui-grid
+                 get-grid-options="posRevenueCategoriesController.gridOptions"
+                 get-grid-data="posRevenueCategoriesController.getGridData">
+            </div>
         </div>
     </div>
 </div>

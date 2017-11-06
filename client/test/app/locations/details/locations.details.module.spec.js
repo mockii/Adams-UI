@@ -7,7 +7,7 @@ describe('adams.locations.details', function() {
         $scope,
         $injector,
         $ocLazyLoad,
-        state = 'locationsdetails';
+        state = 'locationsDetails';
 
     beforeEach(function() {
         module('common.url');
@@ -53,60 +53,160 @@ describe('adams.locations.details', function() {
     });
 
     it('should respond to URL', function () {
-        expect($state.href(state)).toEqual('#/locations/');
+        expect($state.href(state)).toEqual('#/locations//details');
     });
 
-    it('locationsdetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad) {
+    it('locationsDetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad) {
 
-        $injector.invoke($state.get('locationsdetails').resolve['deps'])
+        $injector.invoke($state.get('locationsDetails').resolve['deps'])
             .then(function(res) {console.log(' *res ', res.data);})
             .catch(function(err) {console.log(' *err ', err);});
-        expect($state.get('locationsdetails').resolve['deps'][0]).toEqual('$ocLazyLoad');
-        expect($state.get('locationsdetails').resolve['deps'][1]($ocLazyLoad)).toBeDefined();
+        expect($state.get('locationsDetails').resolve['deps'][0]).toEqual('$ocLazyLoad');
+        expect($state.get('locationsDetails').resolve['deps'][1]($ocLazyLoad)).toBeDefined();
     }));
 
-    it('locationsdetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
-        $stateParams.locationCode = 'create';
-        $location.replace().path('/locations/create');
-        $injector.invoke($state.get('locationsdetails').resolve['action']);
-        expect($state.get('locationsdetails').resolve['action']($stateParams, $location)).toBeDefined();
-    }));
-
-    it('locationsdetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+    it('locationsDetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
         $stateParams.locationCode = 'edit';
         $stateParams.action = null;
         $location.replace().path('/locations/new');
-        $injector.invoke($state.get('locationsdetails').resolve['action']);
-        expect($state.get('locationsdetails').resolve['action']($stateParams, $location)).toBeDefined();
+        $injector.invoke($state.get('locationsDetails').resolve['action']);
+        expect($state.get('locationsDetails').resolve['action']($stateParams, $location)).toBeDefined();
     }));
 
-    it('locationsdetails.costcenters', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+    it('locationsDetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationRowData = {};
+        $stateParams.locationCode = 'LBFNWCU4';
+        $injector.invoke($state.get('locationsDetails').resolve['locationRowData']);
+        expect($state.get('locationsDetails').resolve['locationRowData']($location, $stateParams)).toEqual({});
+    }));
+
+    it('locationsDetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationRowData = {};
+        $stateParams.locationRowData.location_code = null;
+        $stateParams.locationRowData = {"location_code":"LBFNWCU4","location_name":"sdfsdf","location_description":null,"address1":"asd","address2":"xcvxv","city":"sdfsdf","state":"AZ","zip":"00000","active":true,"longitude_latitude":"35.00000N, -95.345678W","created_by":null,"created_date":null,"modified_by":null,"modified_date":null, "location_hours":[]};
+        $location.replace().path('/locations/LBFNWCU4/details/costcenters');
+        $stateParams.locationCode = 'LBFNWCU4';
+        $injector.invoke($state.get('locationsDetails').resolve['locationRowData']);
+        expect($state.get('locationsDetails').resolve['locationRowData']($location, $stateParams)).toEqual(null);
+    }));
+
+    it('locationsDetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams) {
+        $stateParams.locationRowData = {};
+        $stateParams.action = 'edit';
+        $stateParams.locationCode = '100';
+        $injector.invoke($state.get('locationsDetails').resolve['locationsSearchData'])
+            .then(function(res) {console.log(' *res ', res.data);})
+            .catch(function(err) {console.log(' *err ', err);});
+        expect($state.get('locationsDetails').resolve['locationsSearchData']).toBeDefined();
+    }));
+
+    it('locationsDetails', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationRowData = {};
+        $stateParams.action = null;
+        $location.replace().path('/locations/LBFNWCU4/details/costcenters');
+        $stateParams.locationCode = '100';
+        $injector.invoke($state.get('locationsDetails').resolve['locationsSearchData']);
+        expect($state.get('locationsDetails').resolve['locationsSearchData']).toBeDefined();
+    }));
+
+
+
+
+    it('addLocation', inject(function($state, $injector, $httpBackend, $ocLazyLoad) {
+
+        $injector.invoke($state.get('addLocation').resolve['deps'])
+            .then(function(res) {console.log(' *res ', res.data);})
+            .catch(function(err) {console.log(' *err ', err);});
+        expect($state.get('addLocation').resolve['deps'][0]).toEqual('$ocLazyLoad');
+        expect($state.get('addLocation').resolve['deps'][1]($ocLazyLoad)).toBeDefined();
+    }));
+
+    it('addLocation', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationCode = 'add';
+        $stateParams.action = null;
+        $location.replace().path('/locations/new');
+        $injector.invoke($state.get('addLocation').resolve['action']);
+        expect($state.get('addLocation').resolve['action']($stateParams, $location)).toBeDefined();
+    }));
+
+    it('addLocation', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationRowData = {};
+        $injector.invoke($state.get('addLocation').resolve['locationRowData']);
+        expect($state.get('addLocation').resolve['locationRowData']($stateParams, $location)).toEqual($stateParams.locationRowData);
+    }));
+
+    it('addLocation', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams) {
+        $stateParams.locationRowData = {};
+        $stateParams.action = 'add';
+        $stateParams.locationCode = '100';
+        $injector.invoke($state.get('addLocation').resolve['locationsSearchData']);
+        expect($state.get('addLocation').resolve['locationsSearchData']).toBeDefined();
+    }));
+
+    it('addLocation', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams) {
+        $stateParams.locationRowData = {};
+        $stateParams.action = null;
+        $stateParams.locationCode = '100';
+        $injector.invoke($state.get('addLocation').resolve['locationsSearchData']);
+        expect($state.get('addLocation').resolve['locationsSearchData']).toBeDefined();
+    }));
+
+
+
+
+
+
+
+    it('locationsDetails.costCenters', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
         $stateParams.locationCode = 'create';
         $location.replace().path('/locations/create');
-        $injector.invoke($state.get('locationsdetails.costcenters').resolve['action']);
-        expect($state.get('locationsdetails.costcenters').resolve['action']($stateParams, $location)).toBeDefined();
+        $injector.invoke($state.get('locationsDetails.costCenters').resolve['action']);
+        expect($state.get('locationsDetails.costCenters').resolve['action']($stateParams, $location)).toBeDefined();
     }));
 
-    it('locationsdetails.costcenters', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+    it('locationsDetails.costCenters', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
         $stateParams.locationCode = 'edit';
         $stateParams.action = null;
         $location.replace().path('/locations/new');
-        $injector.invoke($state.get('locationsdetails.costcenters').resolve['action']);
-        expect($state.get('locationsdetails.costcenters').resolve['action']($stateParams, $location)).toBeDefined();
+        $injector.invoke($state.get('locationsDetails.costCenters').resolve['action']);
+        expect($state.get('locationsDetails.costCenters').resolve['action']($stateParams, $location)).toBeDefined();
     }));
 
-    it('locationsdetails.stations', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+    it('locationsDetails.stations', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
         $stateParams.locationCode = 'create';
         $location.replace().path('/locations/create');
-        $injector.invoke($state.get('locationsdetails.stations').resolve['action']);
-        expect($state.get('locationsdetails.stations').resolve['action']($stateParams, $location)).toBeDefined();
+        $injector.invoke($state.get('locationsDetails.stations').resolve['action']);
+        expect($state.get('locationsDetails.stations').resolve['action']($stateParams, $location)).toBeDefined();
     }));
 
-    it('locationsdetails.stations', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+    it('locationsDetails.stations', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
         $stateParams.locationCode = 'edit';
         $stateParams.action = null;
         $location.replace().path('/locations/new');
-        $injector.invoke($state.get('locationsdetails.stations').resolve['action']);
-        expect($state.get('locationsdetails.stations').resolve['action']($stateParams, $location)).toBeDefined();
+        $injector.invoke($state.get('locationsDetails.stations').resolve['action']);
+        expect($state.get('locationsDetails.stations').resolve['action']($stateParams, $location)).toBeDefined();
+    }));
+
+
+    it('addLocation.costCenters', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationCode = 'edit';
+        $stateParams.action = null;
+        $injector.invoke($state.get('addLocation.costCenters').resolve['action']);
+        expect($state.get('addLocation.costCenters').resolve['action']($stateParams, $location)).toBeDefined();
+    }));
+
+
+    it('addLocation.stations', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationCode = 'edit';
+        $stateParams.action = null;
+        $injector.invoke($state.get('addLocation.stations').resolve['action']);
+        expect($state.get('addLocation.costCenters').resolve['action']($stateParams, $location)).toBeDefined();
+    }));
+
+    it('addLocation.stations', inject(function($state, $injector, $httpBackend, $ocLazyLoad, $stateParams, $location) {
+        $stateParams.locationCode = 'edit';
+        $stateParams.action = {};
+        $injector.invoke($state.get('addLocation.stations').resolve['action']);
+        expect($state.get('addLocation.costCenters').resolve['action']($stateParams, $location)).toBeDefined();
     }));
 });

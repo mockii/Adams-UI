@@ -38,6 +38,11 @@
     line-height: 16px !important;
 }
 
+.allergen-legend .alert-warning{
+    color: #f2ae38 !important;
+    line-height: 16px !important;
+}
+
 .allergen-table .allergen-name {
     width: 175px;
 }

@@ -114,7 +114,8 @@ module.exports = function(grunt) {
                 '<%= src.i18n %>'
             ],
             options: {
-                jshintrc: '.jshintrc'
+                jshintrc: '.jshintrc',
+                reporterOutput: ''
             }
         },
 

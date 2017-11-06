@@ -6,13 +6,13 @@ describe('adams.point.of.sale', function() {
         $scope,
         $injector,
         $ocLazyLoad,
-        basestate = 'pointofsale',
-        itemsearch = 'pointofsale.itemsearch',
-        revenuecategories = 'pointofsale.revenuecategories',
-        itemcategories = 'pointofsale.itemcategories',
-        itemclasses = 'pointofsale.itemclasses',
-        systemcategories = 'pointofsale.systemcategories',
-        systemcategorydefault = 'pointofsale.systemcategorydefaults';
+        basestate = 'pointOfSale',
+        itemsearch = 'pointOfSale.itemSearch',
+        revenuecategories = 'pointOfSale.revenueCategories',
+        itemcategories = 'pointOfSale.itemCategories',
+        itemclasses = 'pointOfSale.itemClasses',
+        systemcategories = 'pointOfSale.systemCategories',
+        systemcategorydefault = 'pointOfSale.systemCategoryDefaults';
 
     beforeEach(function() {
         module('common.url');
@@ -29,7 +29,7 @@ describe('adams.point.of.sale', function() {
             $injector = _$injector_;
             $ocLazyLoad = _$ocLazyLoad_;
             $ocLazyLoad.load({
-                name:'pointofsale',
+                name:'pointOfSale',
                 files:['css/point-of-sale.css']
             }).then(function(){
                 dump("Loaded!");
@@ -44,11 +44,11 @@ describe('adams.point.of.sale', function() {
     it('should respond to URL', function () {
         expect($state.href(basestate)).toEqual('#/pointofsale');
         expect($state.href(itemsearch)).toEqual('#/pointofsale/item/search');
-        expect($state.href(revenuecategories)).toEqual('#/pointofsale/revenueCategories');
-        expect($state.href(itemcategories)).toEqual('#/pointofsale/itemCategories');
-        expect($state.href(itemclasses)).toEqual('#/pointofsale/itemClasses');
-        expect($state.href(systemcategories)).toEqual('#/pointofsale/systemCategories');
-        expect($state.href(systemcategorydefault)).toEqual('#/pointofsale/systemCategoryDefaults');
+        expect($state.href(revenuecategories)).toEqual('#/pointofsale/revenuecategories');
+        expect($state.href(itemcategories)).toEqual('#/pointofsale/itemcategories');
+        expect($state.href(itemclasses)).toEqual('#/pointofsale/itemclasses');
+        expect($state.href(systemcategories)).toEqual('#/pointofsale/systemcategories');
+        expect($state.href(systemcategorydefault)).toEqual('#/pointofsale/systemcategorydefaults');
     });
 
     it('should resolve pos base deps', inject(function($state, $injector, $httpBackend, $ocLazyLoad) {

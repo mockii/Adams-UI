@@ -123,12 +123,12 @@
 
                                         <div class="row col-md-12">
                                             <label class="control-label control-label-required col-md-3">Zip</label>
-                                            <div class="form-group">
-                                                <div class="col-md-2 zip-icon input-icon right">
+                                            <div class="col-md-5 form-group">
+                                                <div class="zip-icon input-icon right">
                                                     <input type="text" class="form-control" name="zip"
                                                            ng-change="locationsDetailsController.addressChange()"
                                                            ng-blur="locationsDetailsController.onAddressFocusOut($event)"
-                                                           style="width: 100px;" required stg-form-validation validation-type="zip"
+                                                           required stg-form-validation validation-type="zip"
                                                            ng-model="locationsDetailsController.locationZip">
                                                 </div>
                                             </div>
@@ -190,16 +190,20 @@
                                             <label class="control-label col-md-3">Map</label>
                                             <div class="form-group">
                                                 <div class="row col-md-9" style="margin-left: 0px;">
-                                                    <div class="map-address-not-found col-sm-12 col-xs-12"
+                                                    <!--<div class="map-address-not-found col-sm-12 col-xs-12"
                                                          ng-show="locationsDetailsController.autoCompleteData === null">
+
+                                                    </div>-->
+                                                    <!--<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>-->
+
+                                                    <div ng-class="locationsDetailsController.autoCompleteData === null ? 'col-sm-12 col-xs-12 map-not-available' : ''">
                                                         <i ng-show="locationsDetailsController.autoCompleteData === null"
                                                            class="fa fa-map-pin map-pin"
-                                                           aria-hidden="true"></i>
-                                                    </div>
-                                                    <!--<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>-->
-                                                    <div id="map"
-                                                         class="col-sm-12 col-xs-12 map"
-                                                         ng-show="locationsDetailsController.autoCompleteData !== null">
+                                                           aria-hidden="true">
+                                                        </i>
+                                                        <div id="map"
+                                                            class="col-sm-12 col-xs-12 map">
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12 col-xs-12 pull-right address-verification-box">
                                                         <i ng-style="(locationsDetailsController.autoCompleteData || locationsDetailsController.lattitudeLongitude) ? {'color':'#30cc28'} : {'color':'#999999'}"
@@ -213,9 +217,8 @@
 
                                         <div class="container row form-group col-md-12 status-verify-address-box">
                                             <label class="control-label col-md-3">Active</label>
-                                            <div class="row col-md-9">
-                                                <div class="col-md-3 col-sm-12 col-xs-12"
-                                                     style="min-width: 129px;margin-left: 5px;">
+                                            <div class="row col-md-9" style="display: flex;">
+                                                <div class="col-sm-12 col-xs-12 pull-left active-switch-location-div">
                                                     <label class="switch pull-right">
                                                         <input class="switch-input" name="status"
                                                                ng-checked="locationsDetailsController.locationStatus"
@@ -315,11 +318,11 @@
             <div class="portlet-body">
                 <div class="tabbable-line" style="padding-left: 10px ">
                     <ul class="nav nav-tabs">
-                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsDetails.costCenters')}">
-                            <a ui-sref="locationsDetails.costCenters">Cost Centers</a>
+                        <li ui-sref-active="active" ng-class="{active:locationsDetailsController.action === 'add' ? $state.includes('addLocation.costCenters') : $state.includes('locationsDetails.costCenters')}">
+                            <a ui-sref="{{locationsDetailsController.action === 'add' ? 'addLocation.costCenters' : 'locationsDetails.costCenters'}}">Cost Centers</a>
                         </li>
-                        <li ui-sref-active="active" ng-class="{active:$state.includes('locationsDetails.stations')}">
-                            <a ui-sref="locationsDetails.stations">Stations</a>
+                        <li ui-sref-active="active" ng-class="{active:locationsDetailsController.action === 'add' ? $state.includes('addLocation.stations') : $state.includes('locationsDetails.stations')}">
+                            <a ui-sref="{{locationsDetailsController.action === 'add' ? 'addLocation.stations' : 'locationsDetails.stations'}}">Stations</a>
                         </li>
                     </ul>
                     <div class="tab-content">

@@ -20,6 +20,8 @@
                         Number(locationsDetailsController.lattitudeLongitude.split(',')[0].match(/[-+]?\d*(\.(?=\d))?\d+/g)) : NaN;
                     locationsDetailsController.locationLongitude = locationsDetailsController.lattitudeLongitude !== '' ?
                         Number(locationsDetailsController.lattitudeLongitude.split(',')[1].match(/[-+]?\d*(\.(?=\d))?\d+/g)) : NaN;
+                } else {
+                    // Do nothing
                 }
 
                 function initialize() {
@@ -53,7 +55,7 @@
                 };
 
                 locationsDetailsController.stateFilterChanged = function(state){
-                    console.log(state);
+                    $log.log(state);
                 };
 
                 locationsDetailsController.clearAndGoBack = function(){
@@ -62,16 +64,7 @@
                     }
                 };
 
-                locationsDetailsController.errorHandling = function (errorMessage) {
-                    ModalDialogService.confirm({
-                        bodyText: errorMessage,
-                        title: 'Error Message',
-                        okText: 'Ok'
-                    });
-                };
-
                 locationsDetailsController.saveLocation = function(){
-                    //TODO : Restructure this properly
                   var locationData = {},
                       locations = [],
                       locationObject = {
@@ -80,6 +73,8 @@
                           "address2": locationsDetailsController.locationAddress2,
                           "city": locationsDetailsController.locationCity,
                           "location_name": locationsDetailsController.locationName,
+                          "location_code": locationsDetailsController.locationCode,
+                          "location_description": "",
                           "longitude_latitude": locationsDetailsController.locationLattitude + "," + locationsDetailsController.locationLongitude,
                           "state": locationsDetailsController.locationState.abbreviation,
                           "zip": locationsDetailsController.locationZip,
@@ -88,21 +83,53 @@
                       locations.push(locationObject);
                       locationData.locations = locations;
                       locationsDetailsController.locationData = locationData;
-                    LocationsDetailsService.addLocation(locationsDetailsController.locationData)
-                        .then(function(response){
-                            locationsDetailsController.locationsSearchData = response;
-                            $stateParams.action = locationsDetailsController.action = 'edit';
-                            StgStatesService.goToState('locationsdetails', {
-                                'locationSearchData': locationsDetailsController.locationsSearchData,
-                                'locationCode': locationsDetailsController.locationsSearchData.location_code,
-                                'action': locationsDetailsController.action,
-                                'backState': 'locations',
-                                'locationRowData': null
-                            });
-                        }, function(error){
-                            throw "An error occurred while adding locations " + error;
-                        });
+                      if(locationsDetailsController.action === 'add'){
+                            LocationsDetailsService.addLocation(locationsDetailsController.locationData)
+                                .then(function(response){
+                                    onAddOrEditResponse(response);
+                                }, function(error){
+                                    $log.error("An error occurred while adding locations " + error);
+                                });
+
+                      } else {
+                            LocationsDetailsService.updateLocationDetailsByLocationCode(locationsDetailsController.locationData.locations[0])
+                                .then(function(response){
+                                    onAddOrEditResponse(response);
+                                }, function(error){
+                                    $log.error("An error occurred while updating locations " + error);
+                                });
+                      }
                 };
+
+                function onAddOrEditResponse(response){
+                    if(locationsDetailsController.action === 'add') {
+                        locationsDetailsController.locationsSearchData = response;
+                        $stateParams.action = locationsDetailsController.action = 'edit';
+                        StgStatesService.goToState('locationsDetails', {
+                            'locationSearchData': locationsDetailsController.locationsSearchData,
+                            'locationCode': locationsDetailsController.locationsSearchData.location_code,
+                            'action': locationsDetailsController.action,
+                            'backState': 'locations',
+                            'locationRowData': null
+                        });
+                    } else {
+                        LocationsDetailsService.getLocationDetailsByLocationCode(locationsDetailsController.locationCode)
+                            .then(function(response){
+                                    locationsDetailsController.locationsSearchData = response;
+                                    $stateParams.action = locationsDetailsController.action = 'edit';
+                                    StgStatesService.goToState('locationsDetails', {
+                                        'locationSearchData': locationsDetailsController.locationsSearchData,
+                                        'locationCode': locationsDetailsController.locationsSearchData.location_code,
+                                        'action': locationsDetailsController.action,
+                                        'backState': 'locations',
+                                        'locationRowData': null
+                                    });
+                                },
+                                function(error){
+                                    $log.error("An error occurred while fetching locations", error);
+                            });
+                    }
+                }
 
                 locationsDetailsController.buildOperatingHoursData = function() {
                     var gridArray = [],
@@ -166,18 +193,6 @@
                     });
                 };
 
-                locationsDetailsController.appendDefaultSeconds = function(timeString){
-                    var time = locationsDetailsController.getHour(timeString.trim());
-                    time = time.search(':') > -1 ?
-                        (time.search(':00')  > -1 ? time : time+ ':00') : time + ':00';
-                    return time + locationsDetailsController.getMeridian(time);
-                };
-
-                locationsDetailsController.getHour = function(time) {
-                    var hour = time.indexOf(':') > -1 ? time.split(':')[0] : (time.match(/\d+/)[0]);
-                    return hour.length === 1 ? '0' + hour : hour;
-                };
-
                 locationsDetailsController.getCorrectedTime = function(time){
                     if(!time) { return ''; }
                     var hourAndSeconds = time.split(' ')[0];
@@ -190,15 +205,6 @@
                     var updatedHourWithSeconds = hour + seconds;
 
                     return updatedHourWithSeconds + " " + time.split(' ')[1];
-                };
-
-                locationsDetailsController.getSeconds = function(time){
-                    var seconds = time.split(':')[1] ? time.split(':')[1] : '00';
-                    return seconds.length === 1 ? '0' + seconds : seconds;
-                };
-
-                locationsDetailsController.getMeridian = function(time){
-                    return time.indexOf('AM') > -1 ? 'AM' : (time.indexOf('PM') > -1 ? 'PM' : '');
                 };
 
                 locationsDetailsController.containsMatchingWeekDayHourAndName = function(name, openHour, closeHour){
@@ -254,7 +260,7 @@
                         }, function(error){
                             Utils.stopBlockUI("locations-operating-hours-grid");
                             CompassToastr.error("There occurred an error while deleting Locations operating hours for location "+ locationsRow.name);
-                            throw "An error occurred while deleting locations operating hours " + error;
+                            $log.error("An error occurred while deleting locations operating hours " + error);
                         });
                 };
 
@@ -287,7 +293,6 @@
                                 return locationsDetailsController.gridArray;
                             },
                             locationsSearchData: function($stateParams, $location, LocationsDetailsService){
-                                // return $scope.locationsDetailsController.locationsSearchData || locationsDetailsController.locationsSearchData;
                                 if($stateParams.locationsSearchData){
                                     return $stateParams.locationsSearchData;
                                 } else if($scope.locationsSearchData || locationsDetailsController.locationsSearchData) {
@@ -298,7 +303,7 @@
                                 }
                             }
                         }
-                    }).result.then(function (response, error) {
+                    }).result.then(function (response) {
                         if (response === 'true') {
                             // dialog cancelled deliberately. Do not save
                         } else {
@@ -312,7 +317,7 @@
                             return;
                         }
                         Utils.stopBlockUI("locations-operating-hours-grid");
-                        throw Error("An Error occured while saving locations operating hours data " + error);
+                        $log.error("An Error occured while saving locations operating hours data " + error);
                     });
                 };
 
@@ -329,12 +334,19 @@
                                 var status = locationsDetailsController.actionStatus === 'add' ? 'added' : 'updated';
                                 CompassToastr.success("The operating hours for location " + locationName + " has been successfully " + status);
                             }
-                            // Refresh the Table
-                            initialize();
+                            // Get the updated data and Refresh the Table
+                            LocationsDetailsService.getLocationDetailsByLocationCode(locationsDetailsController.locationCode)
+                                .then(function(response) {
+                                    locationsDetailsController.locationsSearchData = response;
+                                    initialize();
+                                }, function(error){
+                                    CompassToastr.error("A error occurred while fetching location details by location code " + error);
+                                    $log.error("A error occurred while fetching location details by location code ", error);
+                                });
                         },
                         function (error) {
                             CompassToastr.error("A error occurred while " + actionStatus + " locations operating hours for location " + locationName + " with error" + error);
-                            throw "An error occurred while updating location status.";
+                            $log.error("An error occurred while updating location status.", error);
                         });
                     return locationsOperatingHoursPromise;
                 }
@@ -353,7 +365,7 @@
                 $rootScope.$on('googleMapsAutoCompleteData', function ($event, autoCompleteData, formattedAddressData) {
                     locationsDetailsController.autoCompleteData = autoCompleteData;
                     if(locationsDetailsController.autoCompleteData && formattedAddressData){
-                        locationsDetailsController.locationAddress = ((formattedAddressData.streetNumber || '') + " " + (formattedAddressData.streetName || '') || '').trimLeft();
+                        locationsDetailsController.locationAddress = ((formattedAddressData.streetNumber || '') + " " + (formattedAddressData.streetName || '')).trimLeft();
                         locationsDetailsController.locationAddress2 = "";
                         locationsDetailsController.locationCity = formattedAddressData.city || '';
                         locationsDetailsController.locationCounty = formattedAddressData.county || '';

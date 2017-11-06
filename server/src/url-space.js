@@ -91,7 +91,21 @@ var urlSpace = (function () {
                 stationsByLocationAndStationCode: '/api/locations/:location_code/stations/:station_code',
                 getCostCentersByLocationAndStationCode: '/api/locations/:location_code/stations/:station_code/cost_centers',
                 addCostCentersByLocationAndStationCode: '/api/locations/:location_code/stations/:station_code/cost_centers',
-                updateStationsCostCenter: '/api/locations/:location_code/stations/:station_code/cost_centers/:cost_center_name'
+                updateStationsCostCenter: '/api/locations/:location_code/stations/:station_code/cost_centers/:cost_center_name',
+
+                // POS
+                getPosItems: '/api/pos/items',
+                getPosItem: '/api/pos/items/:pos_id',
+                getPosRevenueCategories: '/api/pos/revenue_categories',
+                addPosRevenueCategory: '/api/pos/revenue_categories',
+                updatePosRevenueCategory: '/api/pos/revenue_categories',
+                getPosItemCategories: '/api/pos/item_categories',
+                addPosItemCategory: '/api/pos/item_categories',
+                updatePosItemCategory: '/api/pos/item_categories',
+                getPosItemClasses: '/api/pos/item_classes',
+                addPosItemClass: '/api/pos/item_classes',
+                updatePosItemClass: '/api/pos/item_classes',
+                getTypeDetailsForSystemCategoryAndVendor: '/api/pos/system_categories/:system_category/vendors/:vendor_name/types/:type'
 
             },
             adams: {
@@ -183,7 +197,18 @@ var urlSpace = (function () {
                 stationsByLocationAndStationCode: '/api/locations/{locationCode}/stations/{stationCode}/?cost_center_name={costCenterName}&source_system_id={sourceSystemId}',
                 getCostCentersByLocationAndStationCode: '/api/locations/{locationCode}/stations/{stationCode}/cost_centers?limit={limit}&page={page}&sorts={sorts}&search={search}',
                 addCostCentersByLocationAndStationCode: '/api/locations/{locationCode}/stations/{stationCode}/cost_centers',
-                updateStationsCostCenter: '/api/locations/{locationCode}/stations/{stationCode}/cost_centers/{costCenterName}/?source_system_id={sourceSystemId}'
+                updateStationsCostCenter: '/api/locations/{locationCode}/stations/{stationCode}/cost_centers/{costCenterName}/?source_system_id={sourceSystemId}',
+
+                // POS
+                getPosRevenueCategories: '/api/pos/revenue_categories?limit={limit}&page={page}&sorts={sorts}&search={search}',
+                addPosRevenueCategory: '/api/pos/revenue_categories',
+                updatePosRevenueCategory: '/api/pos/revenue_categories',
+                getPosItemCategories: '/api/pos/item_categories?limit={limit}&page={page}&sorts={sorts}&search={search}',
+                addPosItemCategory: '/api/pos/item_categories',
+                updatePosItemCategory: '/api/pos/item_categories',
+                getPosItemClasses: '/api/pos/item_classes?limit={limit}&page={page}&sorts={sorts}&search={search}',
+                addPosItemClass: '/api/pos/item_classes',
+                updatePosItemClass: '/api/pos/item_classes'
             }
         },
         headers: {

@@ -11,5 +11,5 @@
     "alert": false
   },
   "debug": true,
-  "predef": ["angular", "console", "module", "_", "ko", "Metronic", "Layout", "QuickSidebar", "Demo", "window"]
+  "predef": ["angular", "console", "module", "_", "ko", "Metronic", "Layout", "QuickSidebar", "Demo"]
 }

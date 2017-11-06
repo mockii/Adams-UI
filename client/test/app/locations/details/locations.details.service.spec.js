@@ -6,6 +6,7 @@ describe('LocationsDetailsService', function(){
         sampleSvcObj,
         $q,
         $httpBackend,
+        logService = {},
         urlSpace,
         mockHttp,
         promise,
@@ -14,12 +15,19 @@ describe('LocationsDetailsService', function(){
     beforeEach(module('adams.common.url'));
     beforeEach(module('adams.locations.details.service'));
 
-    beforeEach(inject(function($rootScope, _$httpBackend_, LocationsDetailsService, _$q_, ADAMS_URL_SPACE){
+    beforeEach(function () {
+        module(function ($provide) {
+            $provide.value('STGLogService', logService);
+        });
+    });
+
+    beforeEach(inject(function($rootScope, _$httpBackend_, LocationsDetailsService, _$q_, ADAMS_URL_SPACE, STGLogService, $log){
         scope = $rootScope;
         $httpBackend = _$httpBackend_;
         sampleSvcObj = LocationsDetailsService;
         $q = _$q_;
         urlSpace  = ADAMS_URL_SPACE;
+        logService = STGLogService;
     }));
 
     afterEach(function () {

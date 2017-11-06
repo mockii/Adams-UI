@@ -2,7 +2,7 @@
 'use strict';
 
 describe("adams", function () {
-    var $httpBackend, scope, httpProvider;
+    var $httpBackend, scope, httpProvider ={};
 
     beforeEach(module('common.templates.app'));
     beforeEach(module('adams'));
@@ -32,18 +32,41 @@ describe("adams", function () {
     beforeEach(module('adams.locations.search'));
     beforeEach(module('adams.locations.details'));
 
-    beforeEach(inject(function($rootScope, _$httpBackend_){
+    beforeEach(inject(function($rootScope, _$httpBackend_, $location){
         scope = $rootScope;
         $httpBackend = _$httpBackend_;
+        $location = $location;
+        httpProvider = {"transformResponse":[null],"transformRequest":[null],"headers":{"common":{"Accept":"application/json, text/plain, */*"},"post":{"Content-Type":"application/json;charset=utf-8"},"put":{"Content-Type":"application/json;charset=utf-8"},"patch":{"Content-Type":"application/json;charset=utf-8"},"get":{"If-Modified-Since":"0"}},"xsrfCookieName":"XSRF-TOKEN","xsrfHeaderName":"X-XSRF-TOKEN","cache":false};
     }));
 
+    beforeEach(
+        inject( function (_$httpBackend_, $controller, $rootScope, $http) {
+            $httpBackend = _$httpBackend_;
+            /*$httpBackend.expectGET('/ui/api/application/configuration')
+                .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);*/
+
+            scope = $rootScope.$new();
+        }),
+        module(function ($provide, $urlRouterProvider) {
+            $urlRouterProvider.otherwise( function(){ return false; });
+            $urlRouterProvider.deferIntercept();
+            $provide.provider('$http', httpProvider);
+        })
+    );
+
     afterEach(function () {
-        $httpBackend.verifyNoOutstandingExpectation();
+        //$httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
     });
 
     it('should call run on module run', inject(function($rootScope, $httpBackend) {
         $httpBackend.expectGET("/ui/api/application/configuration").respond({});
         $httpBackend.flush();
+    }));
+
+    it('redirects to otherwise page after locationChangeSuccess', inject(function($rootScope, $location, $http) {
+        $location.path('/nonExistentPath');
+        $rootScope.$emit("$locationChangeSuccess");
+        expect($location.path()).toBe("/");
     }));
 });

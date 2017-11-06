@@ -31,15 +31,63 @@
                                             <td class="data-not-found" colspan="50"> No major allergen information available to be displayed </td>
                                         </tr>
                                         <tr ng-repeat="allergen in allergenController.bigEightAllergensData | orderBy: 'allergen' track by $index">
-                                            <td class="allergen-name">{{allergen.allergen}}</td>
-                                            <td><i ng-class="allergen.contains ? 'fa fa-check-circle alert-danger' : ''" aria-hidden="true"></i></td>
-                                            <td><i ng-class="allergen.allergen_built_with_relevant_data ? 'fa fa-check-circle-o alert-success' : (allergen.free_from ? 'fa fa-check-circle alert-success' : '')"
-                                                   aria-hidden="true"></i></td>
-                                            <td><i ng-class="allergen.may_contain ? 'fa fa-check-circle alert-warning' : ''" aria-hidden="true"></i></td>
-                                            <td><i ng-class="allergen.derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
-                                            <td><i ng-class="allergen.not_derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
-                                            <td><i ng-class="allergen.not_intentionally_nor_inherently_included ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
-                                            <td><i ng-class="allergen.undeclared ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                            <td class="allergen-name">{{allergen.label}}</td>
+                                            <td>
+                                                <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.CONTAINS ? 'fa fa-check-circle alert-danger' : ''" aria-hidden="true"></i>
+                                                <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                   data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                   data-trigger="focus">
+                                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergenBuiltWithRelevantData ? 'fa fa-check-circle-o alert-success' : (allergen.allergen_level === ALLERGEN_LEVELS.FREE_FROM ? 'fa fa-check-circle alert-success' : '')" aria-hidden="true"></i>
+                                                <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                   data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                   data-trigger="focus">
+                                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.MAY_CONTAIN ? 'fa fa-check-circle alert-warning' : ''" aria-hidden="true"></i>
+                                                <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                   data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                   data-trigger="focus">
+                                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.DERIVED_FROM ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                   data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                   data-trigger="focus">
+                                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.NOT_DERIVED_FROM ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                   data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                   data-trigger="focus">
+                                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                   data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                   data-trigger="focus">
+                                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.UNDECLARED ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                   data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                   data-trigger="focus">
+                                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -48,6 +96,11 @@
                                 <div class="allergen-legend">
                                     <i class="fa fa-check-circle alert-success provided" aria-hidden="true"></i> - Provided
                                     <i class="fa fa-check-circle-o alert-success derived" aria-hidden="true"></i> - Derived
+                                </div>
+                            </div>
+                            <div ng-show="allergenController.hasMultipleLevels">
+                                <div class="allergen-legend">
+                                    <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i> - Contains multiple Allergen Levels
                                 </div>
                             </div>
                         </div>
@@ -73,14 +126,63 @@
                                             <td class="data-not-found" colspan="50"> No other allergen information available to be displayed </td>
                                         </tr>
                                             <tr ng-repeat="allergen in allergenController.otherAllergensData | orderBy: 'allergen' track by $index">
-                                                <td class="allergen-name">{{allergen.allergen}}</td>
-                                                <td><i ng-class="allergen.contains ? 'fa fa-check-circle alert-danger' : ''" aria-hidden="true"></i></td>
-                                                <td><i ng-class="allergen.free_from ? 'fa fa-check-circle alert-success' : ''" aria-hidden="true"></i></td>
-                                                <td><i ng-class="allergen.may_contain ? 'fa fa-check-circle alert-warning' : ''" aria-hidden="true"></i></td>
-                                                <td><i ng-class="allergen.derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
-                                                <td><i ng-class="allergen.not_derived_from ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
-                                                <td><i ng-class="allergen.not_intentionally_nor_inherently_included ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
-                                                <td><i ng-class="allergen.undeclared ? 'fa fa-check-circle' : ''" aria-hidden="true"></i></td>
+                                                <td class="allergen-name">{{allergen.label}}</td>
+                                                <td>
+                                                    <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.CONTAINS ? 'fa fa-check-circle alert-danger' : ''" aria-hidden="true"></i>
+                                                    <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                       data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                       data-trigger="focus">
+                                                        <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.FREE_FROM ? 'fa fa-check-circle alert-success' : ''" aria-hidden="true"></i>
+                                                    <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                       data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                       data-trigger="focus">
+                                                        <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.MAY_CONTAIN ? 'fa fa-check-circle alert-warning' : ''" aria-hidden="true"></i>
+                                                    <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                       data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                       data-trigger="focus">
+                                                        <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.DERIVED_FROM ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                    <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                       data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                       data-trigger="focus">
+                                                        <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.NOT_DERIVED_FROM ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                    <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                       data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                       data-trigger="focus">
+                                                        <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                    <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                       data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                       data-trigger="focus">
+                                                        <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <i ng-show="!allergen.hasMultipleLevels" ng-class="allergen.allergen_level === ALLERGEN_LEVELS.UNDECLARED ? 'fa fa-check-circle' : ''" aria-hidden="true"></i>
+                                                    <a href="" ng-show="allergen.hasMultipleLevels" data-toggle="popover" data-html="true" title="Multiple Allergen Levels"
+                                                       data-content="{{allergen.multipleAllergenLevels.join(', ')}}"
+                                                       data-trigger="focus">
+                                                        <i class="fa fa-exclamation-triangle alert-warning" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                     </tbody>
                                 </table>

@@ -55,6 +55,18 @@ module.exports = function(){
                 },
                 dynatrace: {
                     enabled: false
+                },
+                clientLogger: {
+                    flushInterval: 600000, // 10 mins
+                    maxLogLength: 10000,
+                    isDebugEnabled: true,
+                    enableLogService: true
+                },
+                googlemaps: {
+                    enabled: true,
+                    clientId: 'AIzaSyBx5XGGSNfkc_nODEPsInQMg7iZKcbd6BE',
+                    url: 'https://maps.googleapis.com/maps',
+                    scriptEndpoint: 'https://maps.googleapis.com/maps/api/js'
                 }
             };
 
@@ -84,6 +96,18 @@ module.exports = function(){
                 },
                 dynatrace: {
                     enabled: false
+                },
+                clientLogger: {
+                    flushInterval: 600000, // 10 mins
+                    maxLogLength: 10000,
+                    isDebugEnabled: true,
+                    enableLogService: true
+                },
+                googlemaps: {
+                    enabled: true,
+                    clientId: 'AIzaSyBx5XGGSNfkc_nODEPsInQMg7iZKcbd6BE',
+                    url: 'https://maps.googleapis.com/maps',
+                    scriptEndpoint: 'https://maps.googleapis.com/maps/api/js'
                 }
             };
 
@@ -113,6 +137,18 @@ module.exports = function(){
                 },
                 dynatrace: {
                     enabled: false
+                },
+                clientLogger: {
+                    flushInterval: 600000, // 10 mins
+                    maxLogLength: 10000,
+                    isDebugEnabled: true,
+                    enableLogService: true
+                },
+                googlemaps: {
+                    enabled: true,
+                    clientId: 'AIzaSyBx5XGGSNfkc_nODEPsInQMg7iZKcbd6BE',
+                    url: 'https://maps.googleapis.com/maps',
+                    scriptEndpoint: 'https://maps.googleapis.com/maps/api/js'
                 }
             };
 
@@ -142,6 +178,18 @@ module.exports = function(){
                 },
                 dynatrace: {
                     enabled: false
+                },
+                clientLogger: {
+                    flushInterval: 600000, // 10 mins
+                    maxLogLength: 10000,
+                    isDebugEnabled: true,
+                    enableLogService: true
+                },
+                googlemaps: {
+                    enabled: true,
+                    clientId: 'AIzaSyBx5XGGSNfkc_nODEPsInQMg7iZKcbd6BE',
+                    url: 'https://maps.googleapis.com/maps',
+                    scriptEndpoint: 'https://maps.googleapis.com/maps/api/js'
                 }
             };
 

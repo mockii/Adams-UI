@@ -1,7 +1,7 @@
 (function () {
     angular.module('adams.vendor.mapping.controller', ['ui.grid.pinning', 'common.modules.logging'])
-        .controller('VendorMappingController', ['$scope', '$state', '$location', 'StgStatesService', 'VendorMappingService', 'CompassToastr', '$uibModal', 'costCenterSearchData', '$timeout', 'Utils', '$log',
-            function ($scope, $state, $location, StgStatesService, VendorMappingService, CompassToastr, $uibModal, costCenterSearchData, $timeout, Utils, $log) {
+        .controller('VendorMappingController', ['$scope', '$state', '$location', 'StgStatesService', 'uiGridConstants', 'VendorMappingService', 'CompassToastr', '$uibModal', 'costCenterSearchData', '$timeout', 'Utils', '$log',
+            function ($scope, $state, $location, StgStatesService, uiGridConstants, VendorMappingService, CompassToastr, $uibModal, costCenterSearchData, $timeout, Utils, $log) {
                 var vendorMappingController = this,
                     vendorUpdatePromise;
 
@@ -218,7 +218,9 @@
                                 minWidth: 150,
                                 cellFilter: 'ediPayStatusFilter',
                                 filter: {
-                                    placeholder: ''
+                                    placeholder: '',
+                                    type: uiGridConstants.filter.SELECT,
+                                    selectOptions: [{value: true, label: 'true'}, {value: false, label: 'false'}]
                                 }
 
                             },
@@ -228,9 +230,7 @@
                                 type: 'date',
                                 cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
                                 minWidth: 150,
-                                filter: {
-                                    placeholder: ''
-                                }
+                                enableFiltering: false
 
                             },
                             {
@@ -239,9 +239,7 @@
                                 cellTemplate: '<label class="switch"><input class="switch-input" ng-checked="row.entity.associated" ng-click="grid.appScope.changeVendorAssociation(row, $event)" type="checkbox"/><span class="switch-label" data-on="YES" data-off="NO"></span><span class="switch-handle"></span></label>',
                                 cellClass: 'switchClass',
                                 minWidth: 100,
-                                filter: {
-                                    placeholder: ''
-                                }
+                                enableFiltering: false
                             },
                             {
                                 field: 'associated_by',
@@ -257,9 +255,7 @@
                                 minWidth: 150,
                                 type: 'date',
                                 cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                                filter: {
-                                    placeholder: ''
-                                }
+                                enableFiltering: false
                             },
                             {
                                 field: 'disassociated_by',
@@ -275,9 +271,7 @@
                                 minWidth: 150,
                                 type: 'date',
                                 cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                                filter: {
-                                    placeholder: ''
-                                }
+                                enableFiltering: false
                             },
                             {
                                 field: 'disassociation_reason',
@@ -301,9 +295,7 @@
                                 minWidth: 150,
                                 type: 'date',
                                 cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                                filter: {
-                                    placeholder: ''
-                                }
+                                enableFiltering: false
                             },
                             {
                                 field: 'modified_by',
@@ -319,9 +311,7 @@
                                 minWidth: 150,
                                 type: 'date',
                                 cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                                filter: {
-                                    placeholder: ''
-                                }
+                                enableFiltering: false
                             }
                         ]
                     };

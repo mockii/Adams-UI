@@ -1,13 +1,11 @@
 (function () {
     angular.module('adams.products.allergen.controller', [])
-        .controller('AllergenController', ['$scope', '$state', 'ALLERGEN_LEVELS', 'MAPPED_ALLERGEN_CODES', 'UNMAPPED_ALLERGEN_CODES', 'BIG_EIGHT_ALLERGENS', 'OTHER_ALLERGENS', 'allergenData',
-            function ($scope, $state, ALLERGEN_LEVELS, MAPPED_ALLERGEN_CODES, UNMAPPED_ALLERGEN_CODES, BIG_EIGHT_ALLERGENS, OTHER_ALLERGENS, allergenData) {
+        .controller('AllergenController', ['$scope', '$state', 'ALLERGEN_LEVELS', 'BIG_EIGHT_ALLERGENS', 'allergenData',
+            function ($scope, $state, ALLERGEN_LEVELS, BIG_EIGHT_ALLERGENS, allergenData) {
                 var allergenController = this,
-                    bigEightAllergenKeys = Object.keys(BIG_EIGHT_ALLERGENS),
-                    otherAllergenKeys = Object.keys(OTHER_ALLERGENS),
-                    allergenKeys = Object.keys(MAPPED_ALLERGEN_CODES),
-                    allergenLevelKeysArray = Object.keys(ALLERGEN_LEVELS),
-                    allergenLevelValuesArray = Object.values(ALLERGEN_LEVELS);
+                    bigEightAllergenKeys = Object.keys(BIG_EIGHT_ALLERGENS);
+
+                $scope.ALLERGEN_LEVELS = ALLERGEN_LEVELS;
 
                 allergenController.productSearchData = $scope.productsDetailsController.productSearchData;
                 $state.current.data.pageTitle = allergenController.productSearchData.description + " (" + allergenController.productSearchData.gtin + ")";
@@ -25,86 +23,59 @@
                     allergenController.hasUnmappedAllergens = allergenController.unMappedAllergens.length > 0;
                 }
 
-
                 function buildAllergenList(allergenData) {
-
+                    var existingAllergen;
                     allergenData.forEach(function(allergen){
-                        var data = {};
-                        if(bigEightAllergenKeys.indexOf(allergen.allergen_type_code) > -1 &&
-                            allergenKeys.indexOf(allergen.allergen_type_code) > -1 &&
-                            !containsAllergenKey(allergen.allergen_type_code, allergenController.bigEightAllergensData)){
-                            data.allergen = MAPPED_ALLERGEN_CODES[allergen.allergen_type_code];
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.CONTAINS)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.CONTAINS ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.FREE_FROM)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.FREE_FROM ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.MAY_CONTAIN)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.MAY_CONTAIN ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.DERIVED_FROM)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.DERIVED_FROM ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.NOT_DERIVED_FROM)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.NOT_DERIVED_FROM ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.UNDECLARED)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.UNDECLARED ? true : false;
+                        if(allergen.big8 === 'YES' && allergen.label){
+                            if(!containsAllergenLabel(allergen.label, allergenController.bigEightAllergensData)){
+                                allergenController.bigEightAllergensData.push(allergen);
+                            } else {
+                                existingAllergen = getAllergen(allergen.label, allergenController.bigEightAllergensData);
+                                if(existingAllergen.allergen_level !== allergen.allergen_level){
+                                    allergenController.hasMultipleLevels = existingAllergen.hasMultipleLevels = true;
+                                    existingAllergen.multipleAllergenLevels = existingAllergen.multipleAllergenLevels  || [];
+                                    if(!containsAllergenLevel(allergen.allergen_level, existingAllergen.multipleAllergenLevels)){
+                                        existingAllergen.multipleAllergenLevels.push(allergen);
+                                    }
+                                }
+                            }
 
-                            data.allergen_type_code = allergen.allergen_type_code;
-                            allergenController.bigEightAllergensData.push(data);
-
-                        } else if(otherAllergenKeys.indexOf(allergen.allergen_type_code) > -1 &&
-                            allergenKeys.indexOf(allergen.allergen_type_code) > -1 &&
-                            !containsAllergenKey(allergen.allergen_type_code, allergenController.otherAllergensData)){
-
-                            data.allergen = MAPPED_ALLERGEN_CODES[allergen.allergen_type_code];
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.CONTAINS)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.CONTAINS ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.FREE_FROM)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.FREE_FROM ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.MAY_CONTAIN)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.MAY_CONTAIN ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.DERIVED_FROM)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.DERIVED_FROM ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.NOT_DERIVED_FROM)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.NOT_DERIVED_FROM ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED ? true : false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.UNDECLARED)].toLowerCase()] =
-                                allergen.allergen_level === ALLERGEN_LEVELS.UNDECLARED ? true : false;
-                            allergenController.otherAllergensData.push(data);
-
-                        } else if (UNMAPPED_ALLERGEN_CODES.indexOf(allergen.allergen_type_code) > -1){
-                            allergenController.unMappedAllergens.push(allergen);
+                        } else if(allergen.label && !containsAllergenLabel(allergen.label, allergenController.otherAllergensData)){
+                            if(!containsAllergenLabel(allergen.label, allergenController.otherAllergensData)){
+                                allergenController.otherAllergensData.push(allergen);
+                            } else {
+                                existingAllergen = getAllergen(allergen.label, allergenController.otherAllergensData);
+                                if(existingAllergen.allergen_level !== allergen.allergen_level){
+                                    allergenController.hasMultipleLevels = existingAllergen.hasMultipleLevels = true;
+                                    existingAllergen.multipleAllergenLevels = existingAllergen.multipleAllergenLevels  || [];
+                                    if(!containsAllergenLevel(allergen.allergen_level, existingAllergen.multipleAllergenLevels)){
+                                        existingAllergen.multipleAllergenLevels.push(allergen);
+                                    }
+                                }
+                            }
                         } else {
-                            //do nothing
+                            allergenController.unMappedAllergens.push(allergen);
                         }
                     });
                 }
 
                 function buildAllergenListWithRelevantData(){
-                    if(allergenController.bigEightAllergensData.length > 0 &&
-                        allergenController.bigEightAllergensData.length < 8 && hasAllergenRelevantData()){
+                    if(hasAllergenRelevantData()){
                         getExcludedKeys();
                         allergenController.hasBeenBuiltWithRelevantData = true;
                         excludedKeys.forEach(function(key){
                             var data = {};
-                            data.allergen = BIG_EIGHT_ALLERGENS[key];
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.CONTAINS)].toLowerCase()] = false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.FREE_FROM)].toLowerCase()] = true;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.MAY_CONTAIN)].toLowerCase()] = false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.DERIVED_FROM)].toLowerCase()] = false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.NOT_DERIVED_FROM)].toLowerCase()] = false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.NOT_INTENTIONALLY_NOR_INHERENTLY_INCLUDED)].toLowerCase()] = false;
-                            data[allergenLevelKeysArray[allergenLevelValuesArray.indexOf(ALLERGEN_LEVELS.UNDECLARED)].toLowerCase()] = false;
+                            data.label = BIG_EIGHT_ALLERGENS[key];
                             data.allergen_type_code = key;
-                            data.allergen_built_with_relevant_data = true;
+                            data.allergen_level = '';
+                            data.allergenBuiltWithRelevantData = true;
 
                             allergenController.bigEightAllergensData.push(data);
                         });
                     }
                 }
 
-                /*Check duplicate allergens from the actal allergens data*/
+                /*Check duplicate allergens from the actual allergens data*/
                 function containsAllergenKey(key, allergensList){
                     for(var i = 0; i < allergensList.length; i++){
                         if(allergensList[i].allergen_type_code === key){
@@ -112,6 +83,31 @@
                         }
                     }
                     return false;
+                }
+
+                /* Check if the Allergen Label exists in the Allergen List*/
+                function getAllergen(label, allergensList){
+                    for(var i = 0; i < allergensList.length; i++){
+                        if(allergensList[i].label === label){
+                            return allergensList[i];
+                        }
+                    }
+                    return null;
+                }
+
+                /*Check duplicate allergens from the actual allergens data by allergen level*/
+                function containsAllergenLevel(level, allergensList){
+                    for(var i = 0; i < allergensList.length; i++){
+                        if(allergensList[i].allergen_level === level){
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                /*Check duplicate allergens from the actual allergens data by allergen label*/
+                function containsAllergenLabel(label, allergensList){
+                    return getAllergen(label, allergensList) ? true : false;
                 }
 
                 /*Get the list of all keys that do not exist in allergenController.bigEightAllergensData*/

@@ -112,7 +112,7 @@
 .address-verification-box {
     height: 50px;
     background-color: #ededed;
-    width: 60%;
+    width: 52%;
     align-items: center;
     display: inline-flex;
     /*justify-content: center;
@@ -136,8 +136,11 @@
 }
 
 .verify-address-button {
-    top: 5px;
-    right: -30px;
+    /*top: 5px;
+    right: -30px;*/
+    right: 20px;
+    display: inline-flex;
+    margin-left: -35px;
 }
 
 label.checkbox-inline{
@@ -365,47 +368,43 @@ label.checkbox-inline{
 .location-cost-center-not-available p {
     margin-top: 200px;
 }
-/*
-.col-md-4.no-padding.add-cost-center-mapping-selected-cost-center-div table {
-    display: block;
-    border-collapse: collapse;
-    border-style: none;
+
+.location-stations-not-available{
+    width: 98%;
+    height: 430px;
+    background-color: #000000;
+    opacity: .75;
+    color: #ffffff;
+    text-align: center;
+    font-size: large;
+    position: absolute;
+    z-index: 10;
+    transition: all linear 1s;
 }
 
-.add-cost-center-mapping-selected-cost-center-div table thead, tbody {
-    display: block;
+.location-stations-not-available p {
+    margin-top: 200px;
 }
 
-.add-cost-center-mapping-selected-cost-center-div table thead {
-    border-bottom-style: solid;
-    border-bottom-color: rgba(211, 211, 211, 0.50);
+.map-not-available {
+    width: 100px;
+    height: 50px;
+    /*background-color: #000000;*/
+    background: #ababab;
+    opacity: .75;
+    color: #ffffff;
+    text-align: center;
+    font-size: large;
+    position: absolute;
+    z-index: 10;
+    transition: all linear 1s;
+    cursor: default;
 }
 
-.add-cost-center-mapping-selected-cost-center-div table thead tr th {
-    width: 260px;
-    border-left-style: hidden;
+.map-not-available .map *{
+    opacity: 0;
+    cursor: default;
 }
-
-.add-cost-center-mapping-selected-cost-center-div table tbody {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 340px;
-    display: block;
-}
-
-.add-cost-center-mapping-selected-cost-center-div table tbody tr:first-child {
-    border-top-style: hidden;
-}
-
-.add-cost-center-mapping-selected-cost-center-div table tbody tr {
-    border-right-style: hidden;
-    border-left-style: hidden;
-}
-
-.add-cost-center-mapping-selected-cost-center-div table tbody tr td div {
-    width: 260px;
-    border-style: hidden;
-}*/
 
 .move-arrow {
     font-size: 28px !important;
@@ -425,7 +424,7 @@ label.checkbox-inline{
 }
 
 .map-address-not-found {
-    background: #ededed;
+    background: #ababab;
     width: 100px;
     height: 50px;
     line-height: 50px;
@@ -433,7 +432,9 @@ label.checkbox-inline{
 }
 
 .map-pin {
-    color: dimgray;
+    color: black;
+    margin-top: 15px;
+    cursor: default;
 }
 
 #map {
@@ -447,4 +448,17 @@ label.checkbox-inline{
 
 .zip-icon.input-icon.right>i {
     right: 10px;
+}
+
+.hide-map{
+    display: none;
+}
+
+.active-switch-location-div{
+    min-width: 139px;
+    margin-left: 5px;
+    right: 20px;
+    display: inline-flex;
+    position: relative;
+    overflow: hidden;
 }

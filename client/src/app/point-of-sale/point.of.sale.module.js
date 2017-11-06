@@ -1,18 +1,31 @@
 (function () {
     'use strict';
     
-    angular.module('adams.point.of.sale',['adams.point.of.sale.item.search.controller',
-                                        'adams.point.of.sale.revenue.categories.controller',
-                                        'adams.point.of.sale.item.categories.controller',
-                                        'adams.point.of.sale.item.classes.controller',
+    angular.module('adams.point.of.sale',['adams.point.of.sale.item.details',
+                                        'adams.point.of.sale.item.search.controller',
+                                        'adams.point.of.sale.item.search.service',
+                                        'adams.point.of.sale.item.details.controller',
+                                        'adams.point.of.sale.item.details.service',
                                         'adams.point.of.sale.system.categories.controller',
-                                        'adams.point.of.sale.system.category.defaults.controller'])
+                                        'adams.point.of.sale.system.categories.service',
+                                        'adams.point.of.sale.system.category.defaults.controller',
+                                        'adams.point.of.sale.add.tags.controller',
+                                        'adams.point.of.sale.revenue.categories.controller',
+                                        'adams.point.of.sale.revenue.categories.service',
+                                        'adams.add.edit.revenue.categories.modal.controller',
+                                        'adams.point.of.sale.item.categories.controller',
+                                        'adams.point.of.sale.item.categories.service',
+                                        'adams.add.edit.item.categories.modal.controller',
+                                        'adams.point.of.sale.item.classes.controller',
+                                        'adams.point.of.sale.item.classes.service',
+                                        'adams.add.edit.item.classes.modal.controller'
+    ])
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
-                .state('pointofsale', {
+                .state('pointOfSale', {
                     url: "/pointofsale",
                     templateUrl : "point-of-sale/point.of.sale.tpl.html",
-                    redirectTo : 'pointofsale.itemsearch',
+                    redirectTo : 'pointOfSale.itemSearch',
                     data : {
                         pageTitle : "Point Of Sale"
                     },
@@ -28,7 +41,7 @@
                         }]
                     }
                 })
-                .state('pointofsale.itemsearch', {
+                .state('pointOfSale.itemSearch', {
                     url: "/item/search",
                     templateUrl : "point-of-sale/point-of-sale-item/search/point.of.sale.item.search.tpl.html",
                     controller : "PointOfSaleItemSearchController as pointOfSaleItemSearchController",
@@ -47,12 +60,12 @@
                         }]
                     }
                 })
-                .state('pointofsale.revenuecategories', {
-                    url: "/revenueCategories",
+                .state('pointOfSale.revenueCategories', {
+                    url: "/revenuecategories",
                     templateUrl : "point-of-sale/revenue-categories/point.of.sale.revenue.categories.tpl.html",
-                    controller : "PointOfSaleRevenueCategoriesController as pointOfSaleRevenueCategoriesController",
+                    controller : "PosRevenueCategoriesController as posRevenueCategoriesController",
                     data : {
-                        pageTitle : "Point Of Sale"
+                        pageTitle : "Point Of Sale - Revenue Categories"
                     },
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -66,12 +79,12 @@
                         }]
                     }
                 })
-                .state('pointofsale.itemcategories', {
-                    url: "/itemCategories",
+                .state('pointOfSale.itemCategories', {
+                    url: "/itemcategories",
                     templateUrl : "point-of-sale/item-categories/point.of.sale.item.categories.tpl.html",
-                    controller : "PointOfSaleItemCategoriesController as pointOfSaleItemCategoriesController",
+                    controller : "PosItemCategoriesController as posItemCategoriesController",
                     data : {
-                        pageTitle : "Point Of Sale"
+                        pageTitle : "Point Of Sale - Item Categories"
                     },
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -85,12 +98,12 @@
                         }]
                     }
                 })
-                .state('pointofsale.itemclasses', {
-                    url: "/itemClasses",
+                .state('pointOfSale.itemClasses', {
+                    url: "/itemclasses",
                     templateUrl : "point-of-sale/item-classes/point.of.sale.item.classes.tpl.html",
-                    controller : "PointOfSaleItemClassesController as pointOfSaleItemClassesController",
+                    controller : "PosItemClassesController as posItemClassesController",
                     data : {
-                        pageTitle : "Point Of Sale"
+                        pageTitle : "Point Of Sale - Item Classes"
                     },
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -104,8 +117,8 @@
                         }]
                     }
                 })
-                .state('pointofsale.systemcategories', {
-                    url: "/systemCategories",
+                .state('pointOfSale.systemCategories', {
+                    url: "/systemcategories",
                     templateUrl : "point-of-sale/system-categories/point.of.sale.system.categories.tpl.html",
                     controller : "PointOfSaleSystemCategoriesController as pointOfSaleSystemCategoriesController",
                     data : {
@@ -123,8 +136,8 @@
                         }]
                     }
                 })
-                .state('pointofsale.systemcategorydefaults', {
-                    url: "/systemCategoryDefaults",
+                .state('pointOfSale.systemCategoryDefaults', {
+                    url: "/systemcategorydefaults",
                     templateUrl : "point-of-sale/system-category-defaults/point.of.sale.system.category.defaults.tpl.html",
                     controller : "PointOfSaleSystemCategoryDefaultsController as pointOfSaleSystemCategoryDefaultsController",
                     data : {

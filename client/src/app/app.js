@@ -31,7 +31,8 @@
         'adams.locations.details',
         'scrollable-table',
         'adams.access.control',
-        'adams.point.of.sale'
+        'adams.point.of.sale',
+        'adams.teams'
     ])
 
     .config(['$urlRouterProvider', '$httpProvider',

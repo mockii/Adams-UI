@@ -21,9 +21,19 @@ describe("Adams Controller", function () {
 
     describe("Controller : AppController", function () {
 
-        it('should exist', function() {
+        it('should exist and call isHeaderHidden ', function() {
+            spyOn(controller, "isHeaderHidden").and.callThrough();
+            controller.isHeaderHidden();
             expect(controller).toBeDefined();
-            expect(controller.menuItems.length).toEqual(11);
+            expect(controller.menuItems.length).toEqual(12);
+            expect(controller.isHeaderHidden).toHaveBeenCalled();
         });
+
+        /*it('should call errorHandling', function () {
+            spyOn(controller, "errorHandling").and.callThrough();
+            controller.errorHandling('error');
+            scope.$apply();
+            expect(controller.errorHandling).toHaveBeenCalledWith('error');
+        });*/
     });
 });

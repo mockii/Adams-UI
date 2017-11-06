@@ -90,7 +90,21 @@ angular.module('adams.common.url', [])
                 stationsByLocationAndStationCode: '/ui/api/locations/{locationCode}/stations/{stationCode}',
                 getCostCentersByLocationAndStationCode: '/ui/api/locations/{locationCode}/stations/{stationCode}/cost_centers',
                 addCostCentersByLocationAndStationCode: '/ui/api/locations/{locationCode}/stations/{stationCode}/cost_centers',
-                updateStationsCostCenter: '/ui/api/locations/{locationCode}/stations/{stationCode}/cost_centers/{costCenterName}'
+                updateStationsCostCenter: '/ui/api/locations/{locationCode}/stations/{stationCode}/cost_centers/{costCenterName}',
+
+                // POS
+                getPosItems: '/ui/api/pos/items',
+                getPosItem: '/ui/api/pos/items/{pos_id}',
+                getPosRevenueCategories: '/ui/api/pos/revenue_categories',
+                addPosRevenueCategory: '/ui/api/pos/revenue_categories',
+                updatePosRevenueCategory: '/ui/api/pos/revenue_categories',
+                getPosItemCategories: '/ui/api/pos/item_categories',
+                addPosItemCategory: '/ui/api/pos/item_categories',
+                updatePosItemCategory: '/ui/api/pos/item_categories',
+                getPosItemClasses: '/ui/api/pos/item_classes',
+                addPosItemClass: '/ui/api/pos/item_classes',
+                updatePosItemClass: '/ui/api/pos/item_classes',
+                getTypeDetailsForSystemCategoryAndVendor: '/ui/api/pos/system_categories/{system_category}/vendors/{vendor_name}/types/{type}'
 
             }
         }

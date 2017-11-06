@@ -258,6 +258,10 @@
                 return RBACService.getCurrentRoleName();
             };
 
+            userAdministrationService.getRBACAppName = function() {
+                return RBACService.getRBACAppName();
+            };
+
 
             userAdministrationService.getApplicationsByLoginUser = function () {
                 var userName;

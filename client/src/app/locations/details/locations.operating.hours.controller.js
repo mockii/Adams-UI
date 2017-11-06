@@ -2,11 +2,9 @@
 
 (function () {
     angular.module('adams.locations.operating.hours.controller', [])
-        .controller('LocationsOperatingHoursController', ['$scope', '$state', '$uibModalInstance', 'locationsGridArray', 'locationsSearchData', 'locationsHourData', 'actionStatus', 'WEEK_DAYS_ARRAY', 'WEEK_DAYS_OBJECT', '$filter', 'CompassToastr', 'filterFilter', 'LocationsDetailsService', 'ModalDialogService',
-        function ($scope, $state, $uibModalInstance, locationsGridArray, locationsSearchData, locationsHourData, actionStatus, WEEK_DAYS_ARRAY, WEEK_DAYS_OBJECT, $filter, CompassToastr, filterFilter, LocationsDetailsService, ModalDialogService) {
-            var locationsOperatingHoursController = this,
-                actualOpenHour,
-                actualCloseHour;
+        .controller('LocationsOperatingHoursController', ['$uibModalInstance', 'locationsSearchData', 'locationsHourData', 'actionStatus', '$filter', 'CompassToastr', 'filterFilter', 'LocationsDetailsService', 'ModalDialogService',
+        function ($uibModalInstance, locationsSearchData, locationsHourData, actionStatus, $filter, CompassToastr, filterFilter, LocationsDetailsService, ModalDialogService) {
+            var locationsOperatingHoursController = this;
 
             function initialize() {
 
@@ -39,8 +37,8 @@
                                 closeTime = locationsOperatingHoursController.getCorrectedTime(times[1].trim()),
                                 daysOfWeek = locationsHourData.days_of_week.split(',').map(function(item) { return item.trim(); });
 
-                            actualOpenHour = times[0].trim();
-                            actualCloseHour = times[1].trim();
+                            locationsOperatingHoursController.actualOpenHour = times[0].trim();
+                            locationsOperatingHoursController.actualCloseHour = times[1].trim();
 
                             locationsOperatingHoursController.locationOpenTimeHour = locationsOperatingHoursController.convertToDate(openTime);
                             locationsOperatingHoursController.locationCloseTimeHour = locationsOperatingHoursController.convertToDate(closeTime);
@@ -70,34 +68,9 @@
                 });
             };
 
-            locationsOperatingHoursController.appendDefaultSeconds = function(timeString){
-                var time = locationsOperatingHoursController.getHour(timeString.trim());
-                time = time.search(':') > -1 ?
-                    (time.search(':00')  > -1 ? time : time+ ':00') : time + ':00';
-                return time + locationsOperatingHoursController.getMeridian(time);
-            };
-
             locationsOperatingHoursController.convertToDate = function(time){
                 var dateInt = Date.parse(new Date().toDateString() + " " + time);
                 return new Date(dateInt);
-            };
-
-            locationsOperatingHoursController.getHour = function(time){
-                var hour = time.indexOf(':') > -1 ? time.split(':')[0] : (time.match(/\d+/)[0]);
-                return hour.length === 1 ? '0' + hour : hour;
-            };
-
-            locationsOperatingHoursController.getSeconds = function(time){
-                var seconds = time.split(':')[1] ? time.split(':')[1] : '00';
-                return seconds.length === 1 ? '0' + seconds : seconds;
-            };
-
-            locationsOperatingHoursController.getMeridian = function(time){
-                return time.indexOf('AM') > -1 ? 'AM' : (time.indexOf('PM') > -1 ? 'PM' : '');
-            };
-
-            locationsOperatingHoursController.setLocationOpenTimeHourValue = function(value){
-                locationsOperatingHoursController.locationOpenTimeHour = value < 10 ? '0'+ value : value;
             };
 
             locationsOperatingHoursController.cancel = function () {
@@ -140,8 +113,9 @@
                 // Get rid of all modified/updated week days object that already exists for edit action.
                 if(actionStatus === 'edit'){
                     locationsOperatingHoursController.unSelectedWeekDays.forEach(function (weekDay) {
-                        var newName = locationsOperatingHoursController.previousLocationHourName.length > 0 ? locationsOperatingHoursController.previousLocationHourName : name,
-                            indexToSplice = getIndexToSplice(newName, newLocationsSearchData.location_hours, weekDay, actualOpenHour, actualCloseHour);
+                        var newName = (locationsOperatingHoursController.previousLocationHourName &&
+                            locationsOperatingHoursController.previousLocationHourName.length > 0) ? locationsOperatingHoursController.previousLocationHourName : name,
+                            indexToSplice = getIndexToSplice(newName, newLocationsSearchData.location_hours, weekDay, locationsOperatingHoursController.actualOpenHour, locationsOperatingHoursController.actualCloseHour);
                         if(indexToSplice > -1){
                             newLocationsSearchData.location_hours.splice(indexToSplice, 1);
                         }
@@ -158,8 +132,9 @@
                         });
                     } else {
                         locationsOperatingHoursController.selectedWeekDays.forEach(function(day){
-                            var newName = locationsOperatingHoursController.previousLocationHourName.length > 0 ? locationsOperatingHoursController.previousLocationHourName : name,
-                                indexToSplice = getIndexToSplice(newName, newLocationsSearchData.location_hours, day, actualOpenHour, actualCloseHour);
+                            var newName = (locationsOperatingHoursController.previousLocationHourName &&
+                                    locationsOperatingHoursController.previousLocationHourName.length > 0) ? locationsOperatingHoursController.previousLocationHourName : name,
+                                indexToSplice = getIndexToSplice(newName, newLocationsSearchData.location_hours, day, locationsOperatingHoursController.actualOpenHour, locationsOperatingHoursController.actualCloseHour);
                             if(indexToSplice > -1){
                                 newLocationsSearchData.location_hours
                                     .splice(indexToSplice, 1, {name: name, day: day, open_hour: openTime, close_hour: closeTime});
@@ -204,20 +179,12 @@
                         name = locationHours[j].name,
                         openHour = locationsOperatingHoursController.getCorrectedTime(locationHours[j].open_hour),
                         closeHour = locationsOperatingHoursController.getCorrectedTime(locationHours[j].close_hour);
-
                     if(selectedDay === day &&
                         selectedOpenTime === openHour &&
                         selectedCloseTime === closeHour &&
                         selectedName === name){
                         return true;
                     }
-                }
-                return false;
-            };
-
-            locationsOperatingHoursController.containsWeekDay = function(day, daysOfWeek){
-                if(daysOfWeek.indexOf(day) > -1){
-                    return true;
                 }
                 return false;
             };

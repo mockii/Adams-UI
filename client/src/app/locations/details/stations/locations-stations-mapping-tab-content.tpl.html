@@ -1,5 +1,8 @@
 <div class="row profile-page">
     <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="location-stations-not-available" ng-show="!locationsStationsMappingController.hasLocationCode">
+            <p> Stations will be available for add after the location has been created and saved. </p>
+        </div>
         <div class="portlet light" block-ui="stations-mapping-grid">
             <button type="button" class="btn blue"
                     ng-disabled="!locationsStationsMappingController.hasLocationCode"
