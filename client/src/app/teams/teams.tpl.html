@@ -1,0 +1,125 @@
+<div class="tab-pane active">
+    <div class="row">
+        <div class="col-md-6 col-sm-12 div-padding-left">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-full-width">
+                        <span class="caption-subject font-blue uppercase bold"> Select a Team </span>
+                    </div>
+                </div>
+
+                <div class="teams-ui portlet-body">
+                    <div class="tabbable tabs-right">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a ng-click="teamsController.switchTab('searchTeam')" data-toggle="tab">Search </a>
+                            </li>
+                            <li>
+                                <a ng-click="teamsController.switchTab('hierarchyTeam')" data-toggle="tab">Hierarchy </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane" id="searchTeam" ng-class="teamsController.hierarchyTeam ? 'fade' : 'active'">
+                                <div stg-ui-grid
+                                     get-grid-options="teamsController.gridOptions"
+                                     get-grid-data="teamsController.getGridData"
+                                     class="teams-ui-grid">
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="hierarchyTeam" ng-class="teamsController.hierarchyTeam ? 'active' : 'fade'">
+                                <div class="table-bordered select-teams">
+                                    <stg-hierarchy-tree
+                                            ref-id="teamHierarchyTree"
+                                            fetch-children-every-time="false"
+                                            enable-multi-select="false"
+                                            select-global-selected-team-by-default="false"
+                                            disable-tree-toggle="false"
+                                            expand-to-depth="1"
+                                            sync-global-team-selection-on-close="false">
+                                    </stg-hierarchy-tree>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 no-left-padding">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-blue uppercase bold"> Selected Team </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-horizontal">
+                        <form role="form" name="teamForm" novalidate>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="row col-md-12 form-group">
+                                            <label class="control-label col-md-3">Team Name</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="teamName" readonly
+                                                       ng-model="teamsController.selectedTeam.team_name">
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <label class="control-label col-md-3">Team Description</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="teamDescription" readonly
+                                                       ng-model="teamsController.selectedTeam.team_description">
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <label class="control-label col-md-3">Team Type Name</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="teamTypeName" readonly
+                                                       ng-model="teamsController.selectedTeam.team_type_name">
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <label class="control-label col-md-3">Team Path</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="teamPath" readonly
+                                                       ng-model="teamsController.selectedTeam.team_path">
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <label class="control-label col-md-3">Team Display Path</label>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" name="vendorDescriptionTextArea" rows="3"
+                                                          ng-model="teamsController.selectedTeam.team_display_path" readonly
+                                                          style="height: 150px"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <label class="control-label col-md-3">Source System Id</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="teamTypeName" readonly
+                                                       ng-model="teamsController.selectedTeam.source_system_id">
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12 form-group">
+                                            <label class="control-label col-md-3">Active</label>
+                                            <div class="col-md-9">
+                                                <label class="switch">
+                                                    <input class="switch-input"
+                                                           ng-checked="teamsController.getTeamStatus()"
+                                                           ng-disabled="true"
+                                                           type="checkbox"/>
+                                                    <span class="switch-label" data-on="YES" data-off="NO"></span>
+                                                    <span class="switch-handle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

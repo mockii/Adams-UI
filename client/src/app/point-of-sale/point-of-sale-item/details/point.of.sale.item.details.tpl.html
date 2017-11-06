@@ -1,0 +1,796 @@
+<div>
+    <div class="form-horizontal">
+        <form role="form" name="posItemForm" novalidate>
+
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption caption-full-width">
+                                    <span class="caption-subject font-blue uppercase bold"> Item </span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Item Name</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" required name="item_name"
+                                                       ng-model="pointOfSaleItemDetailsController.item_name">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">POS ID</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" required name="pos_id"
+                                                       ng-model="pointOfSaleItemDetailsController.posId"
+                                                       ng-disabled="!pointOfSaleItemDetailsController.posId">
+                                            </div>
+                                        </div>
+
+                                        <div class="container row form-group col-md-12">
+                                            <label class="control-label col-md-3">Active</label>
+                                            <div class="row col-md-9">
+                                                <div class="col-md-3 col-sm-12 col-xs-12 switch-label-container">
+                                                    <label class="switch pull-right">
+                                                        <input class="switch-input" name="status"
+                                                               ng-checked="pointOfSaleItemDetailsController.active_indicator"
+                                                               type="checkbox"/>
+                                                        <span class="switch-label" data-on="YES" data-off="NO"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="container row form-group col-md-12">
+                                            <label class="control-label col-md-3">Modifier</label>
+                                            <div class="row col-md-9">
+                                                <div class="col-md-3 col-sm-12 col-xs-12 switch-label-container">
+                                                    <label class="switch pull-right">
+                                                        <input class="switch-input" name="status"
+                                                               ng-checked="pointOfSaleItemDetailsController.modifier"
+                                                               type="checkbox"/>
+                                                        <span class="switch-label" data-on="YES" data-off="NO"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Long</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" required name="long"
+                                                        ng-model="pointOfSaleItemDetailsController.long"
+                                                        maxlength="{{pointOfSaleItemDetailsController.longMaxLength}}">
+                                                <div>
+                                                    <span class="characters-remaining">
+                                                        {{pointOfSaleItemDetailsController.longMaxLength - pointOfSaleItemDetailsController.long.length}} characters remaining
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Mid</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="mid"
+                                                       ng-model="pointOfSaleItemDetailsController.mid"
+                                                       maxlength="{{pointOfSaleItemDetailsController.midMaxLength}}">
+                                                <div>
+                                                    <span class="characters-remaining">
+                                                        {{pointOfSaleItemDetailsController.midMaxLength - pointOfSaleItemDetailsController.mid.length}} characters remaining
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Short</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="short"
+                                                       ng-model="pointOfSaleItemDetailsController.short"
+                                                        maxlength="{{pointOfSaleItemDetailsController.shortMaxLength}}">
+                                                <div>
+                                                    <span class="characters-remaining">
+                                                        {{pointOfSaleItemDetailsController.shortMaxLength - pointOfSaleItemDetailsController.short.length}} characters remaining
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Revenue Category</label>
+                                            <div class="col-md-9">
+                                                <ui-select ng-model="pointOfSaleItemDetailsController.revenueCategory">
+                                                    <ui-select-match placeholder="-- Select --">
+                                                        {{$select.selected.revenue_category_name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="revenuecategory in pointOfSaleItemDetailsController.revenueCategories | filter: $select.search">
+                                                        <div ng-bind-html="revenuecategory.revenue_category_name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Item Category</label>
+                                            <div class="col-md-9">
+                                                <ui-select ng-model="pointOfSaleItemDetailsController.itemCategory">
+                                                    <ui-select-match placeholder="-- Select --">
+                                                        {{$select.selected.item_category_name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="itemcategory in pointOfSaleItemDetailsController.itemCategories | filter: $select.search">
+                                                        <div ng-bind-html="itemcategory.item_category_name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Sold by Weight</label>
+                                            <div class="row col-md-9">
+                                                <div class="col-md-3 col-sm-12 col-xs-12 switch-label-container">
+                                                    <label class="switch pull-right">
+                                                        <input class="switch-input" name="soldByWeight"
+                                                               ng-checked="pointOfSaleItemDetailsController.sold_by_weight_indicator"
+                                                               type="checkbox"/>
+                                                        <span class="switch-label" data-on="YES" data-off="NO"></span>
+                                                        <span class="switch-handle"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Item Cost</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="cost"
+                                                       ng-model="pointOfSaleItemDetailsController.cost">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Default Price</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="default_price"
+                                                       ng-model="pointOfSaleItemDetailsController.defaultPrice">
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption caption-full-width">
+                                    <span class="caption-subject font-blue uppercase bold"> Description </span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+
+                                        <div class="row form-group col-md-12">
+
+                                            <label class="control-label col-md-3">Item Class</label>
+                                            <div class="col-md-9">
+                                                <ui-select ng-model="pointOfSaleItemDetailsController.itemClass">
+                                                    <ui-select-match placeholder="-- Select --">
+                                                        {{$select.selected.item_class_name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="itemclass in pointOfSaleItemDetailsController.itemClasses | filter: $select.search">
+                                                        <div ng-bind-html="itemclass.item_class_name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Webtrition item start -->
+                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Webtrition Item'">
+
+                                            <label class="control-label col-md-3">Master Reference Number</label>
+                                            <div class="col-md-9 form-input-element">
+                                                <input type="text" class="form-control" name="masterReferenceNumber"
+                                                       ng-model="pointOfSaleItemDetailsController.masterReferenceNumber">
+                                            </div>
+
+                                            <label class="control-label col-md-3">Portion Quantity</label>
+                                            <div class="col-md-9 form-input-element">
+                                                <input type="text" class="form-control" name="portitionQuantity"
+                                                       ng-model="pointOfSaleItemDetailsController.portitionQuantity">
+                                            </div>
+
+                                            <label class="control-label col-md-3">Selection Quantity</label>
+                                            <div class="col-md-9 form-input-element">
+                                                <input type="text" class="form-control" name="selectionQuantity"
+                                                       ng-model="pointOfSaleItemDetailsController.selectionQuantity">
+                                            </div>
+
+                                            <label class="control-label col-md-3">Unit of Measure</label>
+                                            <div class="col-md-9 form-input-element">
+                                                <ui-select ng-model="pointOfSaleItemDetailsController.unitOfMeasure">
+                                                    <ui-select-match placeholder="-- Select --">
+                                                        {{$select.selected.name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="unitofmeasure in pointOfSaleItemDetailsController.unitOfMeasures | filter: $select.search">
+                                                        <div ng-bind-html="unitofmeasure.name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+
+                                            <label class="control-label col-md-3">Item Notes</label>
+                                            <div class="col-md-9 form-input-element">
+                                                <textarea class="form-control" rows="8" name="item_notes"
+                                                          ng-model="pointOfSaleItemDetailsController.itemNotes"
+                                                          maxlength="{{pointOfSaleItemDetailsController.itemNotesMaxLength}}">
+                                                </textarea>
+                                                <div>
+                                                    <span class="characters-remaining">
+                                                        {{pointOfSaleItemDetailsController.itemNotesMaxLength - pointOfSaleItemDetailsController.itemNotes.length}} characters remaining
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Webtrition item end -->
+
+                                        <!-- Prepackaged item start -->
+                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Prepackaged Item'">
+
+                                            <label class="control-label col-md-3">Barcode</label>
+                                            <div class="col-md-9 form-input-element">
+                                                <input type="text" class="form-control" name="barcode"
+                                                       ng-model="pointOfSaleItemDetailsController.barcode">
+                                            </div>
+
+                                            <label class="control-label col-md-3">Item Notes</label>
+                                            <div class="col-md-9 form-input-element">
+                                                <textarea class="form-control" rows="8" name="item_notes"
+                                                          ng-model="pointOfSaleItemDetailsController.itemNotes"
+                                                          maxlength="{{pointOfSaleItemDetailsController.itemNotesMaxLength}}">
+                                                </textarea>
+                                                <div>
+                                                    <span class="characters-remaining">
+                                                        {{pointOfSaleItemDetailsController.itemNotesMaxLength - pointOfSaleItemDetailsController.itemNotes.length}} characters remaining
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Prepackaged item end -->
+
+                                        <!-- Prepared item start -->
+                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Prepared Item'">
+                                            <label class="control-label col-md-3">Item Notes</label>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" rows="8" name="item_notes"
+                                                            ng-model="pointOfSaleItemDetailsController.itemNotes"
+                                                            maxlength="{{pointOfSaleItemDetailsController.itemNotesMaxLength}}">
+                                                </textarea>
+                                                <div>
+                                                    <span class="characters-remaining">
+                                                        {{pointOfSaleItemDetailsController.itemNotesMaxLength - pointOfSaleItemDetailsController.itemNotes.length}} characters remaining
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Prepared item end -->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption caption-full-width">
+                                    <span class="caption-subject font-blue uppercase bold"> Tags </span>
+                                </div>
+                                <button type="button" class="btn btn-default pull-right" ng-click="pointOfSaleItemDetailsController.openAddTags()">
+                                    Add Tag <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="row col-md-12">
+                                            <div class="tag-area" ng-show="pointOfSaleItemDetailsController.tags.length > 0">
+                                                <div class="tag-box" ng-repeat="tag in pointOfSaleItemDetailsController.tags">
+
+                                                    {{tag.name}} <span class="fa fa-times-circle tag-delete" ng-click="pointOfSaleItemDetailsController.removeTag(tag.name)"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption caption-full-width">
+                                    <span class="caption-subject font-blue uppercase bold"> POS Specific Fields </span>
+                                </div>
+                                <div class="tabbable-line">
+                                    <ul class="nav nav-tabs pull-right">
+                                        <li ng-class="{'active' : pointOfSaleItemDetailsController.activeVendorTabName === vendor.name}"
+                                            ng-repeat="vendor in pointOfSaleItemDetailsController.vendorTabs track by $index">
+                                            <a ng-click="pointOfSaleItemDetailsController.setActiveVendorTab(vendor.name)">
+                                                {{vendor.name}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="tab-content">
+
+                                            <!-- InfoGenesis tab start -->
+
+                                            <div ng-show="pointOfSaleItemDetailsController.activeVendorTabName === 'InfoGenesis'">
+
+                                                <div class="row">
+
+                                                    <div class="col-lg-6 col-md-12 col-xs-12 padding-bottom-30">
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> General </span>
+                                                        </div>
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">ID</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="infogenesisId"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.infogenesisId">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Item Name</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="itemName"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.itemName">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Button Text 1 & 2</label>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" class="form-control" name="buttonText1"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.buttonText1"
+                                                                           maxlength="{{pointOfSaleItemDetailsController.infogenesisData.buttonText1MaxLength}}">
+                                                                    <div>
+                                                                        <span class="characters-remaining">
+                                                                            {{pointOfSaleItemDetailsController.infogenesisData.buttonText1MaxLength - pointOfSaleItemDetailsController.infogenesisData.buttonText1.length}} characters remaining
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" class="form-control" name="buttonText2"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.buttonText2"
+                                                                           maxlength="{{pointOfSaleItemDetailsController.infogenesisData.buttonText2MaxLength}}">
+                                                                    <div>
+                                                                        <span class="characters-remaining">
+                                                                             {{pointOfSaleItemDetailsController.infogenesisData.buttonText2MaxLength - pointOfSaleItemDetailsController.infogenesisData.buttonText2.length}} characters remaining
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6 col-md-12 col-xs-12 padding-bottom-30">
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> Product Classes </span>
+                                                        </div>
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">Default Product Class</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.defaultProductClass"
+                                                                            ng-options="defaultClass.name for defaultClass in pointOfSaleItemDetailsController.infogenesisData.defaultProductClasses track by defaultClass.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Morrison Product Class</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.morrisonProductClass"
+                                                                            ng-options="morrisonClass.name for morrisonClass in pointOfSaleItemDetailsController.infogenesisData.morrisonProductClasses track by morrisonClass.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Eurest Product Class</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.eurestProductClass"
+                                                                            ng-options="eurestClass.name for eurestClass in pointOfSaleItemDetailsController.infogenesisData.eurestProductClasses track by eurestClass.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-12 col-xs-12 padding-bottom-30">
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> Texts </span>
+                                                        </div>
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">Customer Recipe Text</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="customerRecipeText"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.customerRecipeText">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Kitchen Printer Text</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="kitchenPrinterText"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.kitchenPrinterText">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Kitchen Video Text</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="kitchenVideoText"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.kitchenVideoText">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6 col-md-12 col-xs-12 padding-bottom-30">
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> Revenue Categories </span>
+                                                        </div>
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">Default Revenue Category</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.defaultRevenueCategory"
+                                                                            ng-options="defaultCategory.name for defaultCategory in pointOfSaleItemDetailsController.infogenesisData.defaultRevenueCategories track by defaultCategory.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Morrison Revenue Category</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.morrisonRevenueCategory"
+                                                                            ng-options="morrisonCategory.name for morrisonCategory in pointOfSaleItemDetailsController.infogenesisData.morrisonRevenueCategories track by morrisonCategory.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Eurest Revenue Category</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.eurestRevenueCategory"
+                                                                            ng-options="eurestCategory.name for eurestCategory in pointOfSaleItemDetailsController.infogenesisData.eurestRevenueCategories track by eurestCategory.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- InfoGenesis tab end -->
+
+                                            <!-- Simphony start -->
+
+                                            <div class="row" ng-show="pointOfSaleItemDetailsController.activeVendorTabName === 'Simphony'">
+                                                <div class="col-lg-6 col-md-12 col-xs-12">
+                                                    <div class="padding-bottom-30">
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> General </span>
+                                                        </div>
+
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">Number</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="simphonyNumber"
+                                                                           ng-model="pointOfSaleItemDetailsController.simphonyData.simphonyNumber">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="padding-bottom-30">
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> Simphony Product Name </span>
+                                                        </div>
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">Master Record Name</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="masterRecordName"
+                                                                           ng-model="pointOfSaleItemDetailsController.simphonyData.masterRecordName"
+                                                                           maxlength="{{pointOfSaleItemDetailsController.simphonyData.masterRecordNameMaxLength}}">
+                                                                    <div>
+                                                                        <span class="characters-remaining">
+                                                                             {{pointOfSaleItemDetailsController.simphonyData.masterRecordNameMaxLength - pointOfSaleItemDetailsController.simphonyData.masterRecordName.length}} characters remaining
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">First Name</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="firstName"
+                                                                           ng-model="pointOfSaleItemDetailsController.simphonyData.firstName"
+                                                                           maxlength="{{pointOfSaleItemDetailsController.simphonyData.firstNameMaxLength}}">
+                                                                    <div>
+                                                                        <span class="characters-remaining">
+                                                                             {{pointOfSaleItemDetailsController.simphonyData.firstNameMaxLength - pointOfSaleItemDetailsController.simphonyData.firstName.length}} characters remaining
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Second Name</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="secondName"
+                                                                           ng-model="pointOfSaleItemDetailsController.simphonyData.secondName"
+                                                                           maxlength="{{pointOfSaleItemDetailsController.simphonyData.secondNameMaxLength}}">
+                                                                    <div>
+                                                                        <span class="characters-remaining">
+                                                                             {{pointOfSaleItemDetailsController.simphonyData.secondNameMaxLength - pointOfSaleItemDetailsController.simphonyData.secondName.length}} characters remaining
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Third Name</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" name="thirdName"
+                                                                           ng-model="pointOfSaleItemDetailsController.simphonyData.thirdName"
+                                                                           maxlength="{{pointOfSaleItemDetailsController.simphonyData.thirdNameMaxLength}}">
+                                                                    <div>
+                                                                        <span class="characters-remaining">
+                                                                             {{pointOfSaleItemDetailsController.simphonyData.thirdNameMaxLength - pointOfSaleItemDetailsController.simphonyData.thirdName.length}} characters remaining
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-12 col-xs-12">
+                                                    <div class="padding-bottom-30">
+
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> Major Groups </span>
+                                                        </div>
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">Default Major Group</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.defaultMajorGroup"
+                                                                            ng-options="defaultMajorGroup.name for defaultMajorGroup in pointOfSaleItemDetailsController.simphonyData.defaultMajorGroups track by defaultMajorGroup.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Morrison Major Group</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.morrisonMajorGroup"
+                                                                            ng-options="morrisonMajorGroup.name for morrisonMajorGroup in pointOfSaleItemDetailsController.simphonyData.morrisonMajorGroups track by morrisonMajorGroup.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Eurest Major Group</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.eurestMajorGroup"
+                                                                            ng-options="eurestMajorGroup.name for eurestMajorGroup in pointOfSaleItemDetailsController.simphonyData.eurestMajorGroups track by eurestMajorGroup.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="padding-bottom-30">
+                                                        <div class="caption caption-full-width">
+                                                            <span class="caption-subject font-blue bold"> Family Groups </span>
+                                                        </div>
+
+                                                        <div class="bordered-box">
+                                                            <div class="row form-vendor-input-element margin-top-15">
+                                                                <label class="control-label col-md-4">Default Family Group</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.defaultFamilyGroup"
+                                                                            ng-options="defaultFamilyGroup.name for defaultFamilyGroup in pointOfSaleItemDetailsController.simphonyData.defaultFamilyGroups track by defaultFamilyGroup.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Morrison Family Group</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.morrisonFamilyGroup"
+                                                                            ng-options="morrisonFamilyGroup.name for morrisonFamilyGroup in pointOfSaleItemDetailsController.simphonyData.morrisonFamilyGroups track by morrisonFamilyGroup.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row form-vendor-input-element">
+                                                                <label class="control-label col-md-4">Eurest Family Group</label>
+                                                                <div class="col-md-8">
+                                                                    <select load-select-picker class="form-control"
+                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.eurestFamilyGroup"
+                                                                            ng-options="eurestFamilyGroup.name for eurestFamilyGroup in pointOfSaleItemDetailsController.simphonyData.eurestFamilyGroups track by eurestFamilyGroup.name">
+                                                                        <option style="display:none" value="">
+                                                                            -- Select --
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Simphony end -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption caption-full-width">
+                                    <span class="caption-subject font-blue uppercase bold"> Legacy POS ID </span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">POS ID</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="legacy_pos_id"
+                                                        ng-model="pointOfSaleItemDetailsController.legacy_pos_id"
+                                                        ng-disabled="!pointOfSaleItemDetailsController.legacy_pos_id"
+                                                        ng-readonly="pointOfSaleItemDetailsController.legacy_pos_id">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group col-md-12">
+                                            <label class="control-label col-md-3">Description</label>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" rows="4" name="legacy_pos_description"
+                                                          ng-model="pointOfSaleItemDetailsController.legacy_pos_description"
+                                                          ng-disabled="!pointOfSaleItemDetailsController.legacy_pos_description"
+                                                          ng-readonly="pointOfSaleItemDetailsController.legacy_pos_description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="audit-container">
+        <div>
+            <span>Created by </span> user_id <span> on </span> timestamp
+        </div>
+        <div>
+            <span>Last modified by </span> user_id <span> on </span> timestamp
+        </div>
+    </div>
+
+    <div class="modal-footer" style="text-align: left">
+        <button type="button" class="btn btn-default"
+             ng-click="pointOfSaleItemDetailsController.clearAndGoBack()">
+            Cancel
+        </button>
+        <button type="button" class="btn blue"
+             ng-click="pointOfSaleItemDetailsController.savePointOfSaleItem(posItemForm)">
+            Save
+        </button>
+    </div>
+ </div>

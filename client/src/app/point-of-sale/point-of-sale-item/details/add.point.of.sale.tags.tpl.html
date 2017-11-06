@@ -1,0 +1,68 @@
+<div class="modal-content" block-ui="add-pos-tags">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="addPointOfSaleTagsController.cancel()"></button>
+        <h4 class="modal-title">Add tags</h4>
+
+    </div>
+
+
+    <div class="portlet-body">
+        <div class="row">
+
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="point-of-sale-tags-grid">
+                    <div class="caption caption-full-width add-tag-container">
+                        <span class="caption-subject font-blue bold"> Available tags </span>
+                    </div>
+                    <div class="bordered-box-add-tags">
+                        <div class="bordered-box-tag"
+                                ng-repeat="tag in addPointOfSaleTagsController.tags.data">
+                            <div ng-click="addPointOfSaleTagsController.addTag(tag)">{{tag.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- arrow for tablets and desktops start -->
+
+            <div class="col-lg-2 col-md-2 hidden-sm hidden-xs tags-selection-div-large">
+                <div class="tags-selection-inner-div">
+                    <i class="fa fa-arrow-circle-right tags-arrow"></i>
+                </div>
+            </div>
+            <!-- arrow for tablets and desktops end -->
+
+            <!-- arrow for mobile phones start -->
+            <div class="col-sm-12 col-xs-12 hidden-md hidden-lg tags-selection-div-small">
+                <div class="tags-selection-inner-div">
+                    <i class="fa fa-arrow-circle-down tags-arrow"></i>
+                </div>
+            </div>
+            <!-- arrow for mobile phones end -->
+
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="point-of-sale-selected-tags">
+                    <div class="caption caption-full-width add-tag-container">
+                        <span class="caption-subject font-blue bold"> Selected tags </span>
+                    </div>
+                    <div class="bordered-box-add-tags">
+                        <div class="bordered-box-tag" ng-repeat="tag in addPointOfSaleTagsController.newSelectedTags">
+                            {{tag.name}}  <span class="fa fa-times-circle tag-delete pull-right" ng-click="addPointOfSaleTagsController.removeTag(tag.name)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addPointOfSaleTagsController.cancel()">Cancel</button>
+        <button type="button" class="btn blue" ng-click="addPointOfSaleTagsController.select()">
+            Select
+        </button>
+    </div>
+
+</div>
+<!-- END ADD MARKET MAPPING MODAL -->

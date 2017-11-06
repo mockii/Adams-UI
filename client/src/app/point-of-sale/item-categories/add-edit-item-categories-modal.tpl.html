@@ -1,0 +1,39 @@
+<div class="modal-content">
+
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="addEditItemCategoriesModalController.close()"></button>
+        <h3 class="modal-title">{{addEditItemCategoriesModalController.action}} Item Categories</h3>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form role="form">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Item Category Name</label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control" ng-model="addEditItemCategoriesModalController.itemCategoriesRowData.item_category_name">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Description</label>
+                            <div class="col-lg-7">
+                                <textarea rows="6" class="form-control" ng-model="addEditItemCategoriesModalController.itemCategoriesRowData.description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addEditItemCategoriesModalController.close()">Cancel</button>
+        <button type="button" class="btn blue" ng-click="addEditItemCategoriesModalController.save()">Save</button>
+    </div>
+</div>
