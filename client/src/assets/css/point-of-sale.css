@@ -193,7 +193,7 @@
 
 .audit-container{
     text-align: left;
-    margin: 10px;
+    margin-bottom: 25px;
 }
 
 .add-tag-container{
@@ -207,4 +207,14 @@
 
 .margin-top-15{
     margin-top: 15px
+}
+
+
+.point-of-sale-footer{
+    text-align: left;
+    margin-bottom: 30px;
+    background: #eff3f8;
+    padding-left: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #e5e5e5;
 }

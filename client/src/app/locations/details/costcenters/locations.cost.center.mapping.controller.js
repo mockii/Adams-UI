@@ -1,7 +1,7 @@
 (function () {
     angular.module('adams.locations.costcenters.controller', ['ui.grid.pinning', 'common.modules.logging'])
-        .controller('LocationsCostCenterMappingController', ['$scope', '$state', '$location', 'LocationsCostCenterMappingService', 'CompassToastr', '$uibModal', 'Utils', 'LOCATIONS_STATUS_CONSTANTS', '$q','$log',
-            function ($scope, $state, $location, LocationsCostCenterMappingService, CompassToastr, $uibModal, Utils, LOCATIONS_STATUS_CONSTANTS, $q, $log) {
+        .controller('LocationsCostCenterMappingController', ['$scope', '$state', '$location', 'LocationsCostCenterMappingService', 'CompassToastr', '$uibModal', 'Utils', 'STATUS_CONSTANT', '$q','$log',
+            function ($scope, $state, $location, LocationsCostCenterMappingService, CompassToastr, $uibModal, Utils, STATUS_CONSTANT, $q, $log) {
                 var locationsCostCenterMappingController = this,
                     locationCostCenterUpdatePromise,
                     searchProperty = "location_cost_center_map_status";
@@ -11,7 +11,7 @@
 
                 function initialize() {
                     locationsCostCenterMappingController.gridOptions = defineCostCenterGridOptions();
-                    locationsCostCenterMappingController.locationCostCenterStatuses = LOCATIONS_STATUS_CONSTANTS;
+                    locationsCostCenterMappingController.locationCostCenterStatuses = STATUS_CONSTANT;
                     locationsCostCenterMappingController.locationCostCenterStatus = locationsCostCenterMappingController.locationCostCenterStatuses[1];
                     locationsCostCenterMappingController.statusFilterChanged(locationsCostCenterMappingController.locationCostCenterStatus);
                 }

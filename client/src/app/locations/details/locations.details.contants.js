@@ -1,7 +1,5 @@
 (function () {
     angular.module('adams.locations.details.constants', [])
-        .constant('LOCATIONS_STATUS_CONSTANTS',
-            [{name:'All' }, {name: 'Active'}, {name: 'Inactive'}])
         .constant('LOCATIONS_STATES_CONSTANTS',
         [
             {

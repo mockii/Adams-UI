@@ -2,6 +2,17 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="portlet light" block-ui="cost-center-mapping-grid">
             <a class="btn blue" ng-click="costCenterMappingController.openAddCostCenterMapping()"> Add <i class="fa fa-plus"></i> </a>
+            <div class="form-inline pull-right">
+                <label class="caption-subject">Cost Center Mapping Status: </label>
+                <div class="form-group" style="margin-left: 10px;">
+                    <select load-select-picker class="search-resource-selector pull-right"
+                            ng-model="costCenterMappingController.costCenterMappingStatus"
+                            ng-change="costCenterMappingController.statusFilterChanged(costCenterMappingController.costCenterMappingStatus)"
+                            ng-options="status.name for status in costCenterMappingController.costCenterMappingStatuses track by status.name">
+                        <option style="display:none" value="">{{ costCenterMappingController.costCenterMappingStatus }}</option>
+                    </select>
+                </div>
+            </div>
             <div class="portlet-body">
                 <div stg-ui-grid get-grid-options="costCenterMappingController.gridOptions" get-grid-data="costCenterMappingController.getGridData" class="grid ui-grid-height">
                 </div>

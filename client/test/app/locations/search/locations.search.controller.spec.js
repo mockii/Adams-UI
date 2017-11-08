@@ -36,16 +36,11 @@ describe('LocationsSearchController', function() {
             compassToastr,
             $uibModalInstance,
             sampleSvcObj,
-            templateHtml,
-            formElem,
-            form,
             $utils,
-            $location,
             $state,
             $compile,
             gridApi,
             gridOptions,
-            $timeout,
             event,
             urlSpace;
 
@@ -71,11 +66,11 @@ describe('LocationsSearchController', function() {
                 $provide.value('Utils', mockUtils);
                 $provide.value('Utils', mockUtils1);
                 $provide.value('STGLogService', logService);
-                $provide.value('LOCATIONS_STATUS_CONSTANTS', constants);
+                $provide.value('STATUS_CONSTANT', constants);
             });
         });
 
-        beforeEach(inject(function ($controller, _$state_, _$compile_, _$rootScope_, $location, _$httpBackend_, _$uibModal_, _$filter_, $timeout, LocationsSearchService, _$q_, ADAMS_URL_SPACE, ADAMS_CONSTANTS, CompassToastr, Utils, STGLogService, $log, LOCATIONS_STATUS_CONSTANTS) {
+        beforeEach(inject(function ($controller, _$state_, _$compile_, _$rootScope_, $location, _$httpBackend_, _$uibModal_, _$filter_, $timeout, LocationsSearchService, _$q_, ADAMS_URL_SPACE, ADAMS_CONSTANTS, CompassToastr, Utils, STGLogService, $log, STATUS_CONSTANT) {
 
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
@@ -86,7 +81,7 @@ describe('LocationsSearchController', function() {
             compassToastr = CompassToastr;
             adamsConstants = ADAMS_CONSTANTS;
             urlSpace = ADAMS_URL_SPACE;
-            constants = LOCATIONS_STATUS_CONSTANTS;
+            constants = STATUS_CONSTANT;
             $utils = Utils;
             $uibModal = _$uibModal_;
             $filter = _$filter_;
@@ -357,7 +352,7 @@ describe('LocationsSearchController', function() {
                 Utils: mockUtils,
                 $uibModal: mockModal,
                 StgStatesService: statesService,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl1 = $controller('LocationsSearchController', {
@@ -374,7 +369,7 @@ describe('LocationsSearchController', function() {
                 Utils: mockUtils1,
                 $uibModal: mockModal2,
                 StgStatesService: statesService,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl3 = $controller('LocationsSearchController', {
@@ -391,7 +386,7 @@ describe('LocationsSearchController', function() {
                 Utils: mockUtils1,
                 $uibModal: mockModal2,
                 StgStatesService: statesService,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl4 = $controller('LocationsSearchController', {
@@ -408,7 +403,7 @@ describe('LocationsSearchController', function() {
                 Utils: mockUtils1,
                 $uibModal: mockModal2,
                 StgStatesService: statesService,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl2 = $controller('LocationsSearchController', {
@@ -425,7 +420,7 @@ describe('LocationsSearchController', function() {
                 Utils: mockUtils1,
                 $uibModal: mockModal3,
                 StgStatesService: statesService,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
     }));
 

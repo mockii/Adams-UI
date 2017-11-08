@@ -40,7 +40,7 @@
                                 }
                             }
 
-                        } else if(allergen.label && !containsAllergenLabel(allergen.label, allergenController.otherAllergensData)){
+                        } else if(allergen.label){
                             if(!containsAllergenLabel(allergen.label, allergenController.otherAllergensData)){
                                 allergenController.otherAllergensData.push(allergen);
                             } else {
@@ -60,7 +60,7 @@
                 }
 
                 function buildAllergenListWithRelevantData(){
-                    if(hasAllergenRelevantData()){
+                    if(allergenData && allergenData.length > 0 && hasAllergenRelevantData()){
                         getExcludedKeys();
                         allergenController.hasBeenBuiltWithRelevantData = true;
                         excludedKeys.forEach(function(key){

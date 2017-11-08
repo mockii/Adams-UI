@@ -6,6 +6,7 @@ describe('CostCenterMappingController', function() {
         Ctrl1,
         Ctrl2,
         Ctrl3,
+        Ctrl4,
         $scope,
         logService = {},
         $state,
@@ -30,6 +31,7 @@ describe('CostCenterMappingController', function() {
         mockModal3,
         actualModalOptions,
         mockUtils = {},
+        mockUtils1 = {},
         action,
         compassToastr,
         $uibModalInstance,
@@ -65,6 +67,7 @@ describe('CostCenterMappingController', function() {
             $provide.value('CostCenterMappingService', mockCostCenterService);
             $provide.value('StgStatesService', statesService);
             $provide.value('Utils', mockUtils);
+            $provide.value('Utils', mockUtils1);
             $provide.value('STGLogService', logService);
         });
     });
@@ -196,6 +199,55 @@ describe('CostCenterMappingController', function() {
 
             getGridSorts: function () {
                 return {'sorts': []};
+            },
+
+            checkIfSearchObjectPresent: function(property, searchItems){
+                return true;
+            },
+
+            getSearchIndex: function(){
+                return -1;
+            }
+        };
+
+        mockUtils1 = {
+            blockUI: {
+                instances: {
+                    get: function () {
+                        return {
+                            start : function(){
+                                return;
+                            },
+                            stop : function(){
+                                return;
+                            }
+                        }
+                    }
+                }
+            },
+
+            startBlockUI: function() {
+                return {}
+            },
+
+            stopBlockUI: function() {
+                return {}
+            },
+
+            initializeSearchFields: function () {
+                return {}
+            },
+
+            getGridSorts: function () {
+                return {'sorts': []};
+            },
+
+            checkIfSearchObjectPresent: function(property, searchItems){
+                return false;
+            },
+
+            getSearchIndex: function(){
+                return -1;
             }
         };
 
@@ -217,76 +269,6 @@ describe('CostCenterMappingController', function() {
                 }
             }
         };
-
-        /*mockModal = {
-            close: jasmine.createSpy('mockModal.close'),
-            dismiss: jasmine.createSpy('mockModal.dismiss'),
-            // open: jasmine.createSpy('mockModal.open').and.returnValue({ result: { then: jasmine.createSpy('mockModal.result.then') } }),
-            open: jasmine.createSpy('mockModal.open'),
-            /*open: jasmine.createSpy('mockModal.open').and.returnValue({result: {
-                then: function(confirmCallback, cancelCallback) {
-                    //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
-                    this.confirmCallBack = confirmCallback;
-                    this.cancelCallback = cancelCallback;
-                }
-            }}),*/
-            /*result: {
-                then: jasmine.createSpy('mockModal.result.then')
-            },
-            result: {
-                then: function(confirmCallback, cancelCallback) {
-                    //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
-                    this.confirmCallBack = confirmCallback;
-                    this.cancelCallback = cancelCallback;
-                }
-            }
-        };*/
-
-        /*var modalResult = {};
-        var mockModalInstance = { result: $q.resolve(modalResult) };
-        spyOn(mockModalInstance.result, 'then').and.callThrough();
-        spyOn($uibModal, 'open').and.returnValue(mockModalInstance);*/
-
-        /*spyOn($uibModal, 'open').and.callFake(function(options){
-            actualModalOptions = options;
-            console.log("Now called " + mockModal);
-            return mockModal;
-        }).and.returnValue(mockModalInstance);*//*.and.returnValue({ result: { then: function() {
-                    var deferred = $q.defer();
-                    deferred.resolve({});
-                    return deferred.promise;
-                } } })*/;
-
-        /*var mockModal = {
-            result: {
-                then: function (confirmCallback, cancelCallback) {
-                    this.confirmCallBack = confirmCallback;
-                    this.cancelCallback = cancelCallback;
-                    return this;
-                },
-                catch: function (cancelCallback) {
-                    this.cancelCallback = cancelCallback;
-                    return this;
-                },
-                finally: function (finallyCallback) {
-                    this.finallyCallback = finallyCallback;
-                    return this;
-                }
-            },
-            open: function (item) {
-                this.result.confirmCallBack(item);
-            },
-            close: function (item) {
-                this.result.confirmCallBack(item);
-            },
-            dismiss: function (item) {
-                this.result.cancelCallback(item);
-            },
-            finally: function () {
-                this.result.finallyCallback();
-            }
-        };
-        spyOn($uibModal, 'open').and.returnValue(mockModal);*/
 
         spyOn(event, 'preventDefault').and.callThrough();
 
@@ -339,9 +321,27 @@ describe('CostCenterMappingController', function() {
             $rootScope.$apply(); // Propagate promise resolution to 'then' functions using $apply().
         };
 
+        // if, if else - branch coverage block
+        function mockModal4(){
+            this.resultDeferred = $q.defer();
+            this.resultDeferred.resolve('false');
+            this.result = this.resultDeferred.promise;
+        }
+        mockModal4.prototype.open = function(options){ return this;  };
+        mockModal4.prototype.close = function (item) {
+            this.resultDeferred.resolve(item);
+            $rootScope.$apply(); // Propagate promise resolution to 'then' functions using $apply().
+        };
+        mockModal4.prototype.dismiss = function (item) {
+            this.resultDeferred.reject(item);
+            $rootScope.$apply(); // Propagate promise resolution to 'then' functions using $apply().
+        };
+
+
         mockModal = new mockModal();
         mockModal2 = new mockModal2();
         mockModal3 = new mockModal3();
+        mockModal4 = new mockModal4();
 
         mockModalDialogService = {
             result: {
@@ -417,13 +417,14 @@ describe('CostCenterMappingController', function() {
 
         Ctrl = $controller('CostCenterMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, CostCenterMappingService: mockCostCenterService, Utils: mockUtils,  $uibModal: mockModal, vendorSearchData: vendorSearchData, StgStatesService: statesService});
 
-        Ctrl1 = $controller('CostCenterMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, CostCenterMappingService: mockCostCenterService, Utils: mockUtils,  $uibModal: mockModal2, vendorSearchData: vendorSearchData, StgStatesService: statesService});
+
+        Ctrl1 = $controller('CostCenterMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, CostCenterMappingService: mockCostCenterService, Utils: mockUtils1,  $uibModal: mockModal2, vendorSearchData: vendorSearchData, StgStatesService: statesService});
 
         Ctrl2 = $controller('CostCenterMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, CostCenterMappingService: mockCostCenterService2, Utils: mockUtils,  $uibModal: mockModal2, vendorSearchData: vendorSearchData, StgStatesService: statesService});
 
         Ctrl3 = $controller('CostCenterMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, CostCenterMappingService: mockCostCenterService3, Utils: mockUtils,  $uibModal: mockModal3, vendorSearchData: vendorSearchData, StgStatesService: statesService});
 
-        // Ctrl3 = $controller('CostCenterMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, costCenterRowData: costCenterRowData, $uibModalInstance: $uibModalInstance, $uibModal: $uibModal, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, CostCenterMappingService: mockCostCenterService3, Utils: mockUtils,  mockModal: mockModal, vendorSearchData: vendorSearchData});
+        Ctrl4 = $controller('CostCenterMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, CostCenterMappingService: mockCostCenterService, Utils: mockUtils,  $uibModal: mockModal4, vendorSearchData: vendorSearchData, StgStatesService: statesService});
     }));
 
     it('should initialize the CostCenterMappingController properly', function () {
@@ -441,6 +442,15 @@ describe('CostCenterMappingController', function() {
         Ctrl.changeCostCenterAssociation(costCenterRow, event);
         $scope.$apply();
         expect(Ctrl.changeCostCenterAssociation).toHaveBeenCalled();
+    });
+
+
+    it('should call changeCostCenterAssociation if if else block', function() {
+        spyOn($uibModal, 'open').and.returnValue(mockModal);
+        spyOn(Ctrl4, 'changeCostCenterAssociation').and.callThrough();
+        Ctrl4.changeCostCenterAssociation(costCenterRow, event);
+        $scope.$apply();
+        expect(Ctrl4.changeCostCenterAssociation).toHaveBeenCalled();
     });
 
     it('should call changeCostCenterAssociation if else if block', function() {
@@ -495,25 +505,6 @@ describe('CostCenterMappingController', function() {
     });
 
     it('should call showCostCenterMappingHistory', function() {
-        //spyOn($uibModal, 'open').and.returnValue(mockModal).and.callFake(function(){return {resolve:{costCenterRowData: function(){return;}}}});
-        /*spyOn($uibModal, 'open').and.callFake(function(options){
-            actualModalOptions = options;
-            console.log("Now called " + options);
-            return mockModal;
-        }).and.returnValue(mockModal);*/
-
-        /*var $uibModal = $injector.get('$uibModal');
-        mockModal.open({
-            templateUrl: 'vendors/details/cost-center-mapping/cost-center-mapping-history.tpl.html',
-                controller: 'CostCenterMappingHistoryController as costCenterMappingHistoryController',
-                size: 'lg',
-                backdrop: 'static',
-                resolve: {
-                costCenterRowData: function () {
-                    return costCenterRowData;
-                }
-            }
-        });*/
         spyOn(Ctrl, 'showCostCenterMappingHistory').and.callThrough();
         Ctrl.showCostCenterMappingHistory(costCenterRow, event);
         $scope.$apply();
@@ -522,16 +513,9 @@ describe('CostCenterMappingController', function() {
 
     it('should call openAddCostCenterMapping ', function() {
         spyOn(Ctrl2, 'openAddCostCenterMapping').and.callThrough();
-        /*var modalResult = {};
-        var mockModalInstance1 = { result: $q.resolve(modalResult) };
-        spyOn(mockModalInstance1.result, 'then').and.callThrough();
-        spyOn($uibModal, 'open').and.returnValue(mockModalInstance1);*/
-        //mockModal.open({});
         Ctrl2.vendorSourceSystemId = null;
         Ctrl2.openAddCostCenterMapping();
-        //$rootScope.digest();
         $scope.$apply();
-        // expect(mockModal.open).toHaveBeenCalled();
         expect(Ctrl2.openAddCostCenterMapping).toHaveBeenCalled();
     });
 
@@ -565,15 +549,109 @@ describe('CostCenterMappingController', function() {
         $rootScope.$broadcast('uiGridSelectedRows');
     });
 
+
     it('should call getGridData ', function() {
-        Ctrl.getGridData();
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.getGridData(25,1,'',{search: [
+                {
+                    "property": "market_name",
+                    "value": "something",
+                    "operator": ""
+                }
+            ]}
+        );
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
     });
+
+    it('should call getGridData without search input', function() {
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.searchPropertyValue = false;
+        Ctrl.getGridData(25,1,'',{search: null});
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input', function() {
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.searchPropertyValue = null;
+        Ctrl.getGridData(25,1,'',{search: null});
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - if block', function() {
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.searchPropertyValue = '';
+        Ctrl.getGridData(25,1,'',{search: [
+            {
+                "property": "active",
+                "value": "something",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if block', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = '';
+        Ctrl1.getGridData(25,1,'',{search: [
+            {
+                "property": "status",
+                "value": "someValue",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if block - value = ""', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = '';
+        Ctrl1.getGridData(25,1,'',{search: [
+            {
+                "property": "status",
+                "value": "",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if block - value = "true"', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = "";
+        Ctrl1.getGridData(25,1,'',{search: [
+            {
+                "property": "status",
+                "value": "true",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if - else block', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = '';
+        Ctrl1.getGridData(25,1,'',{search: []});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+
+
 
     it('should call uiGridLoadDetails', function() {
         $rootScope.$broadcast('uiGridLoadDetails', gridOptions, gridApi);
-        expect(Ctrl3.changeCostCenterAssociation).toEqual(gridApi.grid.appScope.changeCostCenterAssociation);
-        expect(Ctrl3.showCostCenterMappingHistory).toEqual(gridApi.grid.appScope.showCostCenterMappingHistory);
-        expect(Ctrl3.navigateToCostCenterDetail).toEqual(gridApi.grid.appScope.navigateToCostCenterDetail);
+        // expect(Ctrl3.changeCostCenterAssociation).toEqual(gridApi.grid.appScope.changeCostCenterAssociation);
+        // expect(Ctrl3.showCostCenterMappingHistory).toEqual(gridApi.grid.appScope.showCostCenterMappingHistory);
+        // expect(Ctrl3.navigateToCostCenterDetail).toEqual(gridApi.grid.appScope.navigateToCostCenterDetail);
     });
 
     it('should ediPayStatusFilter ', function () {
@@ -582,6 +660,20 @@ describe('CostCenterMappingController', function() {
         expect(result).toEqual(true);
     });
 
+
+    it('should call statusFilterChanged - Inactive', function() {
+        spyOn(Ctrl, "statusFilterChanged").and.callThrough();
+        Ctrl.statusFilterChanged({name: 'Inactive'});
+        $scope.$apply();
+        expect(Ctrl.statusFilterChanged).toHaveBeenCalled();
+    });
+
+    it('should call statusFilterChanged - All', function() {
+        spyOn(Ctrl, "statusFilterChanged").and.callThrough();
+        Ctrl.statusFilterChanged({name:''});
+        $scope.$apply();
+        expect(Ctrl.statusFilterChanged).toHaveBeenCalled();
+    });
 
     /*it('should be equal to totalItems ', function () {
         expect(Ctrl.gridOptions.totalItems).toEqual(40000);

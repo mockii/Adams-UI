@@ -31,7 +31,7 @@ module.exports = function(config) {
             'src/**/*.js',
             'src/**/*.tpl.html',
             'test/**/*.spec.js'
-            // 'test/app/teams/teams.controller.spec.js'
+            // 'test/app/common/directives/toolTip.spec.js'
         ],
 
 

@@ -11,8 +11,10 @@
 
             function initialize() {
 
+                pointOfSaleItemDetailsController.action = $state.current.name;
                 pointOfSaleItemDetailsController.infogenesisData = {};
                 pointOfSaleItemDetailsController.simphonyData = {};
+                pointOfSaleItemDetailsController.webtritionItem = {};
 
                 pointOfSaleItemDetailsController.tags = [];
                 pointOfSaleItemDetailsController.vendorTabs = [];
@@ -36,6 +38,9 @@
                 pointOfSaleItemDetailsController.infogenesisData.eurestRevenueCategories = [];
                 pointOfSaleItemDetailsController.simphonyData.eurestMajorGroups = [];
                 pointOfSaleItemDetailsController.simphonyData.eurestFamilyGroups = [];
+
+                // default active indicator to true
+                pointOfSaleItemDetailsController.active_indicator = true;
 
                 pointOfSaleItemDetailsController.initializeMaxLengthsForTextInputs();
                 pointOfSaleItemDetailsController.initializeVendorTabStates();
@@ -71,7 +76,7 @@
             };
 
             pointOfSaleItemDetailsController.setPageTitle = function () {
-                if($state.current.name === "edititem") {
+                if(pointOfSaleItemDetailsController.action === "edititem") {
                     $state.current.data.pageTitle = pos_item.name + ' (' + pos_item.posId + ')';
                 }
             };
@@ -97,7 +102,7 @@
                 pointOfSaleItemDetailsController.loadEurestMajorGroups();
                 pointOfSaleItemDetailsController.loadEurestFamilyGroups();
 
-                if($state.current.name === "edititem") {
+                if(pointOfSaleItemDetailsController.action === "edititem") {
                     pointOfSaleItemDetailsController.posId = pos_item.posId;
                     pointOfSaleItemDetailsController.revenueCategory = pos_item.revenueCategory;
                     pointOfSaleItemDetailsController.itemCategory = pos_item.itemCategory;
@@ -160,7 +165,7 @@
                     }
                 ];
 
-                pointOfSaleItemDetailsController.unitOfMeasures = $filter('orderBy')(response, 'name', false);
+                pointOfSaleItemDetailsController.webtritionItem.unitOfMeasures = $filter('orderBy')(response, 'name', false);
             };
 
             pointOfSaleItemDetailsController.loadDefaultProductClasses = function () {
@@ -340,6 +345,26 @@
                 // submit form here
 
             };
+
+            pointOfSaleItemDetailsController.isNotReadyToSubmit = function(){
+                return pointOfSaleItemDetailsController.revenueCategory === undefined ||
+                        pointOfSaleItemDetailsController.itemCategory === undefined ||
+                        pointOfSaleItemDetailsController.itemClass === undefined ||
+                        (pointOfSaleItemDetailsController.itemClass.item_class_name === 'Webtrition Item' && pointOfSaleItemDetailsController.webtritionItem.unitOfMeasure === undefined) ||
+                        pointOfSaleItemDetailsController.infogenesisData.defaultProductClass === undefined ||
+                        pointOfSaleItemDetailsController.infogenesisData.morrisonProductClass === undefined ||
+                        pointOfSaleItemDetailsController.infogenesisData.eurestProductClass === undefined ||
+                        pointOfSaleItemDetailsController.infogenesisData.defaultRevenueCategory === undefined ||
+                        pointOfSaleItemDetailsController.infogenesisData.morrisonRevenueCategory === undefined ||
+                        pointOfSaleItemDetailsController.infogenesisData.eurestRevenueCategory === undefined ||
+                        pointOfSaleItemDetailsController.simphonyData.defaultMajorGroup === undefined ||
+                        pointOfSaleItemDetailsController.simphonyData.morrisonMajorGroup === undefined ||
+                        pointOfSaleItemDetailsController.simphonyData.eurestMajorGroup === undefined ||
+                        pointOfSaleItemDetailsController.simphonyData.defaultFamilyGroup === undefined ||
+                        pointOfSaleItemDetailsController.simphonyData.morrisonFamilyGroup === undefined ||
+                        pointOfSaleItemDetailsController.simphonyData.eurestFamilyGroup === undefined;
+            };
+
 
             initialize();
         }

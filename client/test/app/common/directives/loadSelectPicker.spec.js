@@ -3,8 +3,8 @@ describe("adams.common.directives.selectPicker", function(){
     var $scope, $compile, element, $timeout;
 
     beforeEach(module("adams.common.directives.selectPicker"));
-    beforeEach(module("adams.locations.details.constants"));
-    beforeEach(inject(function ($rootScope, _$compile_, LOCATIONS_STATUS_CONSTANTS, _$timeout_) {
+    beforeEach(module("adams.common.constants"));
+    beforeEach(inject(function ($rootScope, _$compile_, STATUS_CONSTANT, _$timeout_) {
         $scope = $rootScope.$new();
         $compile = _$compile_;
         $timeout = _$timeout_;

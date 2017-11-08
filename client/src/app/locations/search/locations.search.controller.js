@@ -2,15 +2,15 @@
 
 (function () {
     angular.module('adams.locations.search.controller', ['ui.grid.pinning', 'common.modules.logging'])
-        .controller('LocationsSearchController', ['$scope', '$state', 'LocationsSearchService', 'LocationsDetailsService', 'StgStatesService', '$uibModal', 'Utils', 'CompassToastr', 'ModalDialogService', '$timeout', 'LOCATIONS_STATUS_CONSTANTS', '$log',
-        function ($scope, $state, LocationsSearchService, LocationsDetailsService, StgStatesService, $uibModal, Utils, CompassToastr, ModalDialogService, $timeout, LOCATIONS_STATUS_CONSTANTS, $log) {
+        .controller('LocationsSearchController', ['$scope', '$state', 'LocationsSearchService', 'LocationsDetailsService', 'StgStatesService', '$uibModal', 'Utils', 'CompassToastr', 'ModalDialogService', '$timeout', 'STATUS_CONSTANT', '$log',
+        function ($scope, $state, LocationsSearchService, LocationsDetailsService, StgStatesService, $uibModal, Utils, CompassToastr, ModalDialogService, $timeout, STATUS_CONSTANT, $log) {
             var locationsSearchController = this,
                 locationsSearchStatusChangePromise,
                 searchProperty = "active";
 
             function initialize() {
                 locationsSearchController.gridOptions = defineLocationsSearchGridOptions();
-                locationsSearchController.locationStatuses = LOCATIONS_STATUS_CONSTANTS;
+                locationsSearchController.locationStatuses = STATUS_CONSTANT;
                 locationsSearchController.locationStatus = locationsSearchController.locationStatuses[1];
                 locationsSearchController.statusFilterChanged(locationsSearchController.locationStatus);
             }

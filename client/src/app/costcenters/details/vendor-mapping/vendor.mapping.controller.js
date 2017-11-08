@@ -1,8 +1,9 @@
 (function () {
     angular.module('adams.vendor.mapping.controller', ['ui.grid.pinning', 'common.modules.logging'])
-        .controller('VendorMappingController', ['$scope', '$state', '$location', 'StgStatesService', 'uiGridConstants', 'VendorMappingService', 'CompassToastr', '$uibModal', 'costCenterSearchData', '$timeout', 'Utils', '$log',
-            function ($scope, $state, $location, StgStatesService, uiGridConstants, VendorMappingService, CompassToastr, $uibModal, costCenterSearchData, $timeout, Utils, $log) {
+        .controller('VendorMappingController', ['$scope', '$state', '$location', 'StgStatesService', 'uiGridConstants', 'VendorMappingService', 'CompassToastr', '$uibModal', 'costCenterSearchData', '$timeout', 'Utils', '$log', 'STATUS_CONSTANT',
+            function ($scope, $state, $location, StgStatesService, uiGridConstants, VendorMappingService, CompassToastr, $uibModal, costCenterSearchData, $timeout, Utils, $log, STATUS_CONSTANT) {
                 var vendorMappingController = this,
+                    searchProperty = "associated",
                     vendorUpdatePromise;
 
                 $state.current.data.pageTitle = costCenterSearchData.cost_center_description + ' (' + costCenterSearchData.cost_center + ')';
@@ -12,7 +13,23 @@
 
                 function initialize() {
                     vendorMappingController.gridOptions = defineVendorGridOptions();
+                    vendorMappingController.vendorMappingStatuses = STATUS_CONSTANT;
+                    vendorMappingController.vendorMappingStatus = vendorMappingController.vendorMappingStatuses[1];
+                    vendorMappingController.statusFilterChanged(vendorMappingController.vendorMappingStatus);
                 }
+
+                vendorMappingController.statusFilterChanged = function(status){
+                    if (status.name === 'Active') {
+                        vendorMappingController.searchPropertyValue = true;
+                    }
+                    else if (status.name === 'Inactive') {
+                        vendorMappingController.searchPropertyValue = false;
+                    }
+                    else {
+                        vendorMappingController.searchPropertyValue = '';
+                    }
+                    $scope.$broadcast('uiGridParameterChange');
+                };
 
                 $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
                     // emitted gridOptions and gridApi from Directive controller
@@ -94,7 +111,7 @@
                 });
 
                 function updateVendor(vendorRowData) {
-                    var vendorUpdatePromise = VendorMappingService.updateCostCenterVendor(vendorRowData);
+                    vendorUpdatePromise = VendorMappingService.updateCostCenterVendor(vendorRowData);
                     vendorUpdatePromise.then(
                         function (response) {
                             if (response === 'error') {
@@ -117,7 +134,41 @@
                 }
 
                 vendorMappingController.getGridData = function (pageSize, pageNumber, sort, searchInput) {
-                    return VendorMappingService.getVendorMappingData(pageSize, pageNumber, sort, vendorMappingController.costCenterSourceSystemId, vendorMappingController.costCenterNumber, searchInput);
+                    if(vendorMappingController.hasOwnProperty('searchPropertyValue') &&
+                        vendorMappingController.searchPropertyValue === '' &&
+                        searchInput.search.length === 1 &&
+                        searchInput.search[0].property === 'active') {
+                        return VendorMappingService.getVendorMappingData(pageSize, pageNumber, sort, vendorMappingController.costCenterSourceSystemId, vendorMappingController.costCenterNumber, {});
+                    }
+                    else {
+                        if(!searchInput.search) {
+                            searchInput.search = [];
+                        }
+                        // delete if exist
+                        if (Utils.checkIfSearchObjectPresent(searchProperty, searchInput.search)) {
+                            var index = searchInput.search.findIndex(Utils.getSearchIndex, searchProperty);
+                            searchInput.search.splice(index, 1);
+                        }
+                        if(vendorMappingController.searchPropertyValue !== ""){
+                            searchInput.search.push({
+                                "property": searchProperty,
+                                "value": vendorMappingController.searchPropertyValue === null ? '' : vendorMappingController.searchPropertyValue,
+                                "operator": ""
+                            });
+                        }
+
+                        if (searchInput.search && searchInput.search.length > 0) {
+                            for (var i = 0; i < searchInput.search.length; i++) {
+                                if (searchInput.search[i].property === 'status' &&
+                                    typeof(searchInput.search[i].value) === "string") {
+                                    searchInput.search[i].value = searchInput.search[i].value === '' ? '' :
+                                        searchInput.search[i].value === "true" ? true : false;
+                                }
+                            }
+                        }
+                        vendorMappingController.search = searchInput;
+                        return VendorMappingService.getVendorMappingData(pageSize, pageNumber, sort, vendorMappingController.costCenterSourceSystemId, vendorMappingController.costCenterNumber, vendorMappingController.search);
+                    }
                 };
 
                 vendorMappingController.openAddVendorMapping = function () {

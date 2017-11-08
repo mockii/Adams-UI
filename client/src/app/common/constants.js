@@ -18,4 +18,6 @@ angular.module('adams.common.constants', [])
         SEC_APPLICATION_COUNT: '100',
         PAGE_NO: '1',
         TEMP_ASSOCIATE_RESOURCES: ['All Resources', 'Engaged Resources', 'Available Resources']
-    });
+    })
+    .constant('STATUS_CONSTANT',
+        [{name:'All' }, {name: 'Active'}, {name: 'Inactive'}]);

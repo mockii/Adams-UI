@@ -6,6 +6,7 @@ describe('VendorMappingController', function() {
         Ctrl1,
         Ctrl2,
         Ctrl3,
+        Ctrl4,
         $scope,
         $state,
         CompassToastr,
@@ -30,6 +31,7 @@ describe('VendorMappingController', function() {
         statesService = {},
         actualModalOptions,
         mockUtils = {},
+        mockUtils1 = {},
         action,
         compassToastr,
         $uibModalInstance,
@@ -65,6 +67,7 @@ describe('VendorMappingController', function() {
             $provide.value('VendorMappingService', mockVendorService);
             $provide.value('StgStatesService', statesService);
             $provide.value('Utils', mockUtils);
+            $provide.value('Utils', mockUtils1);
             $provide.value('STGLogService', logService);
         });
     });
@@ -190,6 +193,55 @@ describe('VendorMappingController', function() {
 
             getGridSorts: function () {
                 return {'sorts': []};
+            },
+
+            checkIfSearchObjectPresent: function(property, searchItems){
+                return true;
+            },
+
+            getSearchIndex: function(){
+                return -1;
+            }
+        };
+
+        mockUtils1 = {
+            blockUI: {
+                instances: {
+                    get: function () {
+                        return {
+                            start : function(){
+                                return;
+                            },
+                            stop : function(){
+                                return;
+                            }
+                        }
+                    }
+                }
+            },
+
+            startBlockUI: function() {
+                return {}
+            },
+
+            stopBlockUI: function() {
+                return {}
+            },
+
+            initializeSearchFields: function () {
+                return {}
+            },
+
+            getGridSorts: function () {
+                return {'sorts': []};
+            },
+
+            checkIfSearchObjectPresent: function(property, searchItems){
+                return false;
+            },
+
+            getSearchIndex: function(){
+                return -1;
             }
         };
 
@@ -216,76 +268,6 @@ describe('VendorMappingController', function() {
                 }
             }
         };
-
-        /*mockModal = {
-            close: jasmine.createSpy('mockModal.close'),
-            dismiss: jasmine.createSpy('mockModal.dismiss'),
-            // open: jasmine.createSpy('mockModal.open').and.returnValue({ result: { then: jasmine.createSpy('mockModal.result.then') } }),
-            open: jasmine.createSpy('mockModal.open'),
-            /*open: jasmine.createSpy('mockModal.open').and.returnValue({result: {
-                then: function(confirmCallback, cancelCallback) {
-                    //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
-                    this.confirmCallBack = confirmCallback;
-                    this.cancelCallback = cancelCallback;
-                }
-            }}),*/
-            /*result: {
-                then: jasmine.createSpy('mockModal.result.then')
-            },
-            result: {
-                then: function(confirmCallback, cancelCallback) {
-                    //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
-                    this.confirmCallBack = confirmCallback;
-                    this.cancelCallback = cancelCallback;
-                }
-            }
-        };*/
-
-        /*var modalResult = {};
-        var mockModalInstance = { result: $q.resolve(modalResult) };
-        spyOn(mockModalInstance.result, 'then').and.callThrough();
-        spyOn($uibModal, 'open').and.returnValue(mockModalInstance);*/
-
-        /*spyOn($uibModal, 'open').and.callFake(function(options){
-            actualModalOptions = options;
-            console.log("Now called " + mockModal);
-            return mockModal;
-        }).and.returnValue(mockModalInstance);*//*.and.returnValue({ result: { then: function() {
-                    var deferred = $q.defer();
-                    deferred.resolve({});
-                    return deferred.promise;
-                } } })*/;
-
-        /*var mockModal = {
-            result: {
-                then: function (confirmCallback, cancelCallback) {
-                    this.confirmCallBack = confirmCallback;
-                    this.cancelCallback = cancelCallback;
-                    return this;
-                },
-                catch: function (cancelCallback) {
-                    this.cancelCallback = cancelCallback;
-                    return this;
-                },
-                finally: function (finallyCallback) {
-                    this.finallyCallback = finallyCallback;
-                    return this;
-                }
-            },
-            open: function (item) {
-                this.result.confirmCallBack(item);
-            },
-            close: function (item) {
-                this.result.confirmCallBack(item);
-            },
-            dismiss: function (item) {
-                this.result.cancelCallback(item);
-            },
-            finally: function () {
-                this.result.finallyCallback();
-            }
-        };
-        spyOn($uibModal, 'open').and.returnValue(mockModal);*/
 
         spyOn(event, 'preventDefault').and.callThrough();
 
@@ -338,9 +320,27 @@ describe('VendorMappingController', function() {
             $rootScope.$apply(); // Propagate promise resolution to 'then' functions using $apply().
         };
 
+
+        // if if else branch coverage block
+        function mockModal4(){
+            this.resultDeferred = $q.defer();
+            this.resultDeferred.resolve('false');
+            this.result = this.resultDeferred.promise;
+        }
+        mockModal4.prototype.open = function(options){ return this;  };
+        mockModal4.prototype.close = function (item) {
+            this.resultDeferred.resolve(item);
+            $rootScope.$apply(); // Propagate promise resolution to 'then' functions using $apply().
+        };
+        mockModal4.prototype.dismiss = function (item) {
+            this.resultDeferred.reject(item);
+            $rootScope.$apply(); // Propagate promise resolution to 'then' functions using $apply().
+        };
+
         mockModal = new mockModal();
         mockModal2 = new mockModal2();
         mockModal3 = new mockModal3();
+        mockModal4 = new mockModal4();
 
         mockModalDialogService = {
             result: {
@@ -416,13 +416,14 @@ describe('VendorMappingController', function() {
 
         Ctrl = $controller('VendorMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, VendorMappingService: mockVendorService, Utils: mockUtils,  $uibModal: mockModal, costCenterSearchData: costCenterSearchData, StgStatesService: statesService});
 
-        Ctrl1 = $controller('VendorMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, VendorMappingService: mockVendorService, Utils: mockUtils,  $uibModal: mockModal2, costCenterSearchData: costCenterSearchData, StgStatesService: statesService});
+        Ctrl1 = $controller('VendorMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, VendorMappingService: mockVendorService, Utils: mockUtils1,  $uibModal: mockModal2, costCenterSearchData: costCenterSearchData, StgStatesService: statesService});
 
         Ctrl2 = $controller('VendorMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, VendorMappingService: mockVendorService2, Utils: mockUtils,  $uibModal: mockModal2, costCenterSearchData: costCenterSearchData, StgStatesService: statesService});
 
         Ctrl3 = $controller('VendorMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, VendorMappingService: mockVendorService3, Utils: mockUtils,  $uibModal: mockModal3, costCenterSearchData: costCenterSearchData, StgStatesService: statesService});
 
-        // Ctrl3 = $controller('VendorMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, vendorRowData: vendorRowData, $uibModalInstance: $uibModalInstance, $uibModal: $uibModal, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, VendorMappingService: mockVendorService3, Utils: mockUtils,  mockModal: mockModal, costCenterSearchData: costCenterSearchData});
+        Ctrl4 = $controller('VendorMappingController', { $scope: $scope, $state: $state, $timeout:$timeout, $location: $location, $uibModalInstance: $uibModalInstance, compassToastr: CompassToastr, ADAMS_CONSTANTS: adamsConstants,  ModalDialogService: mockModalDialogService, VendorMappingService: mockVendorService, Utils: mockUtils,  $uibModal: mockModal4, costCenterSearchData: costCenterSearchData, StgStatesService: statesService});
+
     }));
 
     it('should initialize the VendorMappingController properly', function () {
@@ -440,6 +441,14 @@ describe('VendorMappingController', function() {
         Ctrl.changeVendorAssociation(vendorRow, event);
         $scope.$apply();
         expect(Ctrl.changeVendorAssociation).toHaveBeenCalled();
+    });
+
+    it('should call changeVendorAssociation if if else block', function() {
+        spyOn($uibModal, 'open').and.returnValue(mockModal);
+        spyOn(Ctrl4, 'changeVendorAssociation').and.callThrough();
+        Ctrl4.changeVendorAssociation(vendorRow, event);
+        $scope.$apply();
+        expect(Ctrl4.changeVendorAssociation).toHaveBeenCalled();
     });
 
     it('should call changeVendorAssociation if else if block', function() {
@@ -565,15 +574,11 @@ describe('VendorMappingController', function() {
         $rootScope.$broadcast('uiGridSelectedRows');
     });
 
-    it('should call getGridData ', function() {
-        Ctrl.getGridData();
-    });
-
     it('should call uiGridLoadDetails', function() {
         $rootScope.$broadcast('uiGridLoadDetails', gridOptions, gridApi);
-        expect(Ctrl3.changeVendorAssociation).toEqual(gridApi.grid.appScope.changeVendorAssociation);
-        expect(Ctrl3.showVendorMappingHistory).toEqual(gridApi.grid.appScope.showVendorMappingHistory);
-        expect(Ctrl3.navigateToVendorDetail).toEqual(gridApi.grid.appScope.navigateToVendorDetail);
+        // expect(Ctrl3.changeVendorAssociation).toEqual(gridApi.grid.appScope.changeVendorAssociation);
+        // expect(Ctrl3.showVendorMappingHistory).toEqual(gridApi.grid.appScope.showVendorMappingHistory);
+        // expect(Ctrl3.navigateToVendorDetail).toEqual(gridApi.grid.appScope.navigateToVendorDetail);
     });
 
     it('should ediPayStatusFilter with 1', function () {
@@ -642,32 +647,113 @@ describe('VendorMappingController', function() {
 
     }));
 
- //    it('should call getVendorMappingData with response error', inject(function ($timeout) {
- //        $scope.$apply();
- //        expect(Ctrl2.gridOptions.data).toEqual([]);
- //        expect(Ctrl2.gridOptions.totalItems).toBeUndefined();
- //        // flush timeout(s) for all code under test.
- //        $timeout.flush();
- //        // this will throw an exception if there are any pending timeouts.
- //        $timeout.verifyNoPendingTasks();
- //        expect(Ctrl2.errorMessage).toEqual('An error occurred while getting vendors data');
- //        spyOn(Ctrl2, 'errorHandling').and.callThrough();
- //        Ctrl2.errorHandling('An error occurred while getting vendors data');
- //        expect(Ctrl2.errorHandling).toHaveBeenCalledWith('An error occurred while getting vendors data');
- // }));
 
-    /*it('should call getVendorMappingHistoryData with error', function () {
-     $scope.$apply();
-     mockUtils.stopBlockUI();
-     expect($scope.error).toBe('There has been an error!');
-     });*/
 
-    /*it('should registerGridApi ', function () {
-     var gridContainer = "< div ui-grid='myGridOptions' ui-grid-pagination></div>";
+    it('should call getGridData ', function() {
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.getGridData(25,1,'',{search: [
+                {
+                    "property": "market_name",
+                    "value": "something",
+                    "operator": ""
+                }
+            ]}
+        );
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
+    });
 
-     var grid = $compile(gridContainer)($scope); // I've declared scope before as scope = $rootScope.$new();
+    it('should call getGridData without search input', function() {
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.searchPropertyValue = false;
+        Ctrl.getGridData(25,1,'',{search: null});
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
+    });
 
-     $scope.$digest();
-     Ctrl.gridOptions.onRegisterApi(grid);
-     });*/
-})
+    it('should call getGridData without search input', function() {
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.searchPropertyValue = null;
+        Ctrl.getGridData(25,1,'',{search: null});
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - if block', function() {
+        spyOn(Ctrl, "getGridData").and.callThrough();
+        Ctrl.searchPropertyValue = '';
+        Ctrl.getGridData(25,1,'',{search: [
+            {
+                "property": "active",
+                "value": "something",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if block', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = '';
+        Ctrl1.getGridData(25,1,'',{search: [
+            {
+                "property": "status",
+                "value": "someValue",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if block - value = ""', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = '';
+        Ctrl1.getGridData(25,1,'',{search: [
+            {
+                "property": "status",
+                "value": "",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if block - value = "true"', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = "";
+        Ctrl1.getGridData(25,1,'',{search: [
+            {
+                "property": "status",
+                "value": "true",
+                "operator": ""
+            }
+        ]});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call getGridData without search input - else if - else block', function() {
+        spyOn(Ctrl1, "getGridData").and.callThrough();
+        Ctrl1.searchPropertyValue = '';
+        Ctrl1.getGridData(25,1,'',{search: []});
+        $scope.$apply();
+        expect(Ctrl1.getGridData).toHaveBeenCalled();
+    });
+
+    it('should call statusFilterChanged - Inactive', function() {
+        spyOn(Ctrl, "statusFilterChanged").and.callThrough();
+        Ctrl.statusFilterChanged({name: 'Inactive'});
+        $scope.$apply();
+        expect(Ctrl.statusFilterChanged).toHaveBeenCalled();
+    });
+
+    it('should call statusFilterChanged - All', function() {
+        spyOn(Ctrl, "statusFilterChanged").and.callThrough();
+        Ctrl.statusFilterChanged({name:''});
+        $scope.$apply();
+        expect(Ctrl.statusFilterChanged).toHaveBeenCalled();
+    });
+});

@@ -1,7 +1,7 @@
 (function () {
     angular.module('adams.locations.stations.controller', ['ui.grid.pinning', 'common.modules.logging'])
-        .controller('LocationsStationsMappingController', ['$scope', '$state', '$location', 'LocationsStationsMappingService', 'CompassToastr', '$uibModal', 'Utils', 'LOCATIONS_STATUS_CONSTANTS','$q', '$log',
-            function ($scope, $state, $location, LocationsStationsMappingService, CompassToastr, $uibModal, Utils, LOCATIONS_STATUS_CONSTANTS, $q, $log) {
+        .controller('LocationsStationsMappingController', ['$scope', '$state', '$location', 'LocationsStationsMappingService', 'CompassToastr', '$uibModal', 'Utils', 'STATUS_CONSTANT','$q', '$log',
+            function ($scope, $state, $location, LocationsStationsMappingService, CompassToastr, $uibModal, Utils, STATUS_CONSTANT, $q, $log) {
                 var locationsStationsMappingController = this,
                     locationStationUpdatePromise,
                     searchProperty = "location_cost_center_station_map_status";
@@ -11,7 +11,7 @@
 
                 function initialize() {
                     locationsStationsMappingController.gridOptions = defineStationsGridOptions();
-                    locationsStationsMappingController.locationStationsStatuses = LOCATIONS_STATUS_CONSTANTS;
+                    locationsStationsMappingController.locationStationsStatuses = STATUS_CONSTANT;
                     locationsStationsMappingController.locationStationStatus = locationsStationsMappingController.locationStationsStatuses[1];
                     locationsStationsMappingController.statusFilterChanged(locationsStationsMappingController.locationStationStatus);
                 }

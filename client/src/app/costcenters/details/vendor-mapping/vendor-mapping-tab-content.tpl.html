@@ -2,6 +2,17 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="portlet light" block-ui="vendor-ui-grid">
             <a class="btn blue" ng-click="vendorMappingController.openAddVendorMapping()"> Add <i class="fa fa-plus"></i> </a>
+            <div class="form-inline pull-right">
+                <label class="caption-subject">Vendor Mapping Status: </label>
+                <div class="form-group" style="margin-left: 10px;">
+                    <select load-select-picker class="search-resource-selector pull-right"
+                            ng-model="vendorMappingController.vendorMappingStatus"
+                            ng-change="vendorMappingController.statusFilterChanged(vendorMappingController.vendorMappingStatus)"
+                            ng-options="status.name for status in vendorMappingController.vendorMappingStatuses track by status.name">
+                        <option style="display:none" value="">{{ vendorMappingController.vendorMappingStatus }}</option>
+                    </select>
+                </div>
+            </div>
             <div class="portlet-body">
                 <div stg-ui-grid get-grid-options="vendorMappingController.gridOptions" get-grid-data="vendorMappingController.getGridData" class="grid ui-grid-height">
                 </div>

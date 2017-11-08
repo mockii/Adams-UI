@@ -68,11 +68,11 @@ describe('LocationsCostCenterMappingController', function() {
                 $provide.value('Utils', mockUtils);
                 $provide.value('Utils', mockUtils1);
                 $provide.value('STGLogService', logService);
-                $provide.value('LOCATIONS_STATUS_CONSTANTS', constants);
+                $provide.value('STATUS_CONSTANT', constants);
             });
         });
 
-        beforeEach(inject(function ($controller, _$state_, _$compile_, _$rootScope_, $location, _$httpBackend_, _$uibModal_, _$filter_, $timeout, LocationsCostCenterMappingService, _$q_, ADAMS_URL_SPACE, ADAMS_CONSTANTS, CompassToastr, Utils, STGLogService, $log, LOCATIONS_STATUS_CONSTANTS) {
+        beforeEach(inject(function ($controller, _$state_, _$compile_, _$rootScope_, $location, _$httpBackend_, _$uibModal_, _$filter_, $timeout, LocationsCostCenterMappingService, _$q_, ADAMS_URL_SPACE, ADAMS_CONSTANTS, CompassToastr, Utils, STGLogService, $log, STATUS_CONSTANT) {
 
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
@@ -84,7 +84,7 @@ describe('LocationsCostCenterMappingController', function() {
             compassToastr = CompassToastr;
             adamsConstants = ADAMS_CONSTANTS;
             urlSpace = ADAMS_URL_SPACE;
-            constants = LOCATIONS_STATUS_CONSTANTS;
+            constants = STATUS_CONSTANT;
             $utils = Utils;
             $uibModal = _$uibModal_;
             $filter = _$filter_;
@@ -365,7 +365,7 @@ describe('LocationsCostCenterMappingController', function() {
                 LocationsCostCenterMappingService: mockLocationsCostCenterMappingService,
                 Utils: mockUtils,
                 $uibModal: mockModal,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl1 = $controller('LocationsCostCenterMappingController', {
@@ -376,7 +376,7 @@ describe('LocationsCostCenterMappingController', function() {
                 LocationsCostCenterMappingService: mockLocationsCostCenterMappingService,
                 Utils: mockUtils1,
                 $uibModal: mockModal2,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl3 = $controller('LocationsCostCenterMappingController', {
@@ -387,7 +387,7 @@ describe('LocationsCostCenterMappingController', function() {
                 LocationsCostCenterMappingService: mockLocationsCostCenterMappingService1,
                 Utils: mockUtils1,
                 $uibModal: mockModal2,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl4 = $controller('LocationsCostCenterMappingController', {
@@ -398,7 +398,7 @@ describe('LocationsCostCenterMappingController', function() {
                 LocationsCostCenterMappingService: mockLocationsCostCenterMappingService2,
                 Utils: mockUtils1,
                 $uibModal: mockModal2,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
 
             Ctrl2 = $controller('LocationsCostCenterMappingController', {
@@ -409,7 +409,7 @@ describe('LocationsCostCenterMappingController', function() {
                 LocationsCostCenterMappingService: mockLocationsCostCenterMappingService,
                 Utils: mockUtils1,
                 $uibModal: mockModal3,
-                LOCATIONS_STATUS_CONSTANTS: LOCATIONS_STATUS_CONSTANTS
+                STATUS_CONSTANT: STATUS_CONSTANT
             });
     }));
 

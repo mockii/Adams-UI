@@ -1,9 +1,10 @@
 (function () {
     angular.module('adams.cost.center.mapping.controller', ['ui.grid.pinning', 'common.modules.logging'])
-        .controller('CostCenterMappingController', ['$scope', '$state', '$location', 'StgStatesService', 'uiGridConstants', 'CostCenterMappingService', 'CompassToastr', '$uibModal', 'Utils', 'vendorSearchData', '$log',
-            function ($scope, $state, $location, StgStatesService, uiGridConstants, CostCenterMappingService, CompassToastr, $uibModal, Utils, vendorSearchData, $log) {
+        .controller('CostCenterMappingController', ['$scope', '$state', '$location', 'StgStatesService', 'uiGridConstants', 'CostCenterMappingService', 'CompassToastr', '$uibModal', 'Utils', 'vendorSearchData', '$log', 'STATUS_CONSTANT',
+            function ($scope, $state, $location, StgStatesService, uiGridConstants, CostCenterMappingService, CompassToastr, $uibModal, Utils, vendorSearchData, $log, STATUS_CONSTANT) {
                 var costCenterMappingController = this,
-                    vendorcostCenterUpdatePromise;
+                    searchProperty = "associated",
+                    vendorCostCenterUpdatePromise;
 
                 $state.current.data.pageTitle = vendorSearchData.vendor_name_1 + ' (' + vendorSearchData.vendor_number + ')';
                 costCenterMappingController.vendorSourceSystemId = $state.params.vendor_source_system_id;
@@ -12,7 +13,23 @@
 
                 function initialize() {
                     costCenterMappingController.gridOptions = defineCostCenterGridOptions();
+                    costCenterMappingController.costCenterMappingStatuses = STATUS_CONSTANT;
+                    costCenterMappingController.costCenterMappingStatus = costCenterMappingController.costCenterMappingStatuses[1];
+                    costCenterMappingController.statusFilterChanged(costCenterMappingController.costCenterMappingStatus);
                 }
+
+                costCenterMappingController.statusFilterChanged = function(status){
+                    if (status.name === 'Active') {
+                        costCenterMappingController.searchPropertyValue = true;
+                    }
+                    else if (status.name === 'Inactive') {
+                        costCenterMappingController.searchPropertyValue = false;
+                    }
+                    else {
+                        costCenterMappingController.searchPropertyValue = '';
+                    }
+                    $scope.$broadcast('uiGridParameterChange');
+                };
 
                 $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
                     // emitted gridOptions and gridApi from Directive controller
@@ -94,8 +111,8 @@
                 });
 
                 function updateVendorCostCenter(costCenterRowData) {
-                    vendorcostCenterUpdatePromise = CostCenterMappingService.updateVendorCostCenter(costCenterRowData);
-                    vendorcostCenterUpdatePromise.then(
+                    vendorCostCenterUpdatePromise = CostCenterMappingService.updateVendorCostCenter(costCenterRowData);
+                    vendorCostCenterUpdatePromise.then(
                         function (response) {
                             if (response === 'error') {
                                 costCenterRowData.associated = !costCenterRowData.associated;
@@ -113,11 +130,45 @@
                             CompassToastr.error("A error occured while updating vendor cost center association." + error);
                             $log.error("An error occurred while updating vendor cost center association");
                         });
-                    return vendorcostCenterUpdatePromise;
+                    return vendorCostCenterUpdatePromise;
                 }
 
                 costCenterMappingController.getGridData = function (pageSize, pageNumber, sort, searchInput) {
-                    return CostCenterMappingService.getCostCenterMappingData(pageSize, pageNumber, sort, costCenterMappingController.vendorNumber, searchInput);
+                    if(costCenterMappingController.hasOwnProperty('searchPropertyValue') &&
+                        costCenterMappingController.searchPropertyValue === '' &&
+                        searchInput.search.length === 1 &&
+                        searchInput.search[0].property === 'active') {
+                        return CostCenterMappingService.getCostCenterMappingData(pageSize, pageNumber, sort, costCenterMappingController.vendorNumber, {});
+                    }
+                    else {
+                        if(!searchInput.search) {
+                            searchInput.search = [];
+                        }
+                        // delete if exist
+                        if (Utils.checkIfSearchObjectPresent(searchProperty, searchInput.search)) {
+                            var index = searchInput.search.findIndex(Utils.getSearchIndex, searchProperty);
+                            searchInput.search.splice(index, 1);
+                        }
+                        if(costCenterMappingController.searchPropertyValue !== ""){
+                            searchInput.search.push({
+                                "property": searchProperty,
+                                "value": costCenterMappingController.searchPropertyValue === null ? '' : costCenterMappingController.searchPropertyValue,
+                                "operator": ""
+                            });
+                        }
+
+                        if (searchInput.search && searchInput.search.length > 0) {
+                            for (var i = 0; i < searchInput.search.length; i++) {
+                                if (searchInput.search[i].property === 'status' &&
+                                    typeof(searchInput.search[i].value) === "string") {
+                                    searchInput.search[i].value = searchInput.search[i].value === '' ? '' :
+                                        searchInput.search[i].value === "true" ? true : false;
+                                }
+                            }
+                        }
+                        costCenterMappingController.search = searchInput;
+                        return CostCenterMappingService.getCostCenterMappingData(pageSize, pageNumber, sort, costCenterMappingController.vendorNumber, costCenterMappingController.search);
+                    }
                 };
 
                 costCenterMappingController.openAddCostCenterMapping = function () {
