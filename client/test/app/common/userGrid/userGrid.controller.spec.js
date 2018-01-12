@@ -11,6 +11,7 @@ describe("adams.common.user.grid.controller", function () {
         gridApi,
         $uibModalInstance,
         gridOptions,
+        mockApplicationConfigurationService ={},
         promise, mySelectedRows = [];
 
 
@@ -22,6 +23,7 @@ describe("adams.common.user.grid.controller", function () {
 
         module(function($provide) {
             $provide.value('Utils', mockUtils);
+            $provide.value('ApplicationConfigurationService', mockApplicationConfigurationService);
             $provide.value('UserAdministrationService', mockedUserAdministrationService);
         });
 
@@ -167,6 +169,10 @@ describe("adams.common.user.grid.controller", function () {
             return deferred.promise;
         };
 
+        mockApplicationConfigurationService.getApplicationName = function () {
+            return 'ADAMS';
+        };
+
         controller = $controller('UserGridController',
             {$rootScope : $rootScope,
                 $state : state,
@@ -177,6 +183,7 @@ describe("adams.common.user.grid.controller", function () {
                 $uibModalInstance: $uibModalInstance,
                 timeTrackingSystem : ADAMS_CONSTANTS.TIME_TRACKING_SYSTEM_MYSTAFF,
                 ModalDialogService: mockModalDialogService,
+                ApplicationConfigurationService : mockApplicationConfigurationService,
                 Utils: mockUtils
             });
 

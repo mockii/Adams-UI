@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('adams.point.of.sale.item.categories.controller',[])
-        .controller('PosItemCategoriesController',['$rootScope', '$scope', '$q', 'PosItemCategoriesService', '$uibModal', 'CompassToastr',  function ($rootScope, $scope, $q, PosItemCategoriesService, $uibModal, CompassToastr) {
+        .controller('PosItemCategoriesController',['$rootScope', '$scope', '$q', 'PosItemCategoriesService', '$uibModal', 'CompassToastr',
+            function ($rootScope, $scope, $q, PosItemCategoriesService, $uibModal, CompassToastr) {
             var posItemCategoriesController = this,
                 editAction = 'Edit';
 
@@ -16,11 +17,11 @@
 
             $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
                 // emitted gridOptions and gridApi from Directive controller
-                gridApi.grid.appScope.openAddEditItemModal = posItemCategoriesController.openAddEditItemModal;
+                gridApi.grid.appScope.openAddEditItemCategoryModal = posItemCategoriesController.openAddEditItemCategoryModal;
             });
 
             // Modal
-            posItemCategoriesController.openAddEditItemModal = function(action, itemCategoriesRowData) {
+            posItemCategoriesController.openAddEditItemCategoryModal = function(action, itemCategoriesRowData) {
                 var status = action === 'Add' ? 'added' : 'updated';
 
                 $uibModal.open({
@@ -33,9 +34,13 @@
                         itemCategoriesRowData: itemCategoriesRowData || {}
                     }
                 }).result.then(function(response){
-                    // Refresh the Grid. Callback
-                    $scope.$broadcast('uiGridParameterChange');
-                    CompassToastr.success("Item Category has been successfully " + status);
+                    if(response === 'error'){
+                        CompassToastr.error("Item Category was not " + status + ". Please try again later!");
+                    }else {
+                        // Refresh the Grid. Callback
+                        $scope.$broadcast('uiGridParameterChange');
+                        CompassToastr.success("Item Category has been successfully " + status);
+                    }
                 }, function(){
                     // Do nothing on cancel
                 });
@@ -63,7 +68,7 @@
                             field: 'name',
                             displayName: "Edit",
                             headerCellTemplate: '<div class="ui-grid-cell-contents">Edit</div>',
-                            cellTemplate: '<div><i class="fa fa-pencil" ng-click="grid.appScope.openAddEditItemModal(editAction, row.entity)"></i></div>',
+                            cellTemplate: '<div><i class="fa fa-pencil" ng-click="grid.appScope.openAddEditItemCategoryModal(editAction, row.entity)"></i></div>',
                             enableFiltering: false,
                             enableSorting: false,
                             enableColumnMenu: false,
@@ -73,7 +78,7 @@
                             pinnedLeft: true
                         },
                         {
-                            field: 'item_category_name',
+                            field: 'name',
                             displayName: "Item Category Name",
                             filter: {
                                 placeholder: ''

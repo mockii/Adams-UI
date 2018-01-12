@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('adams.point.of.sale.item.search.controller',[])
-        .controller('PointOfSaleItemSearchController',['$rootScope', '$scope', '$q', '$timeout', '$log',
-            'StgStatesService', 'PointOfSaleItemSearchService', 'ModalDialogService',
-            function ($rootScope, $scope, $q, $timeout, $log,
-                      StgStatesService, PointOfSaleItemSearchService, ModalDialogService) {
+        .controller('PointOfSaleItemSearchController',['$rootScope', '$scope', '$q', '$timeout', '$log', 'CompassToastr',
+            'StgStatesService', 'PointOfSaleItemSearchService', 'PointOfSaleItemDetailsService', 'ModalDialogService',
+            function ($rootScope, $scope, $q, $timeout, $log, CompassToastr,
+                      StgStatesService, PointOfSaleItemSearchService, PointOfSaleItemDetailsService, ModalDialogService) {
 
             var pointOfSaleItemSearchController = this;
 
@@ -49,7 +49,7 @@
                                 field: 'name',
                                 displayName: "Copy",
                                 headerCellTemplate: '<div class="ui-grid-cell-contents">Copy</div>',
-                                cellTemplate: '<div><i class="fa fa-copy"></i></div>',
+                                cellTemplate: '<div><i class="fa fa-copy" ng-click="grid.appScope.copyItem(row.entity)"></i></div>',
                                 enableFiltering: false,
                                 enableSorting: false,
                                 enableColumnMenu: false,
@@ -63,10 +63,10 @@
                                 displayName: "POS ID",
                                 filter: {
                                     placeholder: ''
-                                },
+                                }
                             },
                             {
-                                field: 'barcode',
+                                field: 'bar_code',
                                 displayName: "Barcode",
                                 filter: {
                                     placeholder: ''
@@ -111,7 +111,7 @@
                                 field: 'active',
                                 displayName: "Active",
                                 cellClass: 'switchClass',
-                                cellTemplate: '<label class="switch"><input class="switch-input" ng-checked="row.entity.active" type="checkbox"/><span class="switch-label" data-on="YES" data-off="NO"></span><span class="switch-handle"></span></label>',
+                                cellTemplate: '<label class="switch"><input class="switch-input" ng-checked="row.entity.active" ng-click="grid.appScope.updateActiveIndicator(row.entity, $event)" type="checkbox"/><span class="switch-label" data-on="YES" data-off="NO"></span><span class="switch-handle"></span></label>',
                                 enableFiltering: false,
                                 enableSorting: false,
                                 enableColumnMenu: false,
@@ -125,8 +125,8 @@
                     };
             }
 
-            pointOfSaleItemSearchController.getGridData = function () {
-               return PointOfSaleItemSearchService.getPosItems();
+            pointOfSaleItemSearchController.getGridData = function (pageSize, pageNumber, sort, searchInput) {
+               return PointOfSaleItemSearchService.getPosItems(pageSize, pageNumber, sort, searchInput);
             };
 
             pointOfSaleItemSearchController.errorHandling = function (errorMessage) {
@@ -139,16 +139,58 @@
 
             $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
                 gridApi.grid.appScope.editItem = pointOfSaleItemSearchController.editItem;
+                gridApi.grid.appScope.copyItem = pointOfSaleItemSearchController.copyItem;
+                gridApi.grid.appScope.updateActiveIndicator = pointOfSaleItemSearchController.updateActiveIndicator;
             });
+
+            /* THIS IS A TEMPORARY SOLUTION. IDEALLY THIS WILL CHANGE TO PATCH API */
+            pointOfSaleItemSearchController.updateActiveIndicator = function (posItemGridRow, event) {
+                var posItemPromise = PointOfSaleItemDetailsService.getPosItem(posItemGridRow.pos_item_code);
+                posItemGridRow.active = event.currentTarget.checked;
+
+                posItemPromise.then(
+                    function (response) {
+                        var updatedPosItem = response;
+                        updatedPosItem.active = posItemGridRow.active;
+
+                        PointOfSaleItemDetailsService.savePosItem(updatedPosItem).then(
+                            function (response) {
+                                if(response === 'error'){
+                                    CompassToastr.error("Something went wrong while updating active indicator");
+                                    posItemGridRow.active = !posItemGridRow.active;
+                                }else{
+                                    CompassToastr.success("Active indicator was updated successfully");
+                                }
+                            },
+                            function (error) {
+                                posItemGridRow.active = !posItemGridRow.active;
+                                CompassToastr.error("Something went wrong while updating active indicator");
+                            }
+                        );
+                    },
+                    function (error) {
+                        posItemGridRow.active = !posItemGridRow.active;
+                        $log.error('An error occured while loading pos item - ', error);
+                    }
+                );
+            };
 
             pointOfSaleItemSearchController.addItem = function () {
                 StgStatesService.goToState('additem', {});
             };
 
-            pointOfSaleItemSearchController.editItem = function (gridRow) {
+            pointOfSaleItemSearchController.editItem = function (posItemGridRow) {
                 StgStatesService.goToState('edititem',
                                                 {
-                                                    posId:gridRow.pos_id
+                                                    posItemCode:posItemGridRow.pos_item_code
+                                                }
+                                            );
+            };
+
+            pointOfSaleItemSearchController.copyItem = function (posItemGridRow) {
+                StgStatesService.goToState('copyitem',
+                                                {
+                                                    posItemCode:posItemGridRow.pos_item_code
                                                 }
                                             );
             };

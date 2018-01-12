@@ -1,7 +1,12 @@
 <div class="row profile-page">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="portlet light" block-ui="cost-center-mapping-grid">
-            <a class="btn blue" ng-click="costCenterMappingController.openAddCostCenterMapping()"> Add <i class="fa fa-plus"></i> </a>
+
+            <a class="btn blue"
+               ng-click="costCenterMappingController.openAddCostCenterMapping()"
+               stg-secured-object="Vendor Cost Center Mapping"
+            > Add <i class="fa fa-plus"></i></a>
+
             <div class="form-inline pull-right">
                 <label class="caption-subject">Cost Center Mapping Status: </label>
                 <div class="form-group" style="margin-left: 10px;">
@@ -13,6 +18,7 @@
                     </select>
                 </div>
             </div>
+
             <div class="portlet-body">
                 <div stg-ui-grid get-grid-options="costCenterMappingController.gridOptions" get-grid-data="costCenterMappingController.getGridData" class="grid ui-grid-height">
                 </div>

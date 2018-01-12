@@ -3,8 +3,8 @@
 (function () {
 
     angular.module('adams.add.associates.temp.controller', ['adams.common.user.grid.controller', 'adams.common.jobs.grid.controller', 'adams.associates.temp.search.service', 'adams.common.cost.center.grid.controller', 'common.modules.logging'])
-        .controller('AddAssociatesController', ['$rootScope', '$scope', '$state', '$timeout', '$uibModal', 'CompassToastr', 'ModalDialogService', 'ADAMS_CONSTANTS', 'AssociatesSearchService', 'personnelNumber', 'associateData', 'timeTrackingSystems', 'agencies', 'UserAdministrationService', 'blockUI', 'timeTrackingSystem', '$document', '$log', 'Utils',
-                    function($rootScope, $scope, $state, $timeout, $uibModal, CompassToastr, ModalDialogService, ADAMS_CONSTANTS, AssociatesSearchService, personnelNumber, associateData, timeTrackingSystems, agencies, UserAdministrationService, blockUI, timeTrackingSystem, $document, $log, Utils) {
+        .controller('AddAssociatesController', ['$rootScope', '$scope', '$state', '$timeout', '$uibModal', 'CompassToastr', 'ModalDialogService', 'ADAMS_CONSTANTS', 'AssociatesSearchService', 'personnelNumber', 'associateData', 'timeTrackingSystems', 'agencies', 'UserAdministrationService', 'blockUI', 'timeTrackingSystem', '$document', '$log', 'Utils', 'ApplicationConfigurationService',
+                    function($rootScope, $scope, $state, $timeout, $uibModal, CompassToastr, ModalDialogService, ADAMS_CONSTANTS, AssociatesSearchService, personnelNumber, associateData, timeTrackingSystems, agencies, UserAdministrationService, blockUI, timeTrackingSystem, $document, $log, Utils, ApplicationConfigurationService) {
                         var addAssociatesController = this;
                         var searchProperty = "active_engagement";
 
@@ -23,7 +23,7 @@
                     addAssociatesController.jobSourceSystemId = '';
                     addAssociatesController.costCenterSourceSystemId = '';
                     
-                    addAssociatesController.appName = $rootScope.applicationConfiguration.application.name;
+                    addAssociatesController.appName = ApplicationConfigurationService.getApplicationName();
                     addAssociatesController.loginRoleName = UserAdministrationService.getRoleName();
                     
                     if ($state.params.associateSearchData) {
@@ -268,7 +268,7 @@
                         }
                         // delete if exist
                         if(Utils.checkIfSearchObjectPresent(searchProperty, searchInput.search)){
-                            var index = searchInput.search.findIndex(Utils.getSearchIndex, searchProperty);
+                            var index = Utils.getSearchObjectIndex(searchProperty, searchInput.search);
                             searchInput.search.splice(index,1);
                         }
                         searchInput.search.push({

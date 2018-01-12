@@ -3,14 +3,14 @@
         .factory('Utils', ['blockUI', '$timeout', function(blockUI, $timeout) {
             var appUtils = {};
 
-            /*
+            /**
             *  @property
             *
             *  Default property for delay on blockUI set to 0ms
             * */
             appUtils.BLOCKUI_DEFAULT_DELAY = 0;
 
-            /*
+            /**
             * blockUI - Blocks the UI for the given element with the defined properties
             *
             * @param
@@ -27,7 +27,7 @@
                 blockUI.instances.get(element).start(properties);
             };
 
-            /*
+            /**
              * unBlockUI - UnBlocks the UI for the given element
              *
              * @param
@@ -47,7 +47,7 @@
                 }, delay);
             };
 
-            /*
+            /**
             * @initializeSearchFields
             *
             * Setting the Search fields of a given grid.
@@ -74,7 +74,7 @@
                 return searchParams;
             };
 
-            /*
+            /**
             * @gridSorts
             *
             * A array of sort properties for the given sortColumns.
@@ -99,10 +99,21 @@
                 return JSON.stringify(gridSorts);
             };
 
-            appUtils.getSearchIndex = function(obj, index){
-                return obj.property === this;
-            };
-
+            /**
+            * @checkIfSearchObjectPresent
+            *
+            * Checks if the search object is present.
+            *
+            * @param
+            *
+            * property - The object property to check against.
+            * searchItems - The search items to loop through.
+            *
+            * @return
+            *
+            * boolean - Returns true if object is found, else false.
+            *
+            * */
             appUtils.checkIfSearchObjectPresent = function(property, searchItems) {
 
                 var isObjectPresent = false;
@@ -115,6 +126,35 @@
                     }
                 }
                 return isObjectPresent;
+            };
+
+            /**
+            * @getSearchObjectIndex
+            *
+            * Returns the index if the search object is present.
+            *
+            * @param
+            *
+            * property - The object property to check against.
+            * searchItems - The search items to loop through.
+            *
+            * @return
+            *
+            * number - Returns index if object is found, else -1.
+            *
+            * */
+            appUtils.getSearchObjectIndex = function(property, searchItems) {
+
+                var index = -1;
+                if(searchItems && searchItems.length > 0){
+                    for (var i = 0; i < searchItems.length; i++) {
+                        if(property === searchItems[i].property){
+                            index = i;
+                            break;
+                        }
+                    }
+                }
+                return index;
             };
 
             return appUtils;

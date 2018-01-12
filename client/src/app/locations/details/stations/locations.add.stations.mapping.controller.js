@@ -174,11 +174,19 @@
                 columnDefs: [
                     {
                         field: 'cost_center_name',
-                        displayName: "Linked\\Available Cost Centers",
+                        displayName: "Cost Center Name",
                         enableColumnMenu: false,
                         enableCellEdit: false,
-                        width:'100%',
-                        cellTemplate:'<div style="padding-left: 10px; padding-top: 10px;cursor: pointer;">{{row.entity.cost_center_name + " - " + row.entity.cost_center_description }}</div>',
+                        width:'40%',
+                        filter: {
+                            placeholder: ''
+                        }
+                    },{
+                        field: 'cost_center_description',
+                        displayName: "Cost Center Description",
+                        enableColumnMenu: false,
+                        enableCellEdit: false,
+                        width:'60%',
                         filter: {
                             placeholder: ''
                         }

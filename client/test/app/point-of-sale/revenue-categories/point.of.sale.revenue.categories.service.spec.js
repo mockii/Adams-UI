@@ -8,7 +8,7 @@ describe('PosRevenueCategoriesService', function(){
         $httpBackend,
         logService = {},
         urlSpace,
-        revenueCategoriesData = '{"data":[{"total_count": 59988, "users": [{ "vendor_number": "10016000","vendor_name_1": "VSA MIDATLANTIC","vendor_name_2": "","vendor_name_3": "     ","address": "1226 FOREST PKWY","city": "PAULSBORO","state": "NJ","zipcode": "08066-0000","country": "US ","telephone_number_1": "    ","telephone_number_2": "    ","fax_number": " ","category_code": "6909","category_description": "Inactive Suppliers     ","model_market_classification": "Inactive","extraneous": null,"excluded": 0,"diversity_code": "    ","district": "     ","train_station": " ","industry_key": "    ","parent_record_created_date": null,"parent_record_created_by": "HORIZON     ","child_record_created_date": null,"child_record_created_by": null,"account_group": "0006","account_number_alt_payee": "    ","master_record_delete_flag": " ","tax_1": "    ","tax_2": "     ","one_time_account_ind": " ","training_partner_id": "","business_type": "","telebox": "   ","personnel_number": null,"group_key": "    ","central_posting_block": true,"imposed_purchase_block": true,"payment_block": true,"company_code_posting_block": false,"tax_jurisdiction": "   ","company_code": null,"customer_number": "    ","terms_payment_key": null,"account_number": null,"clerk": null,"consolidation_code": null,"consolidation_description": null,"nominated_code": "X     ","nominated_description": "Extraneous  ","source_system_id": 1001,"created_by": "BATCHADM","created_date": "09-20-2016 20:49","modified_by": null,"modified_date": null}]}]}';
+        revenueCategoriesData = {'revenue_category_code':'123'};
 
     beforeEach(module('adams.common.url'));
     beforeEach(module('adams.point.of.sale.revenue.categories.service'));
@@ -35,7 +35,6 @@ describe('PosRevenueCategoriesService', function(){
 
     it('should getAllPosRevenueCategoriesDetails Info', function(){
         var url = urlSpace.urls.local.getPosRevenueCategories+ '?limit=undefined&page=undefined&sorts=undefined&search=undefined';
-        revenueCategoriesData = JSON.parse(revenueCategoriesData);
         $httpBackend.expectGET(url).respond(revenueCategoriesData);
         sampleSvcObj.getAllPosRevenueCategoriesDetails().then(function(response) {
             expect(response).toEqual(revenueCategoriesData);
@@ -68,8 +67,8 @@ describe('PosRevenueCategoriesService', function(){
             response = {data: revenueCategoriesData};
 
         $httpBackend.expectPOST(url).respond(response);
-        sampleSvcObj.addPosRevenueCategory({}).then(function(response) {
-            expect(response).toBeUndefined();
+        sampleSvcObj.addPosRevenueCategory(revenueCategoriesData).then(function(response) {
+            expect(response).toBeDefined();
         });
         $httpBackend.flush();
     });
@@ -77,7 +76,7 @@ describe('PosRevenueCategoriesService', function(){
     it('should return empty addPosRevenueCategory on error ', function(){
         var url = urlSpace.urls.local.addPosRevenueCategory;
         $httpBackend.expectPOST(url).respond(400, {});
-        sampleSvcObj.addPosRevenueCategory({}).then(function(data) {
+        sampleSvcObj.addPosRevenueCategory(revenueCategoriesData).then(function(data) {
             expect(data).toEqual('error');
         });
         $httpBackend.flush();
@@ -86,19 +85,19 @@ describe('PosRevenueCategoriesService', function(){
 
 
     it('should updatePosRevenueCategory Info', inject(function($rootScope){
-        var url = urlSpace.urls.local.updatePosRevenueCategory,
+        var url = urlSpace.urls.local.updatePosRevenueCategory.replace('{revenue_category_code}', revenueCategoriesData.revenue_category_code),
             response = {data: revenueCategoriesData};
         $httpBackend.expectPUT(url).respond(response);
-        sampleSvcObj.updatePosRevenueCategory({}).then(function(response) {
-            expect(response).toBeUndefined();
+        sampleSvcObj.updatePosRevenueCategory(revenueCategoriesData).then(function(response) {
+            expect(response).toBeDefined();
         });
         $httpBackend.flush();
     }));
 
     it('should return empty updatePosRevenueCategory on error ', function(){
-        var url = urlSpace.urls.local.updatePosRevenueCategory;
+        var url = urlSpace.urls.local.updatePosRevenueCategory.replace('{revenue_category_code}', revenueCategoriesData.revenue_category_code);
         $httpBackend.expectPUT(url).respond(400, {});
-        sampleSvcObj.updatePosRevenueCategory({}).then(function(data) {
+        sampleSvcObj.updatePosRevenueCategory(revenueCategoriesData).then(function(data) {
             expect(data).toEqual('error');
         });
         $httpBackend.flush();

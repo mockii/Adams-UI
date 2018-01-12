@@ -1,4 +1,4 @@
-<div>
+<div block-ui="point-of-sale-item-details">
     <div class="form-horizontal">
         <form role="form" name="posItemForm">
 
@@ -27,13 +27,11 @@
 
                                         <div class="row form-group col-md-12">
                                             <label class="control-label col-md-3">
-                                                POS ID<span ng-hide="pointOfSaleItemDetailsController.action === 'additem'" class="required">*</span>
+                                                POS ID
                                             </label>
-                                            <div class="col-md-9 input-icon right">
+                                            <div class="col-md-9">
                                                 <input type="text" class="form-control" name="pos_id"
-                                                       ng-model="pointOfSaleItemDetailsController.posId"
-                                                       ng-disabled="pointOfSaleItemDetailsController.action === 'additem'"
-                                                       stg-form-validation validation-type="required" required>
+                                                       ng-model="pointOfSaleItemDetailsController.posId" disabled>
                                             </div>
                                         </div>
 
@@ -44,6 +42,8 @@
                                                     <label class="switch pull-right">
                                                         <input class="switch-input" name="status"
                                                                ng-checked="pointOfSaleItemDetailsController.active_indicator"
+                                                               ng-click="pointOfSaleItemDetailsController.active_indicator = !pointOfSaleItemDetailsController.active_indicator;
+                                                                        posItemForm.$pristine = posItemForm.status.$pristine"
                                                                type="checkbox"/>
                                                         <span class="switch-label" data-on="YES" data-off="NO"></span>
                                                         <span class="switch-handle"></span>
@@ -57,8 +57,10 @@
                                             <div class="row col-md-9">
                                                 <div class="col-md-3 col-sm-12 col-xs-12 switch-label-container">
                                                     <label class="switch pull-right">
-                                                        <input class="switch-input" name="status"
-                                                               ng-checked="pointOfSaleItemDetailsController.modifier"
+                                                        <input class="switch-input" name="modifier"
+                                                               ng-checked="pointOfSaleItemDetailsController.modifier_indicator"
+                                                               ng-click="pointOfSaleItemDetailsController.modifier_indicator = !pointOfSaleItemDetailsController.modifier_indicator;
+                                                                        posItemForm.$pristine = posItemForm.modifier.$pristine"
                                                                type="checkbox"/>
                                                         <span class="switch-label" data-on="YES" data-off="NO"></span>
                                                         <span class="switch-handle"></span>
@@ -69,16 +71,16 @@
 
                                         <div class="row form-group col-md-12">
                                             <label class="control-label col-md-3">
-                                                Long<span class="required">*</span>
+                                                Long Name<span class="required">*</span>
                                             </label>
                                             <div class="col-md-9 input-icon right">
-                                                <input type="text" class="form-control" name="long"
-                                                       ng-model="pointOfSaleItemDetailsController.long"
-                                                       maxlength="{{pointOfSaleItemDetailsController.longMaxLength}}"
+                                                <input type="text" class="form-control" name="longName"
+                                                       ng-model="pointOfSaleItemDetailsController.longName"
+                                                       maxlength="{{pointOfSaleItemDetailsController.longNameMaxLength}}"
                                                        stg-form-validation validation-type="required" required>
                                                 <div>
                                                     <span class="characters-remaining">
-                                                        {{pointOfSaleItemDetailsController.longMaxLength - pointOfSaleItemDetailsController.long.length}} characters remaining
+                                                        {{pointOfSaleItemDetailsController.longNameMaxLength - pointOfSaleItemDetailsController.longName.length}} characters remaining
                                                     </span>
                                                 </div>
                                             </div>
@@ -86,16 +88,16 @@
 
                                         <div class="row form-group col-md-12">
                                             <label class="control-label col-md-3">
-                                                Mid<span class="required">*</span>
+                                                Mid Name<span class="required">*</span>
                                             </label>
                                             <div class="col-md-9 input-icon right">
-                                                <input type="text" class="form-control" name="mid"
-                                                       ng-model="pointOfSaleItemDetailsController.mid"
-                                                       maxlength="{{pointOfSaleItemDetailsController.midMaxLength}}"
+                                                <input type="text" class="form-control" name="midName"
+                                                       ng-model="pointOfSaleItemDetailsController.midName"
+                                                       maxlength="{{pointOfSaleItemDetailsController.midNameMaxLength}}"
                                                        stg-form-validation validation-type="required" required>
                                                 <div>
                                                     <span class="characters-remaining">
-                                                        {{pointOfSaleItemDetailsController.midMaxLength - pointOfSaleItemDetailsController.mid.length}} characters remaining
+                                                        {{pointOfSaleItemDetailsController.midNameMaxLength - pointOfSaleItemDetailsController.midName.length}} characters remaining
                                                     </span>
                                                 </div>
                                             </div>
@@ -103,16 +105,16 @@
 
                                         <div class="row form-group col-md-12">
                                             <label class="control-label col-md-3">
-                                                Short<span class="required">*</span>
+                                                Short Name<span class="required">*</span>
                                             </label>
                                             <div class="col-md-9 input-icon right">
-                                                <input type="text" class="form-control" name="short"
-                                                       ng-model="pointOfSaleItemDetailsController.short"
-                                                       maxlength="{{pointOfSaleItemDetailsController.shortMaxLength}}"
+                                                <input type="text" class="form-control" name="shortName"
+                                                       ng-model="pointOfSaleItemDetailsController.shortName"
+                                                       maxlength="{{pointOfSaleItemDetailsController.shortNameMaxLength}}"
                                                        stg-form-validation validation-type="required" required>
                                                 <div>
                                                     <span class="characters-remaining">
-                                                        {{pointOfSaleItemDetailsController.shortMaxLength - pointOfSaleItemDetailsController.short.length}} characters remaining
+                                                        {{pointOfSaleItemDetailsController.shortNameMaxLength - pointOfSaleItemDetailsController.shortName.length}} characters remaining
                                                     </span>
                                                 </div>
                                             </div>
@@ -125,10 +127,10 @@
                                             <div class="col-md-9">
                                                 <ui-select ng-model="pointOfSaleItemDetailsController.revenueCategory">
                                                     <ui-select-match placeholder="-- Select --">
-                                                        {{$select.selected.revenue_category_name}}
+                                                        {{$select.selected.name}}
                                                     </ui-select-match>
-                                                    <ui-select-choices repeat="revenuecategory in pointOfSaleItemDetailsController.revenueCategories | filter: $select.search">
-                                                        <div ng-bind-html="revenuecategory.revenue_category_name | highlight: $select.search"></div>
+                                                    <ui-select-choices repeat="revenuecategory.revenue_category_code as revenuecategory in pointOfSaleItemDetailsController.revenueCategories | filter: $select.search">
+                                                        <div ng-bind-html="revenuecategory.name | highlight: $select.search"></div>
                                                     </ui-select-choices>
                                                 </ui-select>
                                             </div>
@@ -141,10 +143,10 @@
                                             <div class="col-md-9">
                                                 <ui-select ng-model="pointOfSaleItemDetailsController.itemCategory">
                                                     <ui-select-match placeholder="-- Select --">
-                                                        {{$select.selected.item_category_name}}
+                                                        {{$select.selected.name}}
                                                     </ui-select-match>
-                                                    <ui-select-choices repeat="itemcategory in pointOfSaleItemDetailsController.itemCategories | filter: $select.search">
-                                                        <div ng-bind-html="itemcategory.item_category_name | highlight: $select.search"></div>
+                                                    <ui-select-choices repeat="itemcategory.item_category_code as itemcategory in pointOfSaleItemDetailsController.itemCategories | filter: $select.search">
+                                                        <div ng-bind-html="itemcategory.name | highlight: $select.search"></div>
                                                     </ui-select-choices>
                                                 </ui-select>
                                             </div>
@@ -157,6 +159,8 @@
                                                     <label class="switch pull-right">
                                                         <input class="switch-input" name="soldByWeight"
                                                                ng-checked="pointOfSaleItemDetailsController.sold_by_weight_indicator"
+                                                               ng-click="pointOfSaleItemDetailsController.sold_by_weight_indicator = !pointOfSaleItemDetailsController.sold_by_weight_indicator;
+                                                                        posItemForm.$pristine = posItemForm.soldByWeight.$pristine"
                                                                type="checkbox"/>
                                                         <span class="switch-label" data-on="YES" data-off="NO"></span>
                                                         <span class="switch-handle"></span>
@@ -172,7 +176,7 @@
                                             <div class="col-md-9 input-icon right">
                                                 <input type="text" class="form-control" name="cost"
                                                        ng-model="pointOfSaleItemDetailsController.cost"
-                                                       stg-form-validation validation-type="required" required>
+                                                       stg-form-validation validation-type="currency" required>
                                             </div>
                                         </div>
 
@@ -183,7 +187,7 @@
                                             <div class="col-md-9 input-icon right">
                                                 <input type="text" class="form-control" name="default_price"
                                                        ng-model="pointOfSaleItemDetailsController.defaultPrice"
-                                                       stg-form-validation validation-type="required" required>
+                                                       stg-form-validation validation-type="currency" required>
                                             </div>
 
                                         </div>
@@ -214,17 +218,17 @@
                                             <div class="col-md-9">
                                                 <ui-select ng-model="pointOfSaleItemDetailsController.itemClass">
                                                     <ui-select-match placeholder="-- Select --">
-                                                        {{$select.selected.item_class_name}}
+                                                        {{$select.selected.name}}
                                                     </ui-select-match>
-                                                    <ui-select-choices repeat="itemclass in pointOfSaleItemDetailsController.itemClasses | filter: $select.search">
-                                                        <div ng-bind-html="itemclass.item_class_name | highlight: $select.search"></div>
+                                                    <ui-select-choices repeat="itemclass.item_class_code as itemclass in pointOfSaleItemDetailsController.itemClasses | filter: $select.search">
+                                                        <div ng-bind-html="itemclass.name | highlight: $select.search"></div>
                                                     </ui-select-choices>
                                                 </ui-select>
                                             </div>
                                         </div>
 
-                                        <!-- Webtrition item start -->
-                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Webtrition Item'">
+                                        <!-- Webtrition Items start -->
+                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass === pointOfSaleItemDetailsController.webtrition_items_label">
 
                                             <label class="control-label col-md-3">
                                                 Master Reference Number<span class="required">*</span>
@@ -233,19 +237,19 @@
                                                 <input type="text" class="form-control" name="masterReferenceNumber"
                                                        ng-model="pointOfSaleItemDetailsController.webtritionItem.masterReferenceNumber"
                                                        stg-form-validation validation-type="required" required
-                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass.item_class_name !== 'Webtrition Item'"
-                                                       ng-required="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Webtrition Item'">
+                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass !== pointOfSaleItemDetailsController.webtrition_items_label"
+                                                       ng-required="pointOfSaleItemDetailsController.itemClass === pointOfSaleItemDetailsController.webtrition_items_label">
                                             </div>
 
                                             <label class="control-label col-md-3">
                                                 Portion Quantity<span class="required">*</span>
                                             </label>
                                             <div class="col-md-9 input-icon right form-input-element">
-                                                <input type="text" class="form-control" name="portitionQuantity"
-                                                       ng-model="pointOfSaleItemDetailsController.webtritionItem.portitionQuantity"
+                                                <input type="text" class="form-control" name="portionQuantity"
+                                                       ng-model="pointOfSaleItemDetailsController.webtritionItem.portionQuantity"
                                                        stg-form-validation validation-type="required" required
-                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass.item_class_name !== 'Webtrition Item'"
-                                                       ng-required="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Webtrition Item'">
+                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass !== pointOfSaleItemDetailsController.webtrition_items_label"
+                                                       ng-required="pointOfSaleItemDetailsController.itemClass === pointOfSaleItemDetailsController.webtrition_items_label">
                                             </div>
 
                                             <label class="control-label col-md-3">
@@ -255,8 +259,8 @@
                                                 <input type="text" class="form-control" name="selectionQuantity"
                                                        ng-model="pointOfSaleItemDetailsController.webtritionItem.selectionQuantity"
                                                        stg-form-validation validation-type="required" required
-                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass.item_class_name !== 'Webtrition Item'"
-                                                       ng-required="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Webtrition Item'">
+                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass !== pointOfSaleItemDetailsController.webtrition_items_label"
+                                                       ng-required="pointOfSaleItemDetailsController.itemClass === pointOfSaleItemDetailsController.webtrition_items_label">
                                             </div>
 
                                             <label class="control-label col-md-3">
@@ -267,7 +271,7 @@
                                                     <ui-select-match placeholder="-- Select --">
                                                         {{$select.selected.name}}
                                                     </ui-select-match>
-                                                    <ui-select-choices repeat="unitofmeasure in pointOfSaleItemDetailsController.webtritionItem.unitOfMeasures | filter: $select.search">
+                                                    <ui-select-choices repeat="unitofmeasure.unit_of_measure_code as unitofmeasure in pointOfSaleItemDetailsController.unitsOfMeasure | filter: $select.search">
                                                         <div ng-bind-html="unitofmeasure.name | highlight: $select.search"></div>
                                                     </ui-select-choices>
                                                 </ui-select>
@@ -289,10 +293,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Webtrition item end -->
+                                        <!-- Webtrition Items end -->
 
-                                        <!-- Prepackaged item start -->
-                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Prepackaged Item'">
+                                        <!-- Prepackaged Items start -->
+                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass === pointOfSaleItemDetailsController.prepackaged_items_label">
 
                                             <label class="control-label col-md-3">
                                                 Barcode<span class="required">*</span>
@@ -301,8 +305,8 @@
                                                 <input type="text" class="form-control" name="barcode"
                                                        ng-model="pointOfSaleItemDetailsController.prepackagedItem.barcode"
                                                        stg-form-validation validation-type="required" required
-                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass.item_class_name !== 'Prepackaged Item'"
-                                                       ng-required="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Prepackaged Item'">
+                                                       ng-disabled="pointOfSaleItemDetailsController.itemClass !== pointOfSaleItemDetailsController.prepackaged_items_label"
+                                                       ng-required="pointOfSaleItemDetailsController.itemClass === pointOfSaleItemDetailsController.prepackaged_items_label">
                                             </div>
 
                                             <label class="control-label col-md-3">
@@ -321,10 +325,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Prepackaged item end -->
+                                        <!-- Prepackaged Items end -->
 
-                                        <!-- Prepared item start -->
-                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass.item_class_name === 'Prepared Item'">
+                                        <!-- Prepared Items start -->
+                                        <div class="row form-group col-md-12" ng-show="pointOfSaleItemDetailsController.itemClass === pointOfSaleItemDetailsController.prepared_items_label">
                                             <label class="control-label col-md-3">
                                                 Item Notes<span class="required">*</span>
                                             </label>
@@ -341,7 +345,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Prepared item end -->
+                                        <!-- Prepared Items end -->
 
                                     </div>
                                 </div>
@@ -353,7 +357,8 @@
                                 <div class="caption caption-full-width">
                                     <span class="caption-subject font-blue uppercase bold"> Tags </span>
                                 </div>
-                                <button type="button" class="btn btn-default pull-right" ng-click="pointOfSaleItemDetailsController.openAddTags()">
+                                <button type="button" class="btn btn-default pull-right" ng-click="pointOfSaleItemDetailsController.openAddTags();
+                                                                                                   posItemForm.$pristine = false">
                                     Add Tag <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -365,7 +370,8 @@
                                             <div class="tag-area" ng-show="pointOfSaleItemDetailsController.tags.length > 0">
                                                 <div class="tag-box" ng-repeat="tag in pointOfSaleItemDetailsController.tags">
 
-                                                    {{tag.name}} <span class="fa fa-times-circle tag-delete" ng-click="pointOfSaleItemDetailsController.removeTag(tag.name)"></span>
+                                                    {{tag.tag_name}} <span class="fa fa-times-circle tag-delete" ng-click="pointOfSaleItemDetailsController.removeTag(tag.tag_name);
+                                                                                                   posItemForm.$pristine = false"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -404,7 +410,7 @@
 
                                             <!-- InfoGenesis tab start -->
 
-                                            <div ng-show="pointOfSaleItemDetailsController.activeVendorTabName === 'InfoGenesis'">
+                                            <div ng-show="pointOfSaleItemDetailsController.activeVendorTabName.toUpperCase() === 'INFOGENESIS'">
 
                                                 <div class="row">
 
@@ -414,22 +420,34 @@
                                                         </div>
 
                                                         <div class="bordered-box">
+
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
-                                                                    ID<span class="required">*</span>
+                                                                <label class="control-label col-md-3">
+                                                                    ID
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
-                                                                    <input type="text" class="form-control" name="infogenesisId"
-                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.infogenesisId"
-                                                                           stg-form-validation validation-type="required" required>
+
+                                                                <div class="col-md-9" ng-show="pointOfSaleItemDetailsController.isInfogenesisIdEditable">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" name="infogenesisId"
+                                                                               ng-model="pointOfSaleItemDetailsController.infogenesisData.infogenesisId" ng-disabled="pointOfSaleItemDetailsController.isInfogenesisIdDisabled">
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-pencil fa-fw" ng-click="pointOfSaleItemDetailsController.isInfogenesisIdDisabled = false"></i>
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
+
+                                                                <div class="col-md-9" ng-show="!pointOfSaleItemDetailsController.isInfogenesisIdEditable">
+                                                                    <input type="text" class="form-control" name="infogenesisId"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.infogenesisId" ng-disabled="pointOfSaleItemDetailsController.isInfogenesisIdDisabled">
+                                                                </div>
+
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Item Name<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
+                                                                <div class="col-md-9 input-icon right">
                                                                     <input type="text" class="form-control" name="itemName"
                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.itemName"
                                                                            stg-form-validation validation-type="required" required>
@@ -437,30 +455,33 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Button Text 1 & 2<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-4 input-icon right">
-                                                                    <input type="text" class="form-control" name="buttonText1"
-                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.buttonText1"
-                                                                           maxlength="{{pointOfSaleItemDetailsController.infogenesisData.buttonText1MaxLength}}"
-                                                                           stg-form-validation validation-type="required" required>
-                                                                    <div>
+                                                                <div class="col-md-9">
+                                                                    <div class="col-md-6 input-icon right zero-left-padding">
+                                                                        <input type="text" class="form-control" name="buttonText1"
+                                                                               ng-model="pointOfSaleItemDetailsController.infogenesisData.buttonText1"
+                                                                               maxlength="{{pointOfSaleItemDetailsController.infogenesisData.buttonText1MaxLength}}"
+                                                                               stg-form-validation validation-type="required" required>
+                                                                        <div>
                                                                         <span class="characters-remaining">
                                                                             {{pointOfSaleItemDetailsController.infogenesisData.buttonText1MaxLength - pointOfSaleItemDetailsController.infogenesisData.buttonText1.length}} characters remaining
                                                                         </span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-4 input-icon right">
-                                                                    <input type="text" class="form-control" name="buttonText2"
-                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.buttonText2"
-                                                                           maxlength="{{pointOfSaleItemDetailsController.infogenesisData.buttonText2MaxLength}}"
-                                                                           stg-form-validation validation-type="required" required>
-                                                                    <div>
+                                                                    <div class="col-md-6 input-icon right zero-right-padding">
+                                                                        <input type="text" class="form-control" name="buttonText2"
+                                                                               ng-model="pointOfSaleItemDetailsController.infogenesisData.buttonText2"
+                                                                               maxlength="{{pointOfSaleItemDetailsController.infogenesisData.buttonText2MaxLength}}"
+                                                                               stg-form-validation validation-type="required" required>
+                                                                        <div>
                                                                         <span class="characters-remaining">
                                                                              {{pointOfSaleItemDetailsController.infogenesisData.buttonText2MaxLength - pointOfSaleItemDetailsController.infogenesisData.buttonText2.length}} characters remaining
                                                                         </span>
+                                                                        </div>
                                                                     </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -474,15 +495,15 @@
 
                                                         <div class="bordered-box">
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Default Product Class<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.infogenesisData.defaultProductClass">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="defaultproductclass in pointOfSaleItemDetailsController.infogenesisData.defaultProductClasses | filter: $select.search">
+                                                                        <ui-select-choices repeat="defaultproductclass.vendor_category_item_code as defaultproductclass in pointOfSaleItemDetailsController.infogenesisData.defaultProductClasses | filter: $select.search">
                                                                             <div ng-bind-html="defaultproductclass.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -490,15 +511,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Morrison Product Class<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.infogenesisData.morrisonProductClass">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="morrisonproductclass in pointOfSaleItemDetailsController.infogenesisData.morrisonProductClasses | filter: $select.search">
+                                                                        <ui-select-choices repeat="morrisonproductclass.vendor_category_item_code as morrisonproductclass in pointOfSaleItemDetailsController.infogenesisData.morrisonProductClasses | filter: $select.search">
                                                                             <div ng-bind-html="morrisonproductclass.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -506,15 +527,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Eurest Product Class<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.infogenesisData.eurestProductClass">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="eurestproductclass in pointOfSaleItemDetailsController.infogenesisData.eurestProductClasses | filter: $select.search">
+                                                                        <ui-select-choices repeat="eurestproductclass.vendor_category_item_code as eurestproductclass in pointOfSaleItemDetailsController.infogenesisData.eurestProductClasses | filter: $select.search">
                                                                             <div ng-bind-html="eurestproductclass.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -532,21 +553,21 @@
 
                                                         <div class="bordered-box">
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
-                                                                    Customer Recipe Text<span class="required">*</span>
+                                                                <label class="control-label col-md-3">
+                                                                    Customer Receipt Text<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
-                                                                    <input type="text" class="form-control" name="customerRecipeText"
-                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.customerRecipeText"
+                                                                <div class="col-md-9 input-icon right">
+                                                                    <input type="text" class="form-control" name="customerReceiptText"
+                                                                           ng-model="pointOfSaleItemDetailsController.infogenesisData.customerReceiptText"
                                                                            stg-form-validation validation-type="required" required>
                                                                 </div>
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Kitchen Printer Text<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
+                                                                <div class="col-md-9 input-icon right">
                                                                     <input type="text" class="form-control" name="kitchenPrinterText"
                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.kitchenPrinterText"
                                                                            stg-form-validation validation-type="required" required>
@@ -554,10 +575,10 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Kitchen Video Text<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
+                                                                <div class="col-md-9 input-icon right">
                                                                     <input type="text" class="form-control" name="kitchenVideoText"
                                                                            ng-model="pointOfSaleItemDetailsController.infogenesisData.kitchenVideoText"
                                                                            stg-form-validation validation-type="required" required>
@@ -574,15 +595,15 @@
 
                                                         <div class="bordered-box">
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Default Revenue Category<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.infogenesisData.defaultRevenueCategory">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="defaultrevenuecategory in pointOfSaleItemDetailsController.infogenesisData.defaultRevenueCategories | filter: $select.search">
+                                                                        <ui-select-choices repeat="defaultrevenuecategory.vendor_category_item_code as defaultrevenuecategory in pointOfSaleItemDetailsController.infogenesisData.defaultRevenueCategories | filter: $select.search">
                                                                             <div ng-bind-html="defaultrevenuecategory.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -590,15 +611,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Morrison Revenue Category<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.infogenesisData.morrisonRevenueCategory">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="morrisonrevenuecategory in pointOfSaleItemDetailsController.infogenesisData.morrisonRevenueCategories | filter: $select.search">
+                                                                        <ui-select-choices repeat="morrisonrevenuecategory.vendor_category_item_code as morrisonrevenuecategory in pointOfSaleItemDetailsController.infogenesisData.morrisonRevenueCategories | filter: $select.search">
                                                                             <div ng-bind-html="morrisonrevenuecategory.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -606,15 +627,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Eurest Revenue Category<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.infogenesisData.eurestRevenueCategory">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="eurestrevenuecategory in pointOfSaleItemDetailsController.infogenesisData.eurestRevenueCategories | filter: $select.search">
+                                                                        <ui-select-choices repeat="eurestrevenuecategory.vendor_category_item_code as eurestrevenuecategory in pointOfSaleItemDetailsController.infogenesisData.eurestRevenueCategories | filter: $select.search">
                                                                             <div ng-bind-html="eurestrevenuecategory.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -629,7 +650,7 @@
 
                                             <!-- Simphony start -->
 
-                                            <div class="row" ng-show="pointOfSaleItemDetailsController.activeVendorTabName === 'Simphony'">
+                                            <div class="row" ng-show="pointOfSaleItemDetailsController.activeVendorTabName.toUpperCase() === 'SIMPHONY'">
                                                 <div class="col-lg-6 col-md-12 col-xs-12">
                                                     <div class="padding-bottom-30">
                                                         <div class="caption caption-full-width">
@@ -639,14 +660,25 @@
 
                                                         <div class="bordered-box">
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
-                                                                    Number<span class="required">*</span>
+                                                                <label class="control-label col-md-3">
+                                                                    Item Number
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
-                                                                    <input type="text" class="form-control" name="simphonyNumber"
-                                                                           ng-model="pointOfSaleItemDetailsController.simphonyData.simphonyNumber"
-                                                                           stg-form-validation validation-type="required" required>
+
+                                                                <div class="col-md-9" ng-show="pointOfSaleItemDetailsController.isSimphonyNumberEditable">
+                                                                    <div class="input-group margin-bottom-sm">
+                                                                        <input type="text" class="form-control" name="simphonyNumber"
+                                                                               ng-model="pointOfSaleItemDetailsController.simphonyData.simphonyNumber" ng-disabled="pointOfSaleItemDetailsController.isSimphonyNumberDisabled">
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-pencil fa-fw" ng-click="pointOfSaleItemDetailsController.isSimphonyNumberDisabled = false"></i>
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
+
+                                                                <div class="col-md-9" ng-show="!pointOfSaleItemDetailsController.isSimphonyNumberEditable">
+                                                                    <input type="text" class="form-control" name="simphonyNumber"
+                                                                           ng-model="pointOfSaleItemDetailsController.simphonyData.simphonyNumber" ng-disabled="pointOfSaleItemDetailsController.isSimphonyNumberDisabled">
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -658,10 +690,10 @@
 
                                                         <div class="bordered-box">
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Master Record Name<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
+                                                                <div class="col-md-9 input-icon right">
                                                                     <input type="text" class="form-control" name="masterRecordName"
                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.masterRecordName"
                                                                            maxlength="{{pointOfSaleItemDetailsController.simphonyData.masterRecordNameMaxLength}}"
@@ -675,10 +707,10 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     First Name<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
+                                                                <div class="col-md-9 input-icon right">
                                                                     <input type="text" class="form-control" name="firstName"
                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.firstName"
                                                                            maxlength="{{pointOfSaleItemDetailsController.simphonyData.firstNameMaxLength}}"
@@ -692,10 +724,10 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Second Name<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
+                                                                <div class="col-md-9 input-icon right">
                                                                     <input type="text" class="form-control" name="secondName"
                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.secondName"
                                                                            maxlength="{{pointOfSaleItemDetailsController.simphonyData.secondNameMaxLength}}"
@@ -709,10 +741,10 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Third Name<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8 input-icon right">
+                                                                <div class="col-md-9 input-icon right">
                                                                     <input type="text" class="form-control" name="thirdName"
                                                                            ng-model="pointOfSaleItemDetailsController.simphonyData.thirdName"
                                                                            maxlength="{{pointOfSaleItemDetailsController.simphonyData.thirdNameMaxLength}}"
@@ -737,15 +769,15 @@
 
                                                         <div class="bordered-box">
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Default Major Group<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.simphonyData.defaultMajorGroup">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="defaultmajorgroup in pointOfSaleItemDetailsController.simphonyData.defaultMajorGroups | filter: $select.search">
+                                                                        <ui-select-choices repeat="defaultmajorgroup.vendor_category_item_code as defaultmajorgroup in pointOfSaleItemDetailsController.simphonyData.defaultMajorGroups | filter: $select.search">
                                                                             <div ng-bind-html="defaultmajorgroup.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -753,15 +785,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Morrison Major Group<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.simphonyData.morrisonMajorGroup">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="morrisonmajorgroup in pointOfSaleItemDetailsController.simphonyData.morrisonMajorGroups | filter: $select.search">
+                                                                        <ui-select-choices repeat="morrisonmajorgroup.vendor_category_item_code as morrisonmajorgroup in pointOfSaleItemDetailsController.simphonyData.morrisonMajorGroups | filter: $select.search">
                                                                             <div ng-bind-html="morrisonmajorgroup.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -769,15 +801,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Eurest Major Group<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.simphonyData.eurestMajorGroup">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="eurestmajorgroup in pointOfSaleItemDetailsController.simphonyData.eurestMajorGroups | filter: $select.search">
+                                                                        <ui-select-choices repeat="eurestmajorgroup.vendor_category_item_code as eurestmajorgroup in pointOfSaleItemDetailsController.simphonyData.eurestMajorGroups | filter: $select.search">
                                                                             <div ng-bind-html="eurestmajorgroup.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -794,15 +826,15 @@
 
                                                         <div class="bordered-box">
                                                             <div class="row form-vendor-input-element margin-top-15">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Default Family Group<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.simphonyData.defaultFamilyGroup">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="defaultfamilygroup in pointOfSaleItemDetailsController.simphonyData.defaultFamilyGroups | filter: $select.search">
+                                                                        <ui-select-choices repeat="defaultfamilygroup.vendor_category_item_code as defaultfamilygroup in pointOfSaleItemDetailsController.simphonyData.defaultFamilyGroups | filter: $select.search">
                                                                             <div ng-bind-html="defaultfamilygroup.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -810,15 +842,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Morrison Family Group<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.simphonyData.morrisonFamilyGroup">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="morrisonfamilygroup in pointOfSaleItemDetailsController.simphonyData.morrisonFamilyGroups | filter: $select.search">
+                                                                        <ui-select-choices repeat="morrisonfamilygroup.vendor_category_item_code as morrisonfamilygroup in pointOfSaleItemDetailsController.simphonyData.morrisonFamilyGroups | filter: $select.search">
                                                                             <div ng-bind-html="morrisonfamilygroup.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -826,15 +858,15 @@
                                                             </div>
 
                                                             <div class="row form-vendor-input-element">
-                                                                <label class="control-label col-md-4">
+                                                                <label class="control-label col-md-3">
                                                                     Eurest Family Group<span class="required">*</span>
                                                                 </label>
-                                                                <div class="col-md-8">
+                                                                <div class="col-md-9">
                                                                     <ui-select ng-model="pointOfSaleItemDetailsController.simphonyData.eurestFamilyGroup">
                                                                         <ui-select-match placeholder="-- Select --">
                                                                             {{$select.selected.name}}
                                                                         </ui-select-match>
-                                                                        <ui-select-choices repeat="eurestfamilygroup in pointOfSaleItemDetailsController.simphonyData.eurestFamilyGroups | filter: $select.search">
+                                                                        <ui-select-choices repeat="eurestfamilygroup.vendor_category_item_code as eurestfamilygroup in pointOfSaleItemDetailsController.simphonyData.eurestFamilyGroups | filter: $select.search">
                                                                             <div ng-bind-html="eurestfamilygroup.name | highlight: $select.search"></div>
                                                                         </ui-select-choices>
                                                                     </ui-select>
@@ -898,26 +930,28 @@
                 </div>
             </div>
         </form>
-        <div class="audit-container" ng-hide="pointOfSaleItemDetailsController.action === 'additem'">
+        <div class="audit-container">
             <div class="row">
-                <div class="col-lg-12">
-                    <span>Created by </span> user_id <span> on </span> timestamp
+                <div class="col-lg-12"
+                     ng-show="pointOfSaleItemDetailsController.created_by">
+                    <span>Created by </span> {{pointOfSaleItemDetailsController.created_by}} <span> on </span> {{pointOfSaleItemDetailsController.created_date | date:'MM/dd/yyyy HH:mm'}}
                 </div>
-                <div class="col-lg-12">
-                    <span>Last modified by </span> user_id <span> on </span> timestamp
+                <div class="col-lg-12"
+                     ng-show="pointOfSaleItemDetailsController.modified_by">
+                    <span>Last modified by </span> {{pointOfSaleItemDetailsController.modified_by}} <span> on </span> {{pointOfSaleItemDetailsController.modified_date | date:'MM/dd/yyyy HH:mm'}}
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div class="point-of-sale-footer navbar navbar-fixed-bottom">
+    <div class="point-of-sale-footer navbar navbar-fixed-bottom" ng-style="{'margin-bottom': pointOfSaleItemDetailsController.hiddenMenu ? '0px' : '30px'}">
         <button type="button" class="btn btn-default"
              ng-click="pointOfSaleItemDetailsController.clearAndGoBack()">
             Cancel
         </button>
         <button type="button" class="btn blue"
-                ng-click="pointOfSaleItemDetailsController.savePointOfSaleItem(posItemForm)"
+                ng-click="pointOfSaleItemDetailsController.savePointOfSaleItem()"
                 ng-disabled="posItemForm.$invalid ||  posItemForm.$pristine || pointOfSaleItemDetailsController.isNotReadyToSubmit()">
             Save
         </button>

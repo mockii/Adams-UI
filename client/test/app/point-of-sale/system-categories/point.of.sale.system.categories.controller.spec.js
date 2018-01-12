@@ -4,18 +4,33 @@ describe('POS system categories controller', function () {
 
     var posSystemCategoriesController,
         $scope,
-        $rootScope;
+        uibModal,
+        compassToastr={},
+        $rootScope,
+        $q,
+        pointOfSaleSystemCategoriesService={};
 
     beforeEach(module('adams.point.of.sale.system.categories.controller'));
+    beforeEach(module('common.services.CompassToastr'));
 
-    beforeEach(inject(function ($controller, _$rootScope_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _$q_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
+        $q = _$q_;
+
+        pointOfSaleSystemCategoriesService.getAllSystemCategories = function () {
+            var deferred = $q.defer();
+            deferred.resolve({});
+            return deferred.promise;
+        };
 
         posSystemCategoriesController = $controller('PointOfSaleSystemCategoriesController',
             {
                 $rootScope: $rootScope,
-                $scope: $scope
+                $scope: $scope,
+                CompassToastr: compassToastr,
+                $uibModal: uibModal,
+                PointOfSaleSystemCategoriesService : pointOfSaleSystemCategoriesService
             }
         );
     }));

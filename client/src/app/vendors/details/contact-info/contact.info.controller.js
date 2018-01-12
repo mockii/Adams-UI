@@ -18,7 +18,6 @@
             $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
                 // emitted gridOptions and gridApi from Directive controller
                 gridApi.grid.appScope.deleteContactInfo = contactInfoController.deleteContactInfoFunction;
-
                 gridApi.grid.appScope.editContactInfo = contactInfoController.editContactInfoFunction;
             });
 
@@ -115,16 +114,23 @@
 
                     columnDefs: [
                         {
-                            field: 'action',
-                            cellTemplate: '<div>' +
-                            '<i class="fa fa-trash" aria-hidden="true" ng-if="grid.appScope.$parent.contactInfoController.gridOptions.data.length > 1" ng-click="grid.appScope.deleteContactInfo(row.entity)" ng-bind="row.getProperty(col.field)"></i>  ' +
-                            '<i class="fa fa-pencil" aria-hidden="true" ng-click="grid.appScope.editContactInfo(row.entity)" ng-bind="row.getProperty(col.field)"></i>  ' +
-                            '</div>',
-                            displayName: "Action",
+                            field: 'edit',
+                            cellTemplate: '<button class="vendor-contact-edit-button" stg-secured-object="Vendor Contacts"><i class="fa fa-pencil" aria-hidden="true" ng-click="grid.appScope.editContactInfo(row.entity)" ng-bind="row.getProperty(col.field)"></i></div>',
+                            displayName: "Edit",
                             enableFiltering: false,
                             enableSorting: false,
                             enableColumnMenu: false,
-                            minWidth: 55,
+                            width: 40,
+                            cellClass: "view-cell"
+                        },
+                        {
+                            field: 'delete',
+                            cellTemplate: '<button class="vendor-contact-delete-button" stg-secured-object="Vendor Contacts" ng-disabled="grid.appScope.$parent.contactInfoController.gridOptions.data.length = 1" ng-click="grid.appScope.deleteContactInfo(row.entity)"><i class="fa fa-trash" aria-hidden="true" ng-bind="row.getProperty(col.field)"></i></button>',
+                            displayName: "Delete",
+                            enableFiltering: false,
+                            enableSorting: false,
+                            enableColumnMenu: false,
+                            width: 55,
                             cellClass: "view-cell"
                         },
                         {

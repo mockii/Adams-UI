@@ -8,9 +8,9 @@
 
             var pointOfSaleItemSearchService = {};
 
-            pointOfSaleItemSearchService.getPosItems = function () {
+            pointOfSaleItemSearchService.getPosItems = function (limit, page, sort, search) {
                 var posItemsDeferred = $q.defer(),
-                    url = ADAMS_URL_SPACE.urls.local.getPosItems;
+                    url = ADAMS_URL_SPACE.urls.local.getPosItems + '?limit=' + limit + '&page=' + page  + '&search=' + JSON.stringify(search) + '&sorts=' + sort;
 
                 var request = $http({
                     method: "get",

@@ -8,7 +8,8 @@ describe('POS item details controller', function () {
         $q,
         $interval,
         mockModal,
-        selectedTags={};
+        selectedTags={},
+        availableTags=[];
 
     beforeEach(module('ui.router'));
     beforeEach(module('adams.point.of.sale.add.tags.controller'));
@@ -16,6 +17,7 @@ describe('POS item details controller', function () {
     beforeEach(function() {
         module(function ($provide) {
             $provide.value('selectedTags', selectedTags);
+            $provide.value('availableTags', availableTags);
         });
     });
 
@@ -46,7 +48,7 @@ describe('POS item details controller', function () {
 
     it('should call submit', function () {
         spyOn(addPointOfSaleTagsController, 'select').and.callThrough();
-        addPointOfSaleTagsController.newSelectedTags = [{"name":"tag one"},{"name":"tag two"}, {"name":"tag three"}];
+        addPointOfSaleTagsController.newSelectedTags = [{"tag_name":"tag one"},{"tag_name":"tag two"}, {"tag_name":"tag three"}];
         addPointOfSaleTagsController.select();
         $scope.$apply();
         expect(addPointOfSaleTagsController.select).toHaveBeenCalled();
@@ -58,25 +60,25 @@ describe('POS item details controller', function () {
     });
 
     it('should add new tag',function () {
-        var tagToAdd = {"name":"Tag To Add"};
+        var tagToAdd = {"tag_name":"Tag To Add"};
         // reset tags
         addPointOfSaleTagsController.newSelectedTags = [];
 
         addPointOfSaleTagsController.addTag(tagToAdd);
         expect(addPointOfSaleTagsController.newSelectedTags.length).toBe(1);
-        expect(addPointOfSaleTagsController.newSelectedTags[0].name).toBe(tagToAdd.name);
+        expect(addPointOfSaleTagsController.newSelectedTags[0].tag_name).toBe(tagToAdd.tag_name);
 
         // add again and verify idempotency
         addPointOfSaleTagsController.addTag(tagToAdd);
         expect(addPointOfSaleTagsController.newSelectedTags.length).toBe(1);
-        expect(addPointOfSaleTagsController.newSelectedTags[0].name).toBe(tagToAdd.name);
+        expect(addPointOfSaleTagsController.newSelectedTags[0].tag_name).toBe(tagToAdd.tag_name);
     });
 
     it('should remve a tag', function () {
-        var tagToRemove = {"name":"tag two"};
-        addPointOfSaleTagsController.newSelectedTags = [{"name":"tag one"},{"name":"tag two"}, {"name":"tag three"}];
+        var tagToRemove = {"tag_name":"tag two"};
+        addPointOfSaleTagsController.newSelectedTags = [{"tag_name":"tag one"},{"tag_name":"tag two"}, {"tag_name":"tag three"}];
 
-        addPointOfSaleTagsController.removeTag(tagToRemove.name);
+        addPointOfSaleTagsController.removeTag(tagToRemove.tag_name);
         expect(addPointOfSaleTagsController.newSelectedTags.length).toBe(2);
     });
 

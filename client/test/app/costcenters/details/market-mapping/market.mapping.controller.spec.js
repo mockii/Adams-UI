@@ -344,15 +344,19 @@ describe('CostCenterMarketMappingController', function() {
         );
     });
 
+    it('should call getGridData ', function() {
+        Ctrl.getGridData(25,1,'',{search: null});
+    });
+
     it('should call uiGridLoadDetails else block', function() {
         Ctrl.gridOptions = gridOptions;
-        $rootScope.$broadcast('uiGridLoadDetails', gridOptions, gridApi);
+        $rootScope.$broadcast('uiGridLoadDetails', gridOptions, gridApi, '', {"metadata":{"version":"1.0.0","status":"Success","http_status_code":"OK","resultCount":"4"},"data":[{"market_name":"MGNIH01","market_description":"Honolulu","market_display_path":"Global~NA Global/MGN000~North America/MGNI00~Incorporated Territories/MGNIH0~Hawaii/MGNIH01~Honolulu/","default_market":false,"created_by":null,"created_date":null,"modified_by":null,"modified_date":null},{"market_name":"MGNMC011","market_description":"San Diego","market_display_path":"Global~NA Global/MGN000~North America/MGNM00~Mainland US/MGNMC0~California/MGNMC011~San Diego/","default_market":false,"created_by":null,"created_date":null,"modified_by":null,"modified_date":null},{"market_name":"MGNMC116","market_description":"Sumter","market_display_path":"Global~NA Global/MGN000~North America/MGNM00~Mainland US/MGNMC1~Carolinas/MGNMC116~Sumter/","default_market":false,"created_by":null,"created_date":null,"modified_by":null,"modified_date":null},{"market_name":"MGNMU018","market_description":"Minneapolis-St. Paul, MN-WI","market_display_path":"Global~NA Global/MGN000~North America/MGNM00~Mainland US/MGNMU0~Upper Midwest/MGNMU018~Minneapolis-St. Paul, MN-WI/","default_market":true,"created_by":"MAJUMS01","created_date":"1473439545723","modified_by":"MAJUMS01","modified_date":"1473439545723"}],"error":[]});
         // expect(function(){}).toEqual(gridApi.grid.appScope.confirmDeleteMarketMapping)
     });
 
     it('should call uiGridLoadDetails', function() {
         Ctrl.gridOptions.data = [];
-        $rootScope.$broadcast('uiGridLoadDetails', gridOptions, gridApi);
+        $rootScope.$broadcast('uiGridLoadDetails', gridOptions, gridApi, '', {"metadata":{"version":"1.0.0","status":"Success","http_status_code":"OK","resultCount":"4"},"data":[],"error":[]});
         // expect(function(){}).toEqual(gridApi.grid.appScope.confirmDeleteMarketMapping)
     });
 

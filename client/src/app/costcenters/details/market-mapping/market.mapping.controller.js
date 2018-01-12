@@ -2,7 +2,8 @@
 
     angular.module('adams.costcenter.market.mapping.controller', ['common.modules.logging']).controller('CostCenterMarketMappingController', ['$scope', 'CostCenterMarketMappingService', 'ModalDialogService', 'CompassToastr', '$uibModal', '$state', '$location', 'costCenterSearchData', 'defaultMarket', '$log',
         function ($scope, CostCenterMarketMappingService, ModalDialogService, CompassToastr, $uibModal, $state, $location, costCenterSearchData, defaultMarket, $log) {
-            var costCenterMarketMappingController = this;
+            var costCenterMarketMappingController = this,
+                searchProperty =  "default_market";
 
             function initialize() {
                 $state.current.data.pageTitle = costCenterSearchData.cost_center_description + ' (' + costCenterSearchData.cost_center + ')';
@@ -17,6 +18,14 @@
             }
 
             costCenterMarketMappingController.getGridData = function (pageSize, pageNumber, sort, searchInput) {
+                if(!searchInput.search) {
+                    searchInput.search = [];
+                }
+                searchInput.search.push({
+                    "property": searchProperty,
+                    "value": false,
+                    "operator": ""
+                });
                 return CostCenterMarketMappingService.getMarketMappingData(pageSize, pageNumber, sort, costCenterMarketMappingController.costCenterNumber, costCenterMarketMappingController.sourceSystemId, searchInput);
             };
 
@@ -91,7 +100,7 @@
                     columnDefs: [
                         {
                             field: 'name',
-                            cellTemplate: '<div><i class="fa fa-trash" aria-hidden="true" ng-click="grid.appScope.confirmDeleteMarketMapping(row.entity)" ng-bind="row.getProperty(col.field)"></i></div>',
+                            cellTemplate: '<div><i class="fa fa-trash" aria-hidden="true" stg-secured-object="Cost Center Market Mapping" ng-click="grid.appScope.confirmDeleteMarketMapping(row.entity)" ng-bind="row.getProperty(col.field)"></i></div>',
                             displayName: "",
                             enableFiltering: false,
                             enableSorting: false,
@@ -101,7 +110,7 @@
                             cellClass: "view-cell"
                         },
                         {
-                            field: 'market_name',
+                            field: 'market_description',
                             displayName: "Market",
                             wordWrap: false,
                             width: '100%',

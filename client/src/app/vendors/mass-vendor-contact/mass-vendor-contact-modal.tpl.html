@@ -1,0 +1,95 @@
+<!-- MASS VENDOR CONTACT MODAL -->
+<div class="modal-content mass-vendor-contact-modal">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="massVendorContactModalController.close()"></button>
+        <h4 class="modal-title"> Vendor Contacts </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- VENDOR GRID -->
+                <div class="col-md-6">
+                    <div class="available-vendors-grid"
+                         stg-ui-grid
+                         get-grid-options="massVendorContactModalController.vendorGridOptions"
+                         get-grid-data="massVendorContactModalController.getVendorGridData">
+                    </div>
+                </div>
+                <!-- END VENDOR GRID -->
+
+                <!-- VENDOR CONTACTS -->
+                <div class="col-md-3 available-vendor-contacts-table-wrapper">
+                    <div class="available-vendor-contacts-table">
+
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th> Available Contacts </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-hide="massVendorContactModalController.selectedVendor"><td class="data-not-found-row">
+                                    <div class="data-not-found"><p> Select a vendor to see the available contacts </p></div>
+                                </td></tr>
+                                <tr ng-show="massVendorContactModalController.selectedVendor && massVendorContactModalController.availableContacts.length === 0"><td class="data-not-found-row">
+                                    <div class="data-not-found"><p> No contacts available to be displayed </p></div>
+                                </td></tr>
+                                <tr ng-repeat="vendorContact in massVendorContactModalController.availableContacts | orderBy: 'first_name' track by $index">
+                                    <td ng-click="massVendorContactModalController.addContactToSelectedContactList(vendorContact)">
+                                        <div class="contacts-name">{{vendorContact.first_name +' '+ vendorContact.last_name}}</div>
+                                        <div class="contacts-email">{{vendorContact.email}}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END VENDOR CONTACTS -->
+
+
+                <!-- SELECTED CONTACTS -->
+                <div class="col-md-3 selected-contacts-table-wrapper">
+                    <div class="selected-contacts-table">
+
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th> Selected Contacts </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="selectedContact in massVendorContactModalController.selectedContacts track by $index">
+                                <td>
+                                    <div class="input-icon right">
+                                        <i class="fa fa-times-circle delete-button"
+                                           ng-click="massVendorContactModalController.removeContactedFromSelectedContactList(selectedContact)"></i>
+                                        <span class="contact-name">{{selectedContact.first_name +' '+ selectedContact.last_name}}</span><br>
+                                        <span class="contact-name">{{selectedContact.email}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END SELECTED CONTACTS -->
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="massVendorContactModalController.close()"> Cancel </button>
+        <button type="button" class="btn blue" ng-click="massVendorContactModalController.submit()"> Select </button>
+    </div>
+</div>
+
+
+
+<!-- END MASS VENDOR CONTACT MODAL -->
+

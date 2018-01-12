@@ -1,0 +1,33 @@
+<div class="modal-content col-md-12">
+    <div class="modal-header select-address-modal-header">
+        <div class="row">
+            <div class="container col-sm-12 no-left-padding">
+                <button type="button" class="close" ng-click="selectAddressController.close()"></button>
+                <h4 class="modal-title">Select a Address</h4>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body no-top-padding-for-model">
+        <div class="row">
+            <div class="col-md-12 no-padding">
+                <div class="col-md-12 no-padding select-address-div">
+                    <div class="select-address-wrapper">
+                        <div class="selected-address right"
+                             ng-class="{'highlight-selected-address' : address.placeId === selectAddressController.isSelectedPlaceId}"
+                             ng-click="selectAddressController.setSelectedAddress(address)"
+                             ng-repeat="address in selectAddressController.formattedAddresses">
+                            <span class="select-address-span">
+                                {{(address.streetNumber ? address.streetNumber + ', ' : '') + (address.streetName ? address.streetName + ', ' : '') + address.city + ', ' + address.state + ', ' + address.country + ', ' + address.zip}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="selectAddressController.close()">Cancel</button>
+        <button type="button" class="btn blue" ng-click="selectAddressController.select()"
+                ng-disabled="!selectAddressController.selectedAddress">Select
+        </button>
+    </div>
+</div>

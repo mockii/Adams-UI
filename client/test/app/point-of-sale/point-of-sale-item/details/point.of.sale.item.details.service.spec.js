@@ -7,15 +7,19 @@ describe('POS Item Details testing', function () {
         urlSpace,
         $httpBackend,
         posItem={},
+        posItemResponse={},
         revenueCategories={},
         itemCategories={},
         itemClasses={},
         typeDetails={},
+        tags=[],
+        units=[],
         posRevenueCategoriesService={},
         posItemCategoriesService={},
         posItemClassesService={},
         pointOfSaleSystemCategoriesService={},
-        posId = "";
+        posId = "",
+        pos_item_code = "";
 
     beforeEach(module('common.url'));
     beforeEach(module('adams.common.url'));
@@ -37,9 +41,11 @@ describe('POS Item Details testing', function () {
         posItemClassesService = PosItemClassesService;
         pointOfSaleSystemCategoriesService = PointOfSaleSystemCategoriesService;
         posId = "1111";
+        pos_item_code = "POSITEMCODE";
 
         posItem = {
-            "pos_id":"1111",
+            "pos_id":posId,
+            "pos_item_code" : pos_item_code,
             "barcode":"3434",
             "webtrition_master_reference_number": "5465646",
             "long_name": "Starbucks Capuccino",
@@ -49,11 +55,22 @@ describe('POS Item Details testing', function () {
             "active": true
         };
 
+        posItemResponse = {
+            "data":
+                [
+                    posItem
+                ]
+        };
+
+
+
 
         revenueCategories = [{"name":"cat one"}];
         itemCategories = [{"name":"item cat one"}];
         itemClasses = [{"name":"item class one"}];
         typeDetails = [{"name":"type one"}];
+        tags = [{"tag_name":"tag_name", "tag_description":"tag_description"}];
+        units = [{"name":"kg"}];
 
         posRevenueCategoriesService.getAllPosRevenueCategoriesDetails = function () {
             var deferred = $q.defer();
@@ -89,23 +106,62 @@ describe('POS Item Details testing', function () {
 
     describe('pos item', function () {
         it('should get pos item', function () {
-            var url = urlSpace.urls.local.getPosItem.replace('{pos_id}', posId);
-            $httpBackend.expectGET(url).respond(posItem);
-            pointOfSaleItemDetailsService.getPosItem(posId).then(function(response) {
+            var url = urlSpace.urls.local.getPosItem.replace('{pos_id}', pos_item_code);
+            $httpBackend.expectGET(url).respond(posItemResponse);
+            pointOfSaleItemDetailsService.getPosItem(pos_item_code).then(function(response) {
                 expect(response).toEqual(posItem);
             });
             $httpBackend.flush();
         });
 
         it('should throw error get pos item', function(){
-            var url = urlSpace.urls.local.getPosItem.replace('{pos_id}', posId);
+            var url = urlSpace.urls.local.getPosItem.replace('{pos_id}', pos_item_code);
             $httpBackend.expectGET(url).respond(400, {});
-            pointOfSaleItemDetailsService.getPosItem(posId).then(function(response) {
+            pointOfSaleItemDetailsService.getPosItem(pos_item_code).then(function(response) {
                 expect(response).toEqual([]);
             });
             $httpBackend.flush();
             scope.$digest();
         });
+
+        it('should add pos item', function () {
+            var url = urlSpace.urls.local.addPosItem;
+            $httpBackend.expectPOST(url).respond({"status":"success"});
+            pointOfSaleItemDetailsService.addPosItem(posItem).then(function(response) {
+                expect(response).toBeDefined();
+            });
+            $httpBackend.flush();
+        });
+
+        it('should throw error add pos item', function(){
+            var url = urlSpace.urls.local.addPosItem;
+            $httpBackend.expectPOST(url).respond(400, {});
+            pointOfSaleItemDetailsService.addPosItem(posItem).then(function(response) {
+                expect(response).toEqual('error');
+            });
+            $httpBackend.flush();
+            scope.$digest();
+        });
+
+        it('should save pos item', function () {
+            var url = urlSpace.urls.local.savePosItem.replace('{pos_id}', posItem.pos_item_code);
+            $httpBackend.expectPUT(url).respond({"status":"success"});
+            pointOfSaleItemDetailsService.savePosItem(posItem).then(function(response) {
+                expect(response).toBeDefined();
+            });
+            $httpBackend.flush();
+        });
+
+        it('should throw error save pos item', function(){
+            var url = urlSpace.urls.local.savePosItem.replace('{pos_id}', posItem.pos_item_code);
+            $httpBackend.expectPUT(url).respond(400, {});
+            pointOfSaleItemDetailsService.savePosItem(posItem).then(function(response) {
+                expect(response).toEqual('error');
+            });
+            $httpBackend.flush();
+            scope.$digest();
+        });
+
     });
 
     describe('revenue categories', function () {
@@ -324,5 +380,48 @@ describe('POS Item Details testing', function () {
     });
 
 
+    describe('Tags', function () {
+        it('should getTags ', function(){
+            var url = urlSpace.urls.local.getPosTags;
+            $httpBackend.expectGET(url).respond(tags);
+            pointOfSaleItemDetailsService.getPosTags().then(function(response) {
+                expect(response).toEqual(tags);
+            });
+            $httpBackend.flush();
+        });
+
+        it('should throw error getTags', function(){
+            var url = urlSpace.urls.local.getPosTags;
+            $httpBackend.expectGET(url).respond(400, {});
+            pointOfSaleItemDetailsService.getPosTags().then(function(response) {
+                expect(response).toEqual([]);
+            });
+            $httpBackend.flush();
+            scope.$digest();
+        });
+
+    });
+
+    describe('Units of measure', function () {
+        it('should getUnitsOfMeasure ', function(){
+            var url = urlSpace.urls.local.getPosUnitsOfMeasure;
+            $httpBackend.expectGET(url).respond(units);
+            pointOfSaleItemDetailsService.getAllUnitsOfMeasure().then(function(response) {
+                expect(response).toEqual(units);
+            });
+            $httpBackend.flush();
+        });
+
+        it('should throw error getUnitsOfMeasure', function(){
+            var url = urlSpace.urls.local.getPosUnitsOfMeasure;
+            $httpBackend.expectGET(url).respond(400, {});
+            pointOfSaleItemDetailsService.getAllUnitsOfMeasure().then(function(response) {
+                expect(response).toEqual([]);
+            });
+            $httpBackend.flush();
+            scope.$digest();
+        });
+
+    });
 
 });

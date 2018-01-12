@@ -39,6 +39,7 @@ describe('UserAdministrationController', function() {
         selectApplicationOptions,
         selectRoleOptions,
         mockModalDialogService,
+        mockApplicationConfigurationService ={},
         mockModal,
         mockModal1,
         mockRBACService = {},
@@ -63,6 +64,7 @@ describe('UserAdministrationController', function() {
     beforeEach(function () {
         module(function ($provide) {
             $provide.value('UserAdministrationService', mockUserAdministrationService);
+            $provide.value('ApplicationConfigurationService', mockApplicationConfigurationService);
             $provide.value('BlockUI', mockBlockUI);
             $provide.value('RBACService', mockRBACService);
             $provide.value('StgStatesService', statesService);
@@ -397,6 +399,10 @@ describe('UserAdministrationController', function() {
             return deferred.promise;
         };
 
+        mockApplicationConfigurationService.getApplicationName = function () {
+            return 'ADAMS';
+        };
+
         userData = {user: "ZZAARONP01",
                     userApplications: [{"name": "ADAMS"},{"name": "MyAdmin"}]
                 };
@@ -408,7 +414,7 @@ describe('UserAdministrationController', function() {
 
 
         Ctrl = $controller('UserAdministrationController', {$rootScope: $rootScope, $scope: $scope, $uibModal : mockModal, $uibModalInstance: $uibModalInstance, UserAdministrationService: userAdministrationService, $timeout: $timeout,
-                                blockUI: mockBlockUI, appName: appName, roleName: roleName, ADAMS_CONSTANTS: adamsConstants, ModalDialogService: mockModalDialogService,
+                                blockUI: mockBlockUI, appName: appName, roleName: roleName, ADAMS_CONSTANTS: adamsConstants, ModalDialogService: mockModalDialogService, ApplicationConfigurationService : mockApplicationConfigurationService,
                                 userData: userData, selectApplicationOptions: selectApplicationOptions, selectRoleOptions: selectRoleOptions, uiGridConstants: uiGridConstants, RBACService: mockRBACService, Utils: mockUtils, StgStatesService: statesService});
 
         appName2 = '';
@@ -444,12 +450,12 @@ describe('UserAdministrationController', function() {
 
 
         Ctrl1 = $controller('UserAdministrationController', {$rootScope: $rootScope, $scope: $scope, $uibModal : mockModal, $uibModalInstance: $uibModalInstance, UserAdministrationService: userAdministrationService, $timeout: $timeout,
-            blockUI: mockBlockUI, appName: appName2, roleName: roleName2, ADAMS_CONSTANTS: adamsConstants, ModalDialogService: mockModalDialogService,
+            blockUI: mockBlockUI, appName: appName2, roleName: roleName2, ADAMS_CONSTANTS: adamsConstants, ModalDialogService: mockModalDialogService, ApplicationConfigurationService: mockApplicationConfigurationService,
             userData: userData, selectApplicationOptions: selectApplicationOptions, selectRoleOptions: selectRoleOptions2, uiGridConstants: uiGridConstants, RBACService: mockRBACService});
 
 
         Ctrl2 = $controller('UserAdministrationController', {$rootScope: $rootScope, $scope: $scope, $uibModal : mockModal1, $uibModalInstance: $uibModalInstance, UserAdministrationService: userAdministrationService, $timeout: $timeout,
-            blockUI: mockBlockUI, appName: appName2, roleName: roleName2, ADAMS_CONSTANTS: adamsConstants, ModalDialogService: mockModalDialogService,
+            blockUI: mockBlockUI, appName: appName2, roleName: roleName2, ADAMS_CONSTANTS: adamsConstants, ModalDialogService: mockModalDialogService, ApplicationConfigurationService: mockApplicationConfigurationService,
             userData: userData, selectApplicationOptions: selectApplicationOptions, selectRoleOptions: selectRoleOptions2, uiGridConstants: uiGridConstants, RBACService: mockRBACService});
     }));
 

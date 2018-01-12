@@ -12,7 +12,8 @@
         'adams.vendor.mapping.history.controller',
         'adams.add.or.edit.contact.info.controller',
         'adams.vendor.mapping.disassociate.controller',
-        'adams.vendor.mapping.disassociate.edi.reason.controller'
+        'adams.vendor.mapping.disassociate.edi.reason.controller',
+        'adams.vendors.mass.vendor.contact.modal.controller'
     ])
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
@@ -87,9 +88,10 @@
                     },
                     defaultMarket: function($stateParams, $location, CostCenterMarketMappingService) {
                         var sourceSystemId = $stateParams.costCenter_source_system_id || $location.search().costCenter_source_system_id,
-                            costCenterNumber = $stateParams.costCenter_number || $location.path().split('/')[2];
+                            costCenterNumber = $stateParams.costCenter_number || $location.path().split('/')[2],
+                            searchInput = {"search":[{"property":"default_market","value":true,"operator":""}]};
 
-                        return CostCenterMarketMappingService.getDefaultMarket(costCenterNumber, sourceSystemId);
+                        return CostCenterMarketMappingService.getDefaultMarket(costCenterNumber, sourceSystemId, searchInput);
                     }
                 }
             }).
@@ -106,6 +108,15 @@
                     backState: 'costcenters'
                 },
                 resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'bookOfRecord',
+                            insertBefore: '#ng_load_plugins_after',
+                            files: [
+                                'css/mass-vendor-contact.css'
+                            ]
+                        });
+                    }],
                     costCenterSearchData: function ($stateParams, $location, CostCenterDetailsService) {
                         if($stateParams.costCenterSearchData) {
                             return $stateParams.costCenterSearchData;

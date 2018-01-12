@@ -4,8 +4,8 @@
         [
             {
                 id: 0,
-                name: "Select State",
-                abbreviation: "-- Select State --"
+                name: "-- Select State --",
+                abbreviation: ""
             },
             {
                 id: 1,

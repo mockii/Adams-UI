@@ -93,19 +93,33 @@ angular.module('adams.common.url', [])
                 updateStationsCostCenter: '/ui/api/locations/{locationCode}/stations/{stationCode}/cost_centers/{costCenterName}',
 
                 // POS
-                getPosItems: '/ui/api/pos/items',
-                getPosItem: '/ui/api/pos/items/{pos_id}',
+                getPosItems: '/ui/api/pos/posItems',
+                getPosItem: '/ui/api/pos/posItems/{pos_id}',
+                addPosItem: '/ui/api/pos/posItems',
+                savePosItem: '/ui/api/pos/posItems/{pos_id}',
                 getPosRevenueCategories: '/ui/api/pos/revenue_categories',
                 addPosRevenueCategory: '/ui/api/pos/revenue_categories',
-                updatePosRevenueCategory: '/ui/api/pos/revenue_categories',
+                updatePosRevenueCategory: '/ui/api/pos/revenue_categories/{revenue_category_code}',
                 getPosItemCategories: '/ui/api/pos/item_categories',
                 addPosItemCategory: '/ui/api/pos/item_categories',
-                updatePosItemCategory: '/ui/api/pos/item_categories',
+                updatePosItemCategory: '/ui/api/pos/item_categories/{item_category_code}',
                 getPosItemClasses: '/ui/api/pos/item_classes',
                 addPosItemClass: '/ui/api/pos/item_classes',
-                updatePosItemClass: '/ui/api/pos/item_classes',
-                getTypeDetailsForSystemCategoryAndVendor: '/ui/api/pos/system_categories/{system_category}/vendors/{vendor_name}/types/{type}'
+                updatePosItemClass: '/ui/api/pos/item_classes/{item_class_code}',
+                getTypeDetailsForSystemCategoryAndVendor: '/ui/api/pos/system_categories/{system_category}/vendors/{vendor_name}/types/{type}/items',
+                addTypeDetailsForSystemCategoryAndVendor: '/ui/api/pos/system_categories/{system_category}/vendors/{vendor_name}/types/{type}/items',
+                getSystemCategories : '/ui/api/pos/system_categories',
+                getVendors : '/ui/api/pos/vendors',
+                getTypesForVendor : '/ui/api/pos/vendors/{vendor_name}/types',
+                getPosTags: '/ui/api/pos/tags',
+                getPosUnitsOfMeasure: '/ui/api/pos/units',
+                getTypeDetailsForSystemCategoryDefaultsAndVendor: '/ui/api/pos/item_categories/{item_category_code}/defaults',
+                updateRevenueCategoryDefaults: '/ui/api/pos/revenue_categories/{revenue_category_code}/defaults/system_categories/{system_category_name}/vendors/{vendor_name}/types/{vendor_category_type_name}',
+                updateItemCategoryDefaults: '/ui/api/pos/item_categories/{item_category_code}/defaults/system_categories/{system_category_name}/vendors/{vendor_name}/types/{vendor_category_type_name}',
 
+                // Communication Preferences
+                commPreferences:  '/ui/api/users/{userName}/communication_preferences',
+                updateCommPreferences:  '/ui/api/users/{userName}/communication_preferences/{communicationPreferencesCode}'
             }
         }
     });

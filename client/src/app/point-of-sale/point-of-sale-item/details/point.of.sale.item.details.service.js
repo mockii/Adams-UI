@@ -29,6 +29,58 @@
 
                     var promise = request.then(
                         function (response) {
+                            return response.data.data[0];
+                        },
+                        function (error) {
+                            return [];
+                        }
+                    );
+
+                    return promise;
+                };
+
+                pointOfSaleItemDetailsService.addPosItem = function (posItem) {
+                    var url = ADAMS_URL_SPACE.urls.local.addPosItem;
+
+                    return $http.post(url, posItem)
+                        .then(
+                            function (response) {
+                                return response;
+                            },
+                            function (error) {
+                                $log.error('Error occured while adding POS item - ', error);
+                                return 'error';
+                            }
+                        );
+                };
+
+                pointOfSaleItemDetailsService.savePosItem = function (posItem) {
+                    var url = ADAMS_URL_SPACE.urls.local.savePosItem.replace('{pos_id}', posItem.pos_item_code);
+
+                    return $http.put(url, posItem)
+                        .then(
+                            function (response) {
+                                return response;
+                            },
+                            function (error) {
+                                $log.error('Error occured while saving POS item - ', error);
+                                return 'error';
+                            }
+                        );
+                };
+
+                pointOfSaleItemDetailsService.getPosTags = function () {
+                    var posTagsDeferred = $q.defer(),
+                        url = ADAMS_URL_SPACE.urls.local.getPosTags;
+
+                    var request = $http({
+                        method: "get",
+                        url: url,
+                        timeout: posTagsDeferred.promise
+                    });
+
+                    var promise = request.then(
+                        function (response) {
                             return response.data;
                         },
                         function (error) {
@@ -41,7 +93,7 @@
 
                 pointOfSaleItemDetailsService.getAllPosRevenueCategoriesDetails = function () {
                     if(pointOfSaleItemDetailsService.revenueCategories.length === 0){
-                        var revenueCategoriesPromise = PosRevenueCategoriesService.getAllPosRevenueCategoriesDetails('','','','');
+                        var revenueCategoriesPromise = PosRevenueCategoriesService.getAllPosRevenueCategoriesDetails('','',{},'');
 
                         revenueCategoriesPromise.then(
                             function (response) {
@@ -61,7 +113,7 @@
 
                 pointOfSaleItemDetailsService.getAllPosItemCategoriesDetails = function () {
                     if(pointOfSaleItemDetailsService.itemCategories.length === 0){
-                        var itemCategoriesPromise = PosItemCategoriesService.getAllPosItemCategoriesDetails('','','','');
+                        var itemCategoriesPromise = PosItemCategoriesService.getAllPosItemCategoriesDetails('','',{},'');
 
                         itemCategoriesPromise.then(
                             function (response) {
@@ -81,7 +133,7 @@
 
                 pointOfSaleItemDetailsService.getAllPosItemClassesDetails = function () {
                     if(pointOfSaleItemDetailsService.itemClasses.length === 0){
-                        var itemClassesPromise = PosItemClassesService.getAllPosItemClassesDetails('','','','');
+                        var itemClassesPromise = PosItemClassesService.getAllPosItemClassesDetails('','',{},'');
 
                         itemClassesPromise.then(
                             function (response) {
@@ -101,7 +153,7 @@
 
                 pointOfSaleItemDetailsService.getTypeDetailsForSystemCategoryAndVendor = function (systemCategory, vendorName, type) {
                     if(shouldLoadTypeDetails(systemCategory, vendorName, type)){
-                        var typeDetailsPromise = PointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type);
+                        var typeDetailsPromise = PointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type, '','','',{});
 
                         typeDetailsPromise.then(
                             function (response) {
@@ -125,6 +177,28 @@
                         return deferred.promise;
                     }
 
+                };
+
+                pointOfSaleItemDetailsService.getAllUnitsOfMeasure = function () {
+                    var posUnitsOfMeasureDeferred = $q.defer(),
+                        url = ADAMS_URL_SPACE.urls.local.getPosUnitsOfMeasure;
+
+                    var request = $http({
+                        method: "get",
+                        url: url,
+                        timeout: posUnitsOfMeasureDeferred.promise
+                    });
+
+                    var promise = request.then(
+                        function (response) {
+                            return response.data;
+                        },
+                        function (error) {
+                            return [];
+                        }
+                    );
+
+                    return promise;
                 };
 
                 function shouldLoadTypeDetails(systemCategory, vendorName, type) {

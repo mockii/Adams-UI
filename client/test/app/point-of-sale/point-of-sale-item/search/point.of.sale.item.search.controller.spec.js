@@ -9,10 +9,13 @@ describe('POS item search controller', function () {
         gridApi,
         gridOptions,
         stgStatesService={},
+        compassToastr={},
         modalDialogService={},
+        pointOfSaleItemDetailsService={},
         pointOfSaleItemSearchService={};
 
     beforeEach(module('adams.point.of.sale.item.search.controller'));
+    beforeEach(module('common.services.CompassToastr'));
 
     beforeEach(function() {
         module(function ($provide) {
@@ -20,10 +23,11 @@ describe('POS item search controller', function () {
         });
     });
 
-    beforeEach(inject(function ($controller, _$rootScope_, _$q_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _$q_, CompassToastr) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $q = _$q_;
+        compassToastr = CompassToastr;
 
         stgStatesService.goToState = function(state, params){
             return;
@@ -63,7 +67,9 @@ describe('POS item search controller', function () {
                 $scope: $scope,
                 $q: $q,
                 PointOfSaleItemSearchService: pointOfSaleItemSearchService,
-                ModalDialogService: modalDialogService
+                PointOfSaleItemDetailsService: pointOfSaleItemDetailsService,
+                ModalDialogService: modalDialogService,
+                CompassToastr: compassToastr
             }
         );
     }));
@@ -90,13 +96,23 @@ describe('POS item search controller', function () {
     });
 
     it('should call editItem', function () {
-        var row = {pos_id:'111'};
+        var row = {pos_item_code:'111'};
         spyOn(stgStatesService, 'goToState');
         spyOn(pointOfSaleItemSearchController, 'editItem').and.callThrough();
         pointOfSaleItemSearchController.editItem(row);
         $scope.$apply();
-        expect(stgStatesService.goToState).toHaveBeenCalledWith('edititem', {posId:row.pos_id});
+        expect(stgStatesService.goToState).toHaveBeenCalledWith('edititem', {posItemCode:row.pos_item_code});
         expect(pointOfSaleItemSearchController.editItem).toHaveBeenCalled();
+    });
+
+    it('should call copyItem', function () {
+        var row = {pos_item_code:'111'};
+        spyOn(stgStatesService, 'goToState');
+        spyOn(pointOfSaleItemSearchController, 'copyItem').and.callThrough();
+        pointOfSaleItemSearchController.copyItem(row);
+        $scope.$apply();
+        expect(stgStatesService.goToState).toHaveBeenCalledWith('copyitem', {posItemCode:row.pos_item_code});
+        expect(pointOfSaleItemSearchController.copyItem).toHaveBeenCalled();
     });
 
     it('should call uiGridLoadDetails', function() {

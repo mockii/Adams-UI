@@ -127,7 +127,7 @@
                         }
                         // delete if exist
                         if(Utils.checkIfSearchObjectPresent(searchProperty, searchInput.search)){
-                            var index = searchInput.search.findIndex(Utils.getSearchIndex, searchProperty);
+                            var index = Utils.getSearchObjectIndex(searchProperty, searchInput.search);
                             searchInput.search.splice(index,1);
                         }
                         if(locationsStationsMappingController.searchPropertyValue !== ""){

@@ -28,7 +28,7 @@
                     }
                 })
                 .state('edititem', {
-                    url: "/pointofsale/item/{posId}/details",
+                    url: "/pointofsale/item/{posItemCode}/details",
                     templateUrl : "point-of-sale/point-of-sale-item/details/point.of.sale.item.details.tpl.html",
                     controller : "PointOfSaleItemDetailsController as pointOfSaleItemDetailsController",
                     data : {
@@ -45,10 +45,32 @@
                             });
                         }],
                         pos_item: ['PointOfSaleItemDetailsService', '$stateParams' ,function (PointOfSaleItemDetailsService, $stateParams) {
-                            return PointOfSaleItemDetailsService.getPosItem($stateParams.posId);
+                            return PointOfSaleItemDetailsService.getPosItem($stateParams.posItemCode);
                         }]
                     }
-                });
+                })
+                .state('copyitem', {
+                url: "/pointofsale/item/{posItemCode}/copy",
+                templateUrl : "point-of-sale/point-of-sale-item/details/point.of.sale.item.details.tpl.html",
+                controller : "PointOfSaleItemDetailsController as pointOfSaleItemDetailsController",
+                data : {
+                    pageTitle : ""
+                },
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'pointOfSale',
+                            insertBefore: '#ng_load_plugins_after',
+                            files: [
+                                'css/point-of-sale.css'
+                            ]
+                        });
+                    }],
+                    pos_item: ['PointOfSaleItemDetailsService', '$stateParams' ,function (PointOfSaleItemDetailsService, $stateParams) {
+                        return PointOfSaleItemDetailsService.getPosItem($stateParams.posItemCode);
+                    }]
+                }
+            });
             }
         ]);
 })();

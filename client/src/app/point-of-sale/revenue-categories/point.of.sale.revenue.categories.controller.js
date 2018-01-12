@@ -17,13 +17,12 @@
 
             $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
                 // emitted gridOptions and gridApi from Directive controller
-                gridApi.grid.appScope.openAddEditRevenueModal = posRevenueCategoriesController.openAddEditRevenueModal;
+                gridApi.grid.appScope.openAddEditRevenueCategoryModal = posRevenueCategoriesController.openAddEditRevenueCategoryModal;
 
             });
 
-            posRevenueCategoriesController.openAddEditRevenueModal = function(action, revenueCategoriesRowData) {
+            posRevenueCategoriesController.openAddEditRevenueCategoryModal = function(action, revenueCategoriesRowData) {
                 var status = action === 'Add' ? 'added' : 'updated';
-
                 $uibModal.open({
                     templateUrl: 'point-of-sale/revenue-categories/add-edit-revenue-categories-modal.tpl.html',
                     controller: 'AddEditRevenueCategoriesModalController as addEditRevenueCategoriesModalController',
@@ -34,9 +33,13 @@
                         revenueCategoriesRowData: revenueCategoriesRowData || {}
                     }
                 }).result.then(function(response){
-                    // Refresh the Grid. Callback
-                    $scope.$broadcast('uiGridParameterChange');
-                    CompassToastr.success("Revenue Category has been successfully " + status);
+                    if(response === 'error'){
+                        CompassToastr.error("Revenue Category was not " + status + ". Please try again later!");
+                    }else {
+                        // Refresh the Grid. Callback
+                        $scope.$broadcast('uiGridParameterChange');
+                        CompassToastr.success("Revenue Category has been successfully " + status);
+                    }
                 }, function(){
                     // Do nothing on cancel
                 });
@@ -64,7 +67,7 @@
                             field: 'name',
                             displayName: "Edit",
                             headerCellTemplate: '<div class="ui-grid-cell-contents">Edit</div>',
-                            cellTemplate: '<div><i class="fa fa-pencil" ng-click="grid.appScope.openAddEditRevenueCategoriesModal(editAction, row.entity)"></i></div>',
+                            cellTemplate: '<div><i class="fa fa-pencil" ng-click="grid.appScope.openAddEditRevenueCategoryModal(editAction, row.entity)"></i></div>',
                             enableFiltering: false,
                             enableSorting: false,
                             enableColumnMenu: false,
@@ -74,22 +77,22 @@
                             pinnedLeft: true
                         },
                         {
-                            field: 'pos_id',
-                            displayName: "POS ID",
+                            field: 'name',
+                            displayName: "Revenue Category Name",
                             filter: {
                                 placeholder: ''
                             }
                         },
                         {
-                            field: 'long_name',
-                            displayName: "Long Name",
+                            field: 'type',
+                            displayName: "Type",
                             filter: {
                                 placeholder: ''
                             }
                         },
                         {
-                            field: 'item_class',
-                            displayName: "item Class",
+                            field: 'description',
+                            displayName: "Description",
                             filter: {
                                 placeholder: ''
                             }

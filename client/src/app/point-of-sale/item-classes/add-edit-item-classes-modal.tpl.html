@@ -2,36 +2,48 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="addEditItemClassesModalController.close()"></button>
-        <h3 class="modal-title">{{addEditItemClassesModalController.action}} Item Classes</h3>
+        <h3 class="modal-title">{{addEditItemClassesModalController.action}} Item Class</h3>
     </div>
 
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-12">
-                <form role="form">
+            <div class="form-horizontal col-md-12">
+                <form role="form" name="itemClassForm">
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-4">Item Class Name</label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" ng-model="addEditItemClassesModalController.itemClassesRowData.item_class_name">
+                            <label class="control-label col-md-4">
+                                Item Class Name<span class="required">*</span>
+                            </label>
+                            <div class="col-lg-7 input-icon right">
+                                <input type="text" class="form-control"
+                                       ng-model="addEditItemClassesModalController.itemClassName"
+                                       stg-form-validation validation-type="required" required>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-4">Item ID Range Start</label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" ng-model="addEditItemClassesModalController.itemClassesRowData.item_id_range_start">
+                            <label class="control-label col-md-4">
+                                Item ID Range Start<span class="required">*</span>
+                            </label>
+                            <div class="col-lg-7 input-icon right">
+                                <input type="text" class="form-control"
+                                       ng-model="addEditItemClassesModalController.itemClassRangeStart"
+                                       stg-form-validation validation-type="required" required>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-4">Item ID Range End</label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" ng-model="addEditItemClassesModalController.itemClassesRowData.item_id_range_end">
+                            <label class="control-label col-md-4">
+                                Item ID Range End<span class="required">*</span>
+                            </label>
+                            <div class="col-lg-7 input-icon right">
+                                <input type="text" class="form-control"
+                                       ng-model="addEditItemClassesModalController.itemClassRangeEnd"
+                                       stg-form-validation validation-type="required" required>
                             </div>
                         </div>
                     </div>
@@ -40,17 +52,24 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Description</label>
                             <div class="col-lg-7">
-                                <textarea rows="6" class="form-control" ng-model="addEditItemClassesModalController.itemClassesRowData.description"></textarea>
+                                <textarea rows="6" class="form-control" ng-model="addEditItemClassesModalController.itemClassDescription"></textarea>
                             </div>
                         </div>
                     </div>
                 </form>
+                <div ng-show="addEditItemClassesModalController.isInvalidRange">
+                    <span>Please input a valid Range. </span>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="addEditItemClassesModalController.close()">Cancel</button>
-        <button type="button" class="btn blue" ng-click="addEditItemClassesModalController.save()">Save</button>
+        <button type="button" class="btn blue"
+                ng-click="addEditItemClassesModalController.save()"
+                ng-disabled="itemClassForm.$invalid ||  itemClassForm.$pristine">
+            Save
+        </button>
     </div>
 </div>

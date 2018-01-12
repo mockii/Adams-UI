@@ -146,7 +146,7 @@
                         }
                         // delete if exist
                         if (Utils.checkIfSearchObjectPresent(searchProperty, searchInput.search)) {
-                            var index = searchInput.search.findIndex(Utils.getSearchIndex, searchProperty);
+                            var index = Utils.getSearchObjectIndex(searchProperty, searchInput.search);
                             searchInput.search.splice(index, 1);
                         }
                         if(costCenterMappingController.searchPropertyValue !== ""){
@@ -270,7 +270,7 @@
                             {
                                 field: 'associated',
                                 displayName: "Associated",
-                                cellTemplate: '<label class="switch"><input class="switch-input" ng-checked="row.entity.associated" ng-click="grid.appScope.changeCostCenterAssociation(row, $event)" type="checkbox"/><span class="switch-label" data-on="YES" data-off="NO"></span><span class="switch-handle"></span></label>',
+                                cellTemplate: '<label class="switch" stg-secured-object="Vendor Cost Center Association"><input class="switch-input" ng-checked="row.entity.associated" ng-click="grid.appScope.changeCostCenterAssociation(row, $event)" type="checkbox"/><span class="switch-label" data-on="YES" data-off="NO"></span><span class="switch-handle"></span></label>',
                                 cellClass: 'switchClass',
                                 minWidth: 100,
                                 enableFiltering: false

@@ -5,7 +5,13 @@
 (function () {
     'use strict';
 
-    angular.module('adams.book.of.record', ['adams.book.of.record.controller', 'adams.book.of.record.service', 'adams.contact.info.modal.controller'])
+    angular.module('adams.book.of.record', [
+        'adams.book.of.record.controller',
+        'adams.book.of.record.service',
+        'adams.contact.info.modal.controller',
+        'adams.vendor.search.service',
+        'adams.vendors.mass.vendor.contact.modal.controller'
+    ])
         .config(['$stateProvider', function($stateProvider){
             $stateProvider
                 .state('bookofrecord', {
@@ -21,7 +27,8 @@
                                 name: 'bookOfRecord',
                                 insertBefore: '#ng_load_plugins_after',
                                 files: [
-                                    'css/bookofrecord.css'
+                                    'css/bookofrecord.css',
+                                    'css/mass-vendor-contact.css'
                                 ]
                             });
                         }]

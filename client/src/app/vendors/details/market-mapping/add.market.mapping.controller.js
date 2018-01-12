@@ -5,13 +5,16 @@
     function($scope, MarketMappingService, addMarketMappingData, $state, $uibModalInstance, ModalDialogService, $timeout, Utils, $log){
         var addMarketMappingController = this,
             addMarketMappingPromise;
+
         addMarketMappingController.marketMappingRefId = "marketRefId";
         addMarketMappingController.teamMappingRefId = "teamRefId";
         addMarketMappingController.disableSelectButton = true;
+
         function initialize() {
             addMarketMappingController.selectedMarketNode = null;
             addMarketMappingController.selectedTeams = [];
         }
+
         addMarketMappingController.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
@@ -69,8 +72,9 @@
         function isNodePresent(node, selectedTeamsArray){
             return(-1 !== selectedTeamsArray.indexOf(node));
         }
+
+
         initialize();
-    }
-    ]);
+    }]);
 
 })();

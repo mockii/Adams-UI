@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('adams.point.of.sale.add.tags.controller',[])
-        .controller('AddPointOfSaleTagsController',['$scope', '$q', '$uibModalInstance', '$interval', 'selectedTags',
-            function ($scope, $q, $uibModalInstance, $interval, selectedTags) {
+        .controller('AddPointOfSaleTagsController',['$scope', '$q', '$uibModalInstance', '$interval', 'selectedTags', 'availableTags',
+            function ($scope, $q, $uibModalInstance, $interval, selectedTags, availableTags) {
 
             var addPointOfSaleTagsController = this;
 
@@ -12,34 +12,7 @@
 
                 addPointOfSaleTagsController.newSelectedTags = [];
                 addPointOfSaleTagsController.newSelectedTags = addPointOfSaleTagsController.newSelectedTags.concat(selectedTags.tags);
-                addPointOfSaleTagsController.tags=
-                    {
-                    "metadata":
-                        {
-                            "resultCount": 15,
-                            "status": "success",
-                            "http_status_code": "200"
-                        },
-                    "data":
-                        [
-                            {"name":"Tag One"},
-                            {"name":"Tag Two"},
-                            {"name":"Tag Three"},
-                            {"name":"Tag Four"},
-                            {"name":"Tag Five"},
-                            {"name":"Tag Six"},
-                            {"name":"Tag Seven"},
-                            {"name":"Tag Eight"},
-                            {"name":"Tag Nine"},
-                            {"name":"Tag Ten"},
-                            {"name":"Tag Eleven"},
-                            {"name":"Tag Twelve"},
-                            {"name":"Tag Thirteen"},
-                            {"name":"Tag Fourteen"},
-                            {"name":"Tag Fifteen"}
-                        ]
-                    };
-
+                addPointOfSaleTagsController.tags = availableTags.tags;
             }
 
             addPointOfSaleTagsController.cancel = function () {
@@ -51,19 +24,29 @@
             };
 
             addPointOfSaleTagsController.addTag = function (tagToAdd) {
-                if(!addPointOfSaleTagsController.newSelectedTags.includes(tagToAdd)) {
+                var tagAddedAlready;
+
+                for(var index=0; index<addPointOfSaleTagsController.newSelectedTags.length; index++){
+                    if(addPointOfSaleTagsController.newSelectedTags[index].tag_name === tagToAdd.tag_name){
+                        tagAddedAlready = true;
+                        break;
+                    }
+                }
+
+                if(!tagAddedAlready) {
                     addPointOfSaleTagsController.newSelectedTags.push(tagToAdd);
                 }
             };
 
             addPointOfSaleTagsController.removeTag = function (tagName) {
                 for(var index=0; index<addPointOfSaleTagsController.newSelectedTags.length; index++) {
-                    if(addPointOfSaleTagsController.newSelectedTags[index].name === tagName) {
+                    if(addPointOfSaleTagsController.newSelectedTags[index].tag_name === tagName) {
                         addPointOfSaleTagsController.newSelectedTags.splice(index, 1);
                         break;
                     }
                 }
             };
+
             initialize();
         }
     ]);

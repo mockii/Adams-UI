@@ -11,42 +11,28 @@
             'common.modules.logging'
         ])
         .controller('UserAdministrationController', ['$rootScope', '$scope', '$window', '$filter', '$timeout', '$interval', '$uibModal', 'StgStatesService', 'UserAdministrationService', 'blockUI', 'appName', 'roleName',
-            'userData', 'selectApplicationOptions', 'selectRoleOptions', 'ADAMS_CONSTANTS', 'ModalDialogService', 'RBACService', 'uiGridConstants', 'Utils', '$log',
+            'userData', 'selectApplicationOptions', 'selectRoleOptions', 'ADAMS_CONSTANTS', 'ModalDialogService', 'RBACService', 'uiGridConstants', 'Utils', '$log', 'ApplicationConfigurationService',
             function ($rootScope, $scope, $window, $filter, $timeout, $interval, $uibModal, StgStatesService, UserAdministrationService, blockUI, appName, roleName,
-                      userData, selectApplicationOptions, selectRoleOptions, ADAMS_CONSTANTS, ModalDialogService, RBACService, uiGridConstants, Utils, $log) {
+                      userData, selectApplicationOptions, selectRoleOptions, ADAMS_CONSTANTS, ModalDialogService, RBACService, uiGridConstants, Utils, $log, ApplicationConfigurationService) {
                 var userAdministrationController = this,
                     userSearchGridPromise;
 
                 function initialize() {
                     blockUserPortlets();
-
-
                     userAdministrationController.gender = '';
                     userAdministrationController.search = '';
-
-
                     userAdministrationController.isCollapsed = true;
                     userAdministrationController.activeTab = 0;
-
                     userAdministrationController.job_description = '';
-
                     userAdministrationController.loginUserApps = userData.userApplications;
-
                     userAdministrationController.applications = [];
-
-
                     userAdministrationController.gridApplication = ' ';
                     userAdministrationController.gridApplications = selectApplicationOptions;
-
                     userAdministrationController.gridRole = ' ';
                     userAdministrationController.gridRoles = selectRoleOptions;
-
                     userAdministrationController.gridTeamName = '';
-
                     userAdministrationController.searchObject = {};
-
                     userAdministrationController.callPagination = true;
-
                     userAdministrationController.applicationAuthorizedForLoginUser = false;
 
 
@@ -54,7 +40,7 @@
                         userAdministrationController.appName = appName;
                     }
                     else {
-                        userAdministrationController.appName = $rootScope.applicationConfiguration.application.name;
+                        userAdministrationController.appName = ApplicationConfigurationService.getApplicationName();
                     }
 
                     if (roleName) {
@@ -117,7 +103,7 @@
                         if (userAdministrationController.searchObject.hasOwnProperty(currentProperty)) {
                             // delete if exist
                             if(Utils.checkIfSearchObjectPresent(currentProperty, searchInput.search)){
-                                var index = searchInput.search.findIndex(Utils.getSearchIndex, currentProperty);
+                                var index = Utils.getSearchObjectIndex(currentProperty, searchInput.search);
                                 searchInput.search.splice(index,1);
                             }
                             searchInput.search.push({

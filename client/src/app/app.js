@@ -2,7 +2,7 @@
 
 (function () {
 
-    angular.module('adams', [
+    var adams = angular.module('adams', [
         'STGWebUtils',
         'templates.app',
         'adams.controller',
@@ -32,11 +32,15 @@
         'scrollable-table',
         'adams.access.control',
         'adams.point.of.sale',
-        'adams.teams'
-    ])
+        'adams.teams',
+        'adams.communication.preferences'
+    ]);
 
-    .config(['$urlRouterProvider', '$httpProvider',
-        function($urlRouterProvider, $httpProvider) {
+    adams.config(['$urlRouterProvider', '$httpProvider', '$stateProvider',
+        function($urlRouterProvider, $httpProvider, $stateProvider) {
+
+            adams.stateProvider = $stateProvider;
+
             $httpProvider.defaults.cache = false;
             if (!$httpProvider.defaults.headers.get) {
                 $httpProvider.defaults.headers.get = {};
@@ -49,8 +53,31 @@
         }
     ])
 
-    .run(function ($rootScope) {
-            //nothing needed here yet
-        });
+    .run(['$rootScope', 'PointOfSaleSystemCategoriesService',
+        function ($rootScope, PointOfSaleSystemCategoriesService) {
+
+            var systemCategoryState = {},
+                systemCategory = {},
+                systemCategoriesResponse = [],
+                systemCategoriesPromise = PointOfSaleSystemCategoriesService.getAllSystemCategories();
+
+            systemCategoriesPromise.then(function (response) {
+                if(response !== 'error'){
+                    systemCategoriesResponse = response.data;
+                    for(var index = 0; index < systemCategoriesResponse.length; index++){
+                        systemCategory = systemCategoriesResponse[index];
+                        systemCategoryState = {};
+                        systemCategoryState.name = 'pointOfSale.systemCategories.' + systemCategory.name;
+                        systemCategoryState.url= '/' + systemCategory.name.toLowerCase();
+                        systemCategoryState.templateUrl = 'point-of-sale/system-categories/point.of.sale.system.category.content.tpl.html';
+                        systemCategoryState.controller = 'PointOfSaleSystemCategoryContentController as pointOfSaleSystemCategoryContentController';
+                        systemCategoryState.data = { category : systemCategory.name };
+                        adams.stateProvider.state(systemCategoryState);
+                    }
+                }
+            }, function (error) {
+                systemCategoriesResponse = [];
+            });
+        }]);
 
 })();

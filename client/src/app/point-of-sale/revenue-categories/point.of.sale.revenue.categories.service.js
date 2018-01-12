@@ -40,8 +40,7 @@
 
                 return $http.post(url, revenueCategoryData)
                     .then(function (response) {
-                        $rootScope.$broadcast('reloadRevenueCategories');
-                        return response.data.data[0];
+                        return response.data;
                     }, function (error) {
                         $log.error("An error occurred while adding Revenue Category.", error.data);
                         return 'error';
@@ -49,12 +48,11 @@
             };
 
             posRevenueCategoriesService.updatePosRevenueCategory = function(revenueCategoryData){
-                var url = ADAMS_URL_SPACE.urls.local.updatePosRevenueCategory;
+                var url = ADAMS_URL_SPACE.urls.local.updatePosRevenueCategory.replace('{revenue_category_code}', revenueCategoryData.revenue_category_code);
 
                 return $http.put(url, revenueCategoryData)
                     .then(function (response) {
-                        $rootScope.$broadcast('reloadRevenueCategories');
-                        return response.data.data[0];
+                        return response.data;
                     }, function (error) {
                         $log.error('An error occurred while updating Revenue Category.', error.data);
                         return 'error';

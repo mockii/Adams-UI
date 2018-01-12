@@ -94,19 +94,33 @@ var urlSpace = (function () {
                 updateStationsCostCenter: '/api/locations/:location_code/stations/:station_code/cost_centers/:cost_center_name',
 
                 // POS
-                getPosItems: '/api/pos/items',
-                getPosItem: '/api/pos/items/:pos_id',
+                getPosItems: '/api/pos/posItems',
+                getPosItem: '/api/pos/posItems/:pos_id',
+                addPosItem: '/api/pos/posItems',
+                savePosItem: '/api/pos/posItems/:pos_id',
                 getPosRevenueCategories: '/api/pos/revenue_categories',
                 addPosRevenueCategory: '/api/pos/revenue_categories',
-                updatePosRevenueCategory: '/api/pos/revenue_categories',
+                updatePosRevenueCategory: '/api/pos/revenue_categories/:revenue_category_code',
                 getPosItemCategories: '/api/pos/item_categories',
                 addPosItemCategory: '/api/pos/item_categories',
-                updatePosItemCategory: '/api/pos/item_categories',
+                updatePosItemCategory: '/api/pos/item_categories/:item_category_code',
                 getPosItemClasses: '/api/pos/item_classes',
                 addPosItemClass: '/api/pos/item_classes',
-                updatePosItemClass: '/api/pos/item_classes',
-                getTypeDetailsForSystemCategoryAndVendor: '/api/pos/system_categories/:system_category/vendors/:vendor_name/types/:type'
+                updatePosItemClass: '/api/pos/item_classes/:item_class_code',
+                getTypeDetailsForSystemCategoryAndVendor: '/api/pos/system_categories/:system_category/vendors/:vendor_name/types/:type/items',
+                addTypeDetailsForSystemCategoryAndVendor: '/api/pos/system_categories/:system_category/vendors/:vendor_name/types/:type/items',
+                getSystemCategories : '/api/pos/system_categories',
+                getVendors : '/api/pos/vendors',
+                getTypesForVendor : '/api/pos/vendors/:vendor_name/types',
+                getPosTags: '/api/pos/tags',
+                getPosUnitsOfMeasure: '/api/pos/units',
+                getTypeDetailsForSystemCategoryDefaultsAndVendor: '/api/pos/item_categories/:item_category_code/defaults',
+                updateRevenueCategoryDefaults: '/api/pos/revenue_categories/:revenue_category_code/defaults/system_categories/:system_category_name/vendors/:vendor_name/types/:vendor_category_type_name',
+                updateItemCategoryDefaults: '/api/pos/item_categories/:item_category_code/defaults/system_categories/:system_category_name/vendors/:vendor_name/types/:vendor_category_type_name',
 
+                // Communication Preferences
+                commPreferences:  '/api/users/:userName/communication_preferences',
+                updateCommPreferences:  '/api/users/:userName/communication_preferences/:communicationPreferencesCode'
             },
             adams: {
                 userDetails: '/api/users?limit={limit}&page={page}&sorts={sorts}&search={search}&appName={appName}&roleName={roleName}',
@@ -200,15 +214,33 @@ var urlSpace = (function () {
                 updateStationsCostCenter: '/api/locations/{locationCode}/stations/{stationCode}/cost_centers/{costCenterName}/?source_system_id={sourceSystemId}',
 
                 // POS
+                getPosItem: '/api/pos/posItems/{pos_id}',
+                getPosItems: '/api/pos/posItems?limit={limit}&page={page}&sorts={sorts}&search={search}',
+                addPosItem: '/api/pos/posItems',
+                savePosItem: '/api/pos/posItems/{pos_id}',
                 getPosRevenueCategories: '/api/pos/revenue_categories?limit={limit}&page={page}&sorts={sorts}&search={search}',
                 addPosRevenueCategory: '/api/pos/revenue_categories',
-                updatePosRevenueCategory: '/api/pos/revenue_categories',
+                updatePosRevenueCategory: '/api/pos/revenue_categories/{revenue_category_code}',
                 getPosItemCategories: '/api/pos/item_categories?limit={limit}&page={page}&sorts={sorts}&search={search}',
                 addPosItemCategory: '/api/pos/item_categories',
-                updatePosItemCategory: '/api/pos/item_categories',
+                updatePosItemCategory: '/api/pos/item_categories/{item_category_code}',
                 getPosItemClasses: '/api/pos/item_classes?limit={limit}&page={page}&sorts={sorts}&search={search}',
                 addPosItemClass: '/api/pos/item_classes',
-                updatePosItemClass: '/api/pos/item_classes'
+                updatePosItemClass: '/api/pos/item_classes/{item_class_code}',
+                getTypeDetailsForSystemCategoryAndVendor: '/api/pos/system_categories/{system_category_name}/vendors/{vendor_name}/types/{type_name}/items?limit={limit}&page={page}&sorts={sorts}&search={search}',
+                addTypeDetailsForSystemCategoryAndVendor: '/api/pos/system_categories/{system_category_name}/vendors/{vendor_name}/types/{type_name}/items',
+                getSystemCategories: '/api/pos/system_categories',
+                getVendors : '/api/pos/vendors',
+                getTypesForVendor : '/api/pos/vendors/{vendor_name}/types',
+                getPosTags: '/api/pos/tags',
+                getPosUnitsOfMeasure: '/api/pos/units',
+                getTypeDetailsForSystemCategoryDefaultsAndVendor: '/api/pos/item_categories/{item_category_code}/defaults',
+                updateRevenueCategoryDefaults: '/api/pos/revenue_categories/{revenue_category_code}/defaults/system_categories/{system_category_name}/vendors/{vendor_name}/types/{vendor_category_type_name}',
+                updateItemCategoryDefaults: '/api/pos/item_categories/{item_category_code}/defaults/system_categories/{system_category_name}/vendors/{vendor_name}/types/{vendor_category_type_name}',
+
+                // Communication Preferences
+                commPreferences:  '/api/users/{userName}/communication_preferences',
+                updateCommPreferences:  '/api/users/{userName}/communication_preferences/{communicationPreferencesCode}'
             }
         },
         headers: {

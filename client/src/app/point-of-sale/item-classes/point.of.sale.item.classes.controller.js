@@ -2,7 +2,8 @@
     'use strict'; //posItemClassesController
 
     angular.module('adams.point.of.sale.item.classes.controller',[])
-        .controller('PosItemClassesController',['$rootScope', '$scope', '$q', 'PosItemClassesService', '$uibModal', 'CompassToastr',  function ($rootScope, $scope, $q, PosItemClassesService, $uibModal, CompassToastr) {
+        .controller('PosItemClassesController',['$rootScope', '$scope', '$q', 'PosItemClassesService', '$uibModal', 'CompassToastr',
+            function ($rootScope, $scope, $q, PosItemClassesService, $uibModal, CompassToastr) {
 
             var posItemClassesController = this,
                 editAction = 'Edit';
@@ -15,8 +16,9 @@
                 return PosItemClassesService.getAllPosItemClassesDetails(pageSize, pageNumber, searchInput, sort);
             };
 
-            $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
+            $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi, refId, response) {
                 // emitted gridOptions and gridApi from Directive controller
+                posItemClassesController.gridData = response.data;
                 gridApi.grid.appScope.openAddEditItemClassesModal = posItemClassesController.openAddEditItemClassesModal;
 
             });
@@ -32,12 +34,19 @@
                     backdrop: 'static',
                     resolve: {
                         action: function(){return action || editAction;},
-                        itemClassesRowData: itemClassesRowData || {}
+                        itemClassesRowData: itemClassesRowData || {},
+                        itemClassesGridData: function () {
+                            return posItemClassesController.gridData;
+                        }
                     }
                 }).result.then(function(response){
-                    // Refresh the Grid. Callback
-                    $scope.$broadcast('uiGridParameterChange');
-                    CompassToastr.success("Item Class has been successfully " + status);
+                    if(response === 'error'){
+                        CompassToastr.error("Item Class was not " + status + ". Please try again later!");
+                    }else{
+                        // Refresh the Grid. Callback
+                        $scope.$broadcast('uiGridParameterChange');
+                        CompassToastr.success("Item Class has been successfully " + status);
+                    }
                 }, function(){
                     // Do nothing on cancel
                 });
@@ -75,21 +84,21 @@
                             pinnedLeft: true
                         },
                         {
-                            field: 'item_class_name',
+                            field: 'name',
                             displayName: "Item Class Name",
                             filter: {
                                 placeholder: ''
                             }
                         },
                         {
-                            field: 'item_id_range_start',
+                            field: 'range_start',
                             displayName: "Item ID Range Start",
                             filter: {
                                 placeholder: ''
                             }
                         },
                         {
-                            field: 'item_id_range_end',
+                            field: 'range_end',
                             displayName: "Item ID Range End",
                             filter: {
                                 placeholder: ''

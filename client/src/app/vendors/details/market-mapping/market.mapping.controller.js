@@ -103,7 +103,7 @@
                 columnDefs: [
                     {
                         field: 'name',
-                        cellTemplate: '<div><i class="fa fa-trash" aria-hidden="true" ng-click="grid.appScope.confirmDeleteMarketMapping(row.entity)" ng-bind="row.getProperty(col.field)"></i></div>',
+                        cellTemplate: '<div><i class="fa fa-trash" aria-hidden="true" stg-secured-object="Vendor Market Mapping" ng-click="grid.appScope.confirmDeleteMarketMapping(row.entity)" ng-bind="row.getProperty(col.field)"></i></div>',
                         displayName: "",
                         enableFiltering: false,
                         enableSorting: false,

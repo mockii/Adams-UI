@@ -12,12 +12,14 @@
                             <label class="control-label control-label-required col-md-4 bold">Name</label>
                             <div class="form-group">
                                 <div class="col-md-5 input-icon right">
-                                    <input type="text" class="form-control" required name="name"
+                                    <input type="text" class="form-control" required name="locationHourName"
+                                           stg-form-validation validation-type="required"
                                            ng-model="locationsOperatingHoursController.locationHourName"
                                            ng-init="locationsOperatingHoursController.previousLocationHourName = ''"
-                                           ng-focus="locationsOperatingHoursController.previousLocationHourName = locationsOperatingHoursController.locationHourName"
                                            ng-model-options="{updateOn:'blur'}"
-                                           stg-form-validation validation-type="required">
+                                           ng-focus="locationsOperatingHoursController.previousLocationHourName = locationsOperatingHoursController.locationHourName"
+                                           ng-change="locationsOperatingHoursController.pristineLocationNameCheck()"
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -26,6 +28,7 @@
                             <label class="control-label control-label-required col-md-4 bold">Open Time</label>
                             <div class="form-group col-md-8">
                                 <uib-timepicker ng-model="locationsOperatingHoursController.locationOpenTimeHour"
+                                                ng-change="locationsOperatingHoursController.pristineLocationHourCheck()"
                                                 minute-step="30" show-spinners="false" required></uib-timepicker>
                             </div>
                         </div>
@@ -36,6 +39,7 @@
                             <label class="control-label control-label-required col-md-4 bold">Close Time</label>
                             <div class="form-group col-md-8">
                                 <uib-timepicker ng-model="locationsOperatingHoursController.locationCloseTimeHour"
+                                                ng-change="locationsOperatingHoursController.pristineLocationHourCheck()"
                                                 minute-step="30" show-spinners="false" required></uib-timepicker>
                             </div>
                         </div>
@@ -49,7 +53,9 @@
                                             type="checkbox"
                                             name="selectedWeekDays[]"
                                             value="{{weekDay}}"
+                                            ng-change="locationsOperatingHoursController.weekDayChanged()"
                                             ng-model="weekDay.selected"
+                                            ng-required="!locationsOperatingHoursController.anySelectedWeekDay"
                                     > {{weekDay.day}}
                                 </span>
                             </div>
@@ -65,6 +71,7 @@
     </button>
     <button type="button" class="btn blue" ng-click="locationsOperatingHoursController.saveLocationsOperatingHours()"
             analytics-on="click"
+            ng-disabled="(locationOperatingHoursForm.$invalid || locationOperatingHoursForm.$pristine) && locationOperatingHoursForm.$error.required"
             analytics-category="Location Status Change Modal" analytics-event="Submit Message">Save
     </button>
 </div>

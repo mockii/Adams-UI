@@ -2,14 +2,15 @@
 
 (function () {
     angular.module('adams.locations.operating.hours.controller', [])
-        .controller('LocationsOperatingHoursController', ['$uibModalInstance', 'locationsSearchData', 'locationsHourData', 'actionStatus', '$filter', 'CompassToastr', 'filterFilter', 'LocationsDetailsService', 'ModalDialogService',
-        function ($uibModalInstance, locationsSearchData, locationsHourData, actionStatus, $filter, CompassToastr, filterFilter, LocationsDetailsService, ModalDialogService) {
+        .controller('LocationsOperatingHoursController', ['$uibModalInstance', 'locationsSearchData', 'locationsHourData', 'actionStatus', '$filter', 'CompassToastr', 'filterFilter', 'LocationsDetailsService', 'ModalDialogService', 'locationsGridArray',
+        function ($uibModalInstance, locationsSearchData, locationsHourData, actionStatus, $filter, CompassToastr, filterFilter, LocationsDetailsService, ModalDialogService, locationsGridArray) {
             var locationsOperatingHoursController = this;
 
             function initialize() {
 
+                locationsOperatingHoursController.locationHourName = "";
                 var locationCode = actionStatus === 'edit' ? " - " + locationsSearchData.location_code : '';
-                locationsOperatingHoursController.title = "Location Operating Hours" + locationCode;
+                locationsOperatingHoursController.title = (actionStatus === 'edit' ? 'Edit' : 'Add') + " Location Operating Hours" + locationCode;
                 locationsOperatingHoursController.actionStatus = actionStatus;
 
                 locationsOperatingHoursController.weekDaysData = [
@@ -23,50 +24,68 @@
 
                 locationsOperatingHoursController.selectedWeekDays = [];
 
-                LocationsDetailsService.getLocationDetailsByLocationCode(locationsSearchData.location_code)
-                    .then(function (response) {
-                        locationsOperatingHoursController.locationsSearchDetailsData = response;
-                        locationsOperatingHoursController.allLocationHours = response.location_hours;
-                        if(actionStatus === 'edit' && response && locationsHourData){
-                            locationsOperatingHoursController.locationsHourData = locationsHourData;
-                            locationsOperatingHoursController.locationHourName =  locationsHourData.name;
-                            locationsOperatingHoursController.previousLocationHourName = '';
+                locationsOperatingHoursController.locationsSearchDetailsData = angular.copy(locationsSearchData);
+                if(actionStatus === 'edit' && locationsHourData){
+                    locationsOperatingHoursController.locationsHourData = locationsHourData;
+                    locationsOperatingHoursController.locationHourName =  locationsHourData.name;
+                    locationsOperatingHoursController.previousLocationHourName = '';
 
-                            var times = locationsHourData.times.split('-'),
-                                openTime = locationsOperatingHoursController.getCorrectedTime(times[0].trim()),
-                                closeTime = locationsOperatingHoursController.getCorrectedTime(times[1].trim()),
-                                daysOfWeek = locationsHourData.days_of_week.split(',').map(function(item) { return item.trim(); });
+                    var times = locationsHourData.times.split('-'),
+                        openTime = locationsOperatingHoursController.getCorrectedTime(times[0].trim()),
+                        closeTime = locationsOperatingHoursController.getCorrectedTime(times[1].trim()),
+                        daysOfWeek = locationsHourData.days_of_week.split(',').map(function(item) { return item.trim(); });
 
-                            locationsOperatingHoursController.actualOpenHour = times[0].trim();
-                            locationsOperatingHoursController.actualCloseHour = times[1].trim();
+                    locationsOperatingHoursController.actualOpenHour = times[0].trim();
+                    locationsOperatingHoursController.actualCloseHour = times[1].trim();
 
-                            locationsOperatingHoursController.locationOpenTimeHour = locationsOperatingHoursController.convertToDate(openTime);
-                            locationsOperatingHoursController.locationCloseTimeHour = locationsOperatingHoursController.convertToDate(closeTime);
+                    locationsOperatingHoursController.locationOpenTimeHour = locationsOperatingHoursController.convertToDate(openTime);
+                    locationsOperatingHoursController.locationCloseTimeHour = locationsOperatingHoursController.convertToDate(closeTime);
 
-                            daysOfWeek.forEach(function(day){
-                                locationsOperatingHoursController.weekDaysData.forEach(function (weekDayObject) {
-                                    if(weekDayObject.day === day){
-                                        weekDayObject.selected = true;
-                                    }
-                                });
-                            });
-                        } else {
-                            locationsOperatingHoursController.locationHourName = '';
-                            locationsOperatingHoursController.locationOpenTimeHour = '';
-                            locationsOperatingHoursController.locationCloseTimeHour = '';
-                        }
-                    }, function (error) {
-                        locationsOperatingHoursController.errorHandling(error);
+                    daysOfWeek.forEach(function(day){
+                        locationsOperatingHoursController.weekDaysData.forEach(function (weekDayObject) {
+                            if(weekDayObject.day === day){
+                                weekDayObject.selected = true;
+                            }
+                        });
                     });
+                } else {
+                    locationsOperatingHoursController.locationHourName = '';
+                    locationsOperatingHoursController.locationOpenTimeHour = '';
+                    locationsOperatingHoursController.locationCloseTimeHour = '';
+                }
             }
 
-            locationsOperatingHoursController.errorHandling = function (errorMessage) {
+            locationsOperatingHoursController.weekDayChanged = function(){
+                locationsOperatingHoursController.anySelectedWeekDay = Object.values(locationsOperatingHoursController.weekDaysData).some(function (value) {
+                    return value.selected;
+                });
+            };
+
+            locationsOperatingHoursController.pristineLocationNameCheck = function(){
+                if(!locationsOperatingHoursController.locationHourName ||
+                    !locationsOperatingHoursController.locationOpenTimeHour ||
+                    !locationsOperatingHoursController.locationCloseTimeHour){
+                    return;
+                }
+                locationsOperatingHoursController.weekDayChanged();
+            };
+
+            locationsOperatingHoursController.pristineLocationHourCheck = function(){
+                if(!locationsOperatingHoursController.locationHourName ||
+                    !locationsOperatingHoursController.locationOpenTimeHour ||
+                    !locationsOperatingHoursController.locationCloseTimeHour){
+                    return;
+                }
+                locationsOperatingHoursController.weekDayChanged();
+            };
+
+            /*locationsOperatingHoursController.errorHandling = function (errorMessage) {
                 ModalDialogService.confirm({
                     bodyText: errorMessage,
                     title: 'Error Message',
                     okText: 'Ok'
                 });
-            };
+            };*/
 
             locationsOperatingHoursController.convertToDate = function(time){
                 var dateInt = Date.parse(new Date().toDateString() + " " + time);
@@ -93,6 +112,7 @@
 
             locationsOperatingHoursController.saveLocationsOperatingHours = function(){
 
+                locationsOperatingHoursController.locationsGridArray = locationsGridArray;
                 locationsOperatingHoursController.locationOpenTimeHour = $filter('date')(locationsOperatingHoursController.locationOpenTimeHour, 'shortTime');
                 locationsOperatingHoursController.locationCloseTimeHour = $filter('date')(locationsOperatingHoursController.locationCloseTimeHour, 'shortTime');
 
@@ -100,6 +120,7 @@
                     openTime = locationsOperatingHoursController.locationOpenTimeHour,
                     closeTime = locationsOperatingHoursController.locationCloseTimeHour,
                     name = locationsOperatingHoursController.locationHourName;
+
 
                 locationsOperatingHoursController.selectedWeekDays = filterFilter(locationsOperatingHoursController.weekDaysData, { selected: true })
                     .map(function(weekDay){
@@ -109,6 +130,12 @@
                     .map(function (weekDay){
                         return weekDay.day;
                     });
+
+                //Check if the added/edit location operating hour already exist.
+                /*if(actionStatus === 'add' && locationsOperatingHoursController.containsMatchingWeekDayHourForAnyDay(newLocationsSearchData.location_hours)){
+                    CompassToastr.error("The selected location operating hour already exist, please modify your selection.");
+                    return;
+                }*/
 
                 // Get rid of all modified/updated week days object that already exists for edit action.
                 if(actionStatus === 'edit'){
@@ -120,31 +147,36 @@
                             newLocationsSearchData.location_hours.splice(indexToSplice, 1);
                         }
                     });
-                }
-                //Check if the added value already exist. No check for editing
-                if(actionStatus === 'add' && locationsOperatingHoursController.containsMatchingWeekDayHourForAnyDay(newLocationsSearchData.location_hours)){
-                    CompassToastr.error("The selected location operating hour already exist, please modify your selection.");
-                    return;
-                } else {
-                    if(actionStatus === 'add'){
-                        locationsOperatingHoursController.selectedWeekDays.forEach(function(day){
-                            newLocationsSearchData.location_hours.push({name: name, day: day, open_hour: openTime, close_hour: closeTime});
-                        });
-                    } else {
-                        locationsOperatingHoursController.selectedWeekDays.forEach(function(day){
-                            var newName = (locationsOperatingHoursController.previousLocationHourName &&
-                                    locationsOperatingHoursController.previousLocationHourName.length > 0) ? locationsOperatingHoursController.previousLocationHourName : name,
-                                indexToSplice = getIndexToSplice(newName, newLocationsSearchData.location_hours, day, locationsOperatingHoursController.actualOpenHour, locationsOperatingHoursController.actualCloseHour);
-                            if(indexToSplice > -1){
-                                newLocationsSearchData.location_hours
-                                    .splice(indexToSplice, 1, {name: name, day: day, open_hour: openTime, close_hour: closeTime});
-                            } else {
-                                newLocationsSearchData.location_hours.push({name: name, day: day, open_hour: openTime, close_hour: closeTime});
-                            }
-                        });
+
+                    if(locationsOperatingHoursController.containsMatchingNameAndHourForSelectedDay()){
+                        CompassToastr.error("The selected location operating hour already exist, please modify your selection.");
+                        return;
                     }
-                    $uibModalInstance.close(newLocationsSearchData);
+
+                    locationsOperatingHoursController.selectedWeekDays.forEach(function(day){
+                        var newName = (locationsOperatingHoursController.previousLocationHourName &&
+                            locationsOperatingHoursController.previousLocationHourName.length > 0) ? locationsOperatingHoursController.previousLocationHourName : name,
+                            indexToSplice = getIndexToSplice(newName, newLocationsSearchData.location_hours, day, locationsOperatingHoursController.actualOpenHour, locationsOperatingHoursController.actualCloseHour);
+                        if(indexToSplice > -1){
+                            newLocationsSearchData.location_hours
+                                .splice(indexToSplice, 1, {name: name, day: day, open_hour: openTime, close_hour: closeTime});
+                        } else {
+                            newLocationsSearchData.location_hours.push({name: name, day: day, open_hour: openTime, close_hour: closeTime});
+                        }
+                    });
                 }
+
+                if(actionStatus === 'add'){
+                    if(locationsOperatingHoursController.containsMatchingWeekDayHourForAnyDay(newLocationsSearchData.location_hours)){
+                        CompassToastr.error("The selected location operating hour already exist, please modify your selection.");
+                        return;
+                    }
+                    locationsOperatingHoursController.selectedWeekDays.forEach(function(day){
+                        newLocationsSearchData.location_hours.push({name: name, day: day, open_hour: openTime, close_hour: closeTime});
+                    });
+                }
+
+                $uibModalInstance.close(newLocationsSearchData);
             };
 
             function getIndexToSplice(name, locationHours, day, openHour, closeHour){
@@ -158,6 +190,30 @@
                 }
                 return -1;
             }
+
+            locationsOperatingHoursController.containsMatchingNameAndHourForSelectedDay = function(){
+                var selectedName = locationsOperatingHoursController.locationHourName,
+                    times = locationsOperatingHoursController.getCorrectedTime(locationsOperatingHoursController.locationOpenTimeHour) +
+                        " - " +  locationsOperatingHoursController.getCorrectedTime(locationsOperatingHoursController.locationCloseTimeHour);
+
+                for(var j=0; j < locationsOperatingHoursController.locationsGridArray.length; j++){
+                    var name = locationsOperatingHoursController.locationsGridArray[j].name,
+                        daysOfWeek = locationsOperatingHoursController.selectedWeekDays.join(', ');
+                    if(times === locationsOperatingHoursController.locationsGridArray[j].times &&
+                        selectedName === name &&
+                        (daysOfWeek === locationsOperatingHoursController.locationsGridArray[j].days_of_week ||
+                            locationsOperatingHoursController.locationsGridArray[j].days_of_week.contains(daysOfWeek))){
+                        /*for(var i=0; i < locationsOperatingHoursController.selectedWeekDays.length; i++) {
+                            var selectedDay = locationsOperatingHoursController.selectedWeekDays[i];
+                            if(locationsOperatingHoursController.locationsGridArray[j].days.indexOf(selectedDay) > -1){
+                                return true;
+                            }
+                        }*/
+                        return true;
+                    }
+                }
+                return false;
+            };
 
             locationsOperatingHoursController.containsMatchingWeekDayHourForAnyDay = function(locationHours){
                 var selectedName = locationsOperatingHoursController.locationHourName,

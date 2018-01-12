@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div ng-repeat="(vendorIndex, vendor) in pointOfSaleSystemCategoryContentController.vendors track by vendorIndex">
+            <div class="row">
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption caption-full-width">
+                            <span class="caption-subject font-blue uppercase"> {{vendor.name}} </span>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body">
+                        <div ng-repeat="(typeIndex, type) in vendor.types track by typeIndex">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="row margin-bottom-15">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <span class="h5 caption-subject font-blue"> {{type.name}} </span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <button type="button" class="btn btn-default pull-right"
+                                                ng-click="pointOfSaleSystemCategoryContentController.addType(vendor, type)">
+                                            Add {{type.name}} <span class="fa fa-plus"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-bottom-15">
+                                    <div class="col-lg-12">
+                                        <div stg-ui-grid
+                                             ref-id = "pointOfSaleSystemCategoryContentController.activeSystemCategoryName + '.' + vendor.name + '.' + type.name"
+                                             get-grid-options="pointOfSaleSystemCategoryContentController.getGridOptions"
+                                             grid-data-params="{'vendor' : vendor.name, 'type': type.name}"
+                                             get-grid-data="pointOfSaleSystemCategoryContentController.getGridData">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    
+
     angular.module('adams.point.of.sale',['adams.point.of.sale.item.details',
                                         'adams.point.of.sale.item.search.controller',
                                         'adams.point.of.sale.item.search.service',
@@ -8,6 +8,8 @@
                                         'adams.point.of.sale.item.details.service',
                                         'adams.point.of.sale.system.categories.controller',
                                         'adams.point.of.sale.system.categories.service',
+                                        'adams.add.point.of.sale.system.category.controller',
+                                        'adams.point.of.sale.system.category.content.controller',
                                         'adams.point.of.sale.system.category.defaults.controller',
                                         'adams.point.of.sale.add.tags.controller',
                                         'adams.point.of.sale.revenue.categories.controller',
@@ -18,9 +20,14 @@
                                         'adams.add.edit.item.categories.modal.controller',
                                         'adams.point.of.sale.item.classes.controller',
                                         'adams.point.of.sale.item.classes.service',
-                                        'adams.add.edit.item.classes.modal.controller'
+                                        'adams.add.edit.item.classes.modal.controller',
+                                        'adams.point.of.sale.revenue.category.defaults.controller',
+                                        'adams.point.of.sale.item.category.defaults.controller',
+                                        'adams.point.of.sale.system.categories.defaults.service',
+                                        'adams.point.of.sale.constants'
     ])
         .config(['$stateProvider', function ($stateProvider) {
+
             $stateProvider
                 .state('pointOfSale', {
                     url: "/pointofsale",
@@ -65,7 +72,7 @@
                     templateUrl : "point-of-sale/revenue-categories/point.of.sale.revenue.categories.tpl.html",
                     controller : "PosRevenueCategoriesController as posRevenueCategoriesController",
                     data : {
-                        pageTitle : "Point Of Sale - Revenue Categories"
+                        pageTitle : "Point Of Sale"
                     },
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -84,7 +91,7 @@
                     templateUrl : "point-of-sale/item-categories/point.of.sale.item.categories.tpl.html",
                     controller : "PosItemCategoriesController as posItemCategoriesController",
                     data : {
-                        pageTitle : "Point Of Sale - Item Categories"
+                        pageTitle : "Point Of Sale"
                     },
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -103,7 +110,7 @@
                     templateUrl : "point-of-sale/item-classes/point.of.sale.item.classes.tpl.html",
                     controller : "PosItemClassesController as posItemClassesController",
                     data : {
-                        pageTitle : "Point Of Sale - Item Classes"
+                        pageTitle : "Point Of Sale"
                     },
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -139,6 +146,7 @@
                 .state('pointOfSale.systemCategoryDefaults', {
                     url: "/systemcategorydefaults",
                     templateUrl : "point-of-sale/system-category-defaults/point.of.sale.system.category.defaults.tpl.html",
+                    redirectTo : 'pointOfSale.systemCategoryDefaults.revenueCategories',
                     controller : "PointOfSaleSystemCategoryDefaultsController as pointOfSaleSystemCategoryDefaultsController",
                     data : {
                         pageTitle : "Point Of Sale"
@@ -154,6 +162,16 @@
                             });
                         }]
                     }
+                })
+                .state('pointOfSale.systemCategoryDefaults.revenueCategories', {
+                    url: "/revenuecategories",
+                    templateUrl : "point-of-sale/system-category-defaults/revenue-categories/revenue-categories.defaults.tpl.html",
+                    controller : "RevenueCategoryDefaultsController as revenueCategoryDefaultsController"
+                })
+                .state('pointOfSale.systemCategoryDefaults.itemCategories', {
+                    url: "/itemcategories",
+                    templateUrl : "point-of-sale/system-category-defaults/item-categories/item-categories.defaults.tpl.html",
+                    controller : "ItemCategoryDefaultsController as itemCategoryDefaultsController"
                 });
             }
         ]);

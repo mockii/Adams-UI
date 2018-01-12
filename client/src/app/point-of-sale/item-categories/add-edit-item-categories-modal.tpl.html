@@ -2,18 +2,22 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="addEditItemCategoriesModalController.close()"></button>
-        <h3 class="modal-title">{{addEditItemCategoriesModalController.action}} Item Categories</h3>
+        <h3 class="modal-title">{{addEditItemCategoriesModalController.action}} Item Category</h3>
     </div>
 
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-12">
-                <form role="form">
+            <div class="form-horizontal col-md-12">
+                <form role="form" name="itemCategoryForm">
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-4">Item Category Name</label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" ng-model="addEditItemCategoriesModalController.itemCategoriesRowData.item_category_name">
+                            <label class="control-label col-md-4">
+                                Item Category Name<span class="required">*</span>
+                            </label>
+                            <div class="col-lg-7 input-icon right">
+                                <input type="text" class="form-control"
+                                       ng-model="addEditItemCategoriesModalController.itemCategoryName"
+                                       stg-form-validation validation-type="required" required>
                             </div>
                         </div>
                     </div>
@@ -22,7 +26,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Description</label>
                             <div class="col-lg-7">
-                                <textarea rows="6" class="form-control" ng-model="addEditItemCategoriesModalController.itemCategoriesRowData.description"></textarea>
+                                <textarea rows="6" class="form-control" ng-model="addEditItemCategoriesModalController.itemCategoryDescription"></textarea>
                             </div>
                         </div>
                     </div>
@@ -34,6 +38,10 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="addEditItemCategoriesModalController.close()">Cancel</button>
-        <button type="button" class="btn blue" ng-click="addEditItemCategoriesModalController.save()">Save</button>
+        <button type="button" class="btn blue"
+                ng-click="addEditItemCategoriesModalController.save()"
+                ng-disabled="itemCategoryForm.$invalid ||  itemCategoryForm.$pristine">
+            Save
+        </button>
     </div>
 </div>

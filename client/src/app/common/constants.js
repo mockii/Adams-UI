@@ -17,7 +17,8 @@ angular.module('adams.common.constants', [])
         UI_GRID_LIMIT: '25',
         SEC_APPLICATION_COUNT: '100',
         PAGE_NO: '1',
-        TEMP_ASSOCIATE_RESOURCES: ['All Resources', 'Engaged Resources', 'Available Resources']
+        TEMP_ASSOCIATE_RESOURCES: ['All Resources', 'Engaged Resources', 'Available Resources'],
+        COMM_MEDIUM_TYPE: 'PHONE'
     })
     .constant('STATUS_CONSTANT',
         [{name:'All' }, {name: 'Active'}, {name: 'Inactive'}]);

@@ -95,7 +95,7 @@ describe('CostCenterMappingService', function(){
             marketName = '',
             costCenterNumber='',
             sourceSystemId='',
-            search={default_market: true},
+            search={"search":[{"property":"default_market","value":true,"operator":""}]},
             teamName = '',
 
             url = urlSpace.urls.local.costCenterAndListMarkets + '?limit=' + 10 + '&page=' + 1 + '&sorts=' + null + '&costCenterNumber=' + costCenterNumber + '&sourceSystemId=' + sourceSystemId + '&search=' + JSON.stringify(search);
@@ -106,7 +106,7 @@ describe('CostCenterMappingService', function(){
             }
         };
         $httpBackend.expectGET(url).respond(responseData);
-        sampleSvcObj.getDefaultMarket(costCenterNumber, sourceSystemId).then(function(data) {
+        sampleSvcObj.getDefaultMarket(costCenterNumber, sourceSystemId, search).then(function(data) {
             expect(data).toEqual(undefined);
         });
         $httpBackend.flush();
@@ -120,13 +120,13 @@ describe('CostCenterMappingService', function(){
             marketName = '',
             costCenterNumber='',
             sourceSystemId='',
-            search={default_market: true},
+            search={"search":[{"property":"default_market","value":true,"operator":""}]},
             teamName = '',
 
             url = urlSpace.urls.local.costCenterAndListMarkets + '?limit=' + 10 + '&page=' + 1 + '&sorts=' + null + '&costCenterNumber=' + costCenterNumber + '&sourceSystemId=' + sourceSystemId + '&search=' + JSON.stringify(search);
         spyOn(promise, 'abort').and.callThrough();
         $httpBackend.expectGET(url).respond(400, {});
-        sampleSvcObj.getDefaultMarket(costCenterNumber, sourceSystemId).then(function(data) {
+        sampleSvcObj.getDefaultMarket(costCenterNumber, sourceSystemId, search).then(function(data) {
             expect(data).toEqual('error');
         });
         $httpBackend.flush();

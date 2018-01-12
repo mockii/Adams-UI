@@ -13,404 +13,195 @@ var posRoutes = function (config, stgAuth) {
 
     posRoutes.route(urlSpace.urls.local.getPosItems)
         .get(function (req, res) {
-            var posItemData =
-                {
-                    "metadata":
-                        {
-                            "resultCount": 3,
-                            "status": "success",
-                            "http_status_code": "200"
-                        },
-                    "data":
-                        [
-                            {
-                                "pos_id":"1111",
-                                "barcode":"3434",
-                                "webtrition_master_reference_number": "5465646",
-                                "long_name": "Starbucks Capuccino",
-                                "item_class_name": "Prepared Items",
-                                "revenue_category_name": "Beverage Hot",
-                                "item_category_name": "Beverage > Coffee Hot",
-                                "active": true
-                            },
-                            {
-                                "pos_id":"2222",
-                                "barcode":"3434",
-                                "webtrition_master_reference_number": "5465646",
-                                "long_name": "Starbucks Capuccino",
-                                "item_class_name": "Prepared Items",
-                                "revenue_category_name": "Beverage Hot",
-                                "item_category_name": "Beverage > Coffee Hot",
-                                "active": false
-                            },
-                            {
-                                "pos_id":"3333",
-                                "barcode":"3434",
-                                "webtrition_master_reference_number": "5465646",
-                                "long_name": "Starbucks Capuccino",
-                                "item_class_name": "Prepared Items",
-                                "revenue_category_name": "Beverage Hot",
-                                "item_category_name": "Beverage > Coffee Hot",
-                                "active": true
-                            }
-                        ]
-                };
-            res.send(posItemData);
+
+            var limit = req.query.limit,
+                page = req.query.page,
+                search = req.query.search,
+                sorts = req.query.sorts,
+                url = config.urls.adams + urlSpace.urls.adams.getPosItems.replace('{limit}', limit).replace('{page}', page).replace('{sorts}', sorts).replace('{search}', search),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
+
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get pos items route response - ', data);
+            }, function (error) {
+                logger.info('get pos items route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+
         });
 
     /* Get a POS Item */
 
     posRoutes.route(urlSpace.urls.local.getPosItem)
         .get(function (req, res) {
-            var posItem = {},
-                posId = req.params.pos_id;
 
-            posItem.posId = posId;
-            posItem.name = "Starbucks Capuccino";
-            posItem.revenueCategory = {
-                "revenue_category_name": "Breakfast",
-                "revenue_category_code": "A"
-            };
-            posItem.itemCategory = {
-                "item_category_name": "Additions > Combo Additions"
-            };
-            posItem.unitOfMeasure = {
-                "name" : "pounds"
-            };
+            var posId = req.params.pos_id,
+                url = config.urls.adams + urlSpace.urls.adams.getPosItem.replace('{pos_id}', posId),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
 
-            res.send(posItem);
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get pos item route response - ', data);
+            }, function (error) {
+                logger.info('get pos item route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+
         });
+
+    /* Add POS Item */
+
+    posRoutes.route(urlSpace.urls.local.addPosItem)
+        .post(function (req, res) {
+            var body = req.body,
+                url = config.urls.adams + urlSpace.urls.adams.addPosItem,
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1,
+                contentType = urlSpace.headers.contentType.json;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType)
+                .then(function (data) {
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.send(data);
+                }, function (error) {
+                    var status = (error.http_status) ? error.http_status : 500;
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.status(status).send(error);
+                });
+        });
+
+    posRoutes.route(urlSpace.urls.local.savePosItem)
+        .put(function (req, res) {
+            var body = req.body,
+                posItemCode = req.params.pos_id,
+                url = config.urls.adams + urlSpace.urls.adams.savePosItem.replace('{pos_id}', posItemCode),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1,
+                contentType = urlSpace.headers.contentType.json;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
+                .then(function (data) {
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.send(data);
+                }, function (error) {
+                    var status = (error.http_status) ? error.http_status : 500;
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.status(status).send(error);
+                });
+        });
+
+    /* Get POS Tags */
+
+    posRoutes.route(urlSpace.urls.local.getPosTags)
+        .get(function (req, res) {
+
+            var url = config.urls.adams + urlSpace.urls.adams.getPosTags,
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
+
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get pos tags route response - ', data);
+            }, function (error) {
+                logger.info('get pos tags route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+
+        });
+
+    /* Get POS Tags */
+
+    posRoutes.route(urlSpace.urls.local.getPosUnitsOfMeasure)
+        .get(function (req, res) {
+
+            var url = config.urls.adams + urlSpace.urls.adams.getPosUnitsOfMeasure,
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
+
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get pos tags route response - ', data);
+            }, function (error) {
+                logger.info('get pos tags route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+        });
+
 
     /* Get System Categories */
 
     posRoutes.route(urlSpace.urls.local.getTypeDetailsForSystemCategoryAndVendor)
         .get(function (req, res) {
-            var systemCategory = req.params.system_category,
+            var systemCategoryName = req.params.system_category,
                 vendorName = req.params.vendor_name,
-                type = req.params.type,
-                typeDetails = {};
+                typeName = req.params.type,
+                limit = req.query.limit,
+                page = req.query.page,
+                search = req.query.search,
+                sorts = req.query.sorts,
+                url = config.urls.adams + urlSpace.urls.adams.getTypeDetailsForSystemCategoryAndVendor
+                    .replace('{system_category_name}', systemCategoryName).replace('{vendor_name}', vendorName).replace('{type_name}', typeName)
+                    .replace('{limit}', limit).replace('{page}', page).replace('{sorts}', sorts).replace('{search}', search),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
 
-            if(vendorName === 'InfoGenesis'){
-                if(systemCategory === 'default'){
-                    switch (type){
-                        case 'product_class': typeDetails={
-                                "metadata":
-                                    {
-                                        "resultCount": 4,
-                                        "status": "success",
-                                        "http_status_code": "200"
-                                    },
-                                "data":
-                                    [
-                                        {
-                                            "name" : "Beverage"
-                                        },
-                                        {
-                                            "name" : "Food"
-                                        },
-                                        {
-                                            "name" : "Retail"
-                                        },
-                                        {
-                                            "name" : "Alcohol"
-                                        }
-                                    ]
-                            }; break;
-                        case 'revenue_category': typeDetails={
-                                "metadata":
-                                    {
-                                        "resultCount": 4,
-                                        "status": "success",
-                                        "http_status_code": "200"
-                                    },
-                                "data":
-                                    [
-                                        {
-                                            "name" : "Rev Cat 1"
-                                        },
-                                        {
-                                            "name" : "Rev Cat 2"
-                                        },
-                                        {
-                                            "name" : "Rev Cat 3"
-                                        },
-                                        {
-                                            "name" : "Rev Cat 4"
-                                        }
-                                    ]
-                            }; break;
-                        default : typeDetails={};
-                    }
-                }
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get pos type details route response - ', data);
+            }, function (error) {
+                logger.info('get pos type details route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
 
-                if(systemCategory === 'morrison'){
-                    switch (type){
-                        case 'product_class': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Beverage"
-                                    },
-                                    {
-                                        "name" : "Food"
-                                    },
-                                    {
-                                        "name" : "Retail"
-                                    },
-                                    {
-                                        "name" : "Alcohol"
-                                    }
-                                ]
-                        }; break;
-                        case 'revenue_category': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Rev Cat 1"
-                                    },
-                                    {
-                                        "name" : "Rev Cat 2"
-                                    },
-                                    {
-                                        "name" : "Rev Cat 3"
-                                    },
-                                    {
-                                        "name" : "Rev Cat 4"
-                                    }
-                                ]
-                        }; break;
-                        default : typeDetails={};
-                    }
-                }
+        });
 
-                if(systemCategory === 'eurest'){
-                    switch (type){
-                        case 'product_class': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Beverage"
-                                    },
-                                    {
-                                        "name" : "Food"
-                                    },
-                                    {
-                                        "name" : "Retail"
-                                    },
-                                    {
-                                        "name" : "Alcohol"
-                                    }
-                                ]
-                        }; break;
-                        case 'revenue_category': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Rev Cat 1"
-                                    },
-                                    {
-                                        "name" : "Rev Cat 2"
-                                    },
-                                    {
-                                        "name" : "Rev Cat 3"
-                                    },
-                                    {
-                                        "name" : "Rev Cat 4"
-                                    }
-                                ]
-                        }; break;
-                        default : typeDetails={};
-                    }
-                }
+    /* Add System Categories */
 
-            }
+    posRoutes.route(urlSpace.urls.local.addTypeDetailsForSystemCategoryAndVendor)
+        .get(function (req, res) {
+            var body = req.body,
+                systemCategoryName = req.params.system_category,
+                vendorName = req.params.vendor_name,
+                typeName = req.params.type,
+                url = config.urls.adams + urlSpace.urls.adams.getTypeDetailsForSystemCategoryAndVendor
+                    .replace('{system_category_name}', systemCategoryName).replace('{vendor_name}', vendorName).replace('{type_name}', typeName),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1,
+                contentType = urlSpace.headers.contentType.json;
 
-            if(vendorName === 'Simphony'){
-                if(systemCategory === 'default'){
-                    switch (type){
-                        case 'major_group': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Major Group 1"
-                                    },
-                                    {
-                                        "name" : "Major Group 2"
-                                    },
-                                    {
-                                        "name" : "Major Group 3"
-                                    },
-                                    {
-                                        "name" : "Major Group 4"
-                                    }
-                                ]
-                        }; break;
-                        case 'family_group': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Family Group 1"
-                                    },
-                                    {
-                                        "name" : "Family Group 2"
-                                    },
-                                    {
-                                        "name" : "Family Group 3"
-                                    },
-                                    {
-                                        "name" : "Family Group 4"
-                                    }
-                                ]
-                        }; break;
-                        default : typeDetails={};
-                    }
-                }
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType).then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get pos type details route response - ', data);
+            }, function (error) {
+                logger.info('get pos type details route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
 
-                if(systemCategory === 'morrison'){
-                    switch (type){
-                        case 'major_group': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Major Group 1"
-                                    },
-                                    {
-                                        "name" : "Major Group 2"
-                                    },
-                                    {
-                                        "name" : "Major Group 3"
-                                    },
-                                    {
-                                        "name" : "Major Group 4"
-                                    }
-                                ]
-                        }; break;
-                        case 'family_group': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Family Group 1"
-                                    },
-                                    {
-                                        "name" : "Family Group 2"
-                                    },
-                                    {
-                                        "name" : "Family Group 3"
-                                    },
-                                    {
-                                        "name" : "Family Group 4"
-                                    }
-                                ]
-                        }; break;
-                        default : typeDetails={};
-                    }
-                }
-
-                if(systemCategory === 'eurest'){
-                    switch (type){
-                        case 'major_group': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Major Group 1"
-                                    },
-                                    {
-                                        "name" : "Major Group 2"
-                                    },
-                                    {
-                                        "name" : "Major Group 3"
-                                    },
-                                    {
-                                        "name" : "Major Group 4"
-                                    }
-                                ]
-                        }; break;
-                        case 'family_group': typeDetails={
-                            "metadata":
-                                {
-                                    "resultCount": 4,
-                                    "status": "success",
-                                    "http_status_code": "200"
-                                },
-                            "data":
-                                [
-                                    {
-                                        "name" : "Family Group 1"
-                                    },
-                                    {
-                                        "name" : "Family Group 2"
-                                    },
-                                    {
-                                        "name" : "Family Group 3"
-                                    },
-                                    {
-                                        "name" : "Family Group 4"
-                                    }
-                                ]
-                        }; break;
-                        default : typeDetails={};
-                    }
-                }
-
-            }
-
-
-
-            res.send(typeDetails);
         });
 
     // POS Revenue Categories
@@ -419,58 +210,26 @@ var posRoutes = function (config, stgAuth) {
     posRoutes.route(urlSpace.urls.local.getPosRevenueCategories)
         .get(function(req, res) {
 
-            var fields = req.query.fields,
-                limit = req.query.limit,
+            var limit = req.query.limit,
                 page = req.query.page,
                 search = req.query.search,
                 sorts = req.query.sorts,
                 url = config.urls.adams + urlSpace.urls.adams.getPosRevenueCategories.replace('{limit}', limit).replace('{page}', page).replace('{sorts}', sorts).replace('{search}', search),
                 token = stgAuth.getTokenFromHeader(req),
-                accept = urlSpace.headers.adams.accept.v1,
-                envPath = process.env.NODE_ENV ? process.env.NODE_ENV : 'pos';
+                accept = urlSpace.headers.adams.accept.v1;
 
 
-            /*  utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+              utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
                   res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                   res.send(data);
-                  logger.info('get book of records route response - ', data);
+                  logger.info('get pos revenue categories route response - ', data);
               }, function (error) {
-                  logger.info('get book of records route error - ', error);
+                  logger.info('get pos revenue categories route error - ', error);
                   var status = (error.http_status) ? error.http_status : 500;
                   res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                   res.status(status).send(error);
-              });*/
+              });
 
-            var posAllRevenueCategories =
-                {
-                    "metadata":
-                        {
-                            "resultCount": 4,
-                            "status": "success",
-                            "http_status_code": "200"
-                        },
-                    "data":
-                        [
-                            {
-                                "revenue_category_name": "Beverage Cold",
-                                "revenue_category_code": "B"
-                            },
-                            {
-                                "revenue_category_name": "Entree",
-                                "revenue_category_code": "D"
-                            },
-                            {
-                                "revenue_category_name": "Beverage Hot",
-                                "revenue_category_code": "C"
-                            },
-                            {
-                                "revenue_category_name": "Breakfast",
-                                "revenue_category_code": "A"
-                            }
-                        ]
-                };
-
-            res.send(posAllRevenueCategories);
 
         });
 
@@ -483,7 +242,7 @@ var posRoutes = function (config, stgAuth) {
                 accept = urlSpace.headers.adams.accept.v1,
                 contentType = urlSpace.headers.contentType.json;
 
-            /*utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType)
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType)
                 .then(function (data) {
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.send(data);
@@ -491,21 +250,20 @@ var posRoutes = function (config, stgAuth) {
                     var status = (error.http_status) ? error.http_status : 500;
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.status(status).send(error);
-                });*/
+                });
 
-            res.send('true');
         });
 
     /* Update POS Revenue Category*/
     posRoutes.route(urlSpace.urls.local.updatePosRevenueCategory)
         .put(function (req, res) {
             var body = req.body,
-                url = config.urls.adams + urlSpace.urls.adams.updatePosRevenueCategory,
+                url = config.urls.adams + urlSpace.urls.adams.updatePosRevenueCategory.replace('{revenue_category_code}', body.revenue_category_code),
                 token = stgAuth.getTokenFromHeader(req),
                 accept = urlSpace.headers.adams.accept.v1,
                 contentType = urlSpace.headers.contentType.json;
 
-            /*utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
                 .then(function (data) {
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.send(data);
@@ -514,8 +272,8 @@ var posRoutes = function (config, stgAuth) {
                     var status = (error.http_status) ? error.http_status : 500;
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.status(status).send(error);
-                });*/
-            res.send('true');
+                });
+
         });
 
 
@@ -525,57 +283,25 @@ var posRoutes = function (config, stgAuth) {
     posRoutes.route(urlSpace.urls.local.getPosItemCategories)
         .get(function(req, res) {
 
-            var fields = req.query.fields,
-                limit = req.query.limit,
+            var limit = req.query.limit,
                 page = req.query.page,
                 search = req.query.search,
                 sorts = req.query.sorts,
                 url = config.urls.adams + urlSpace.urls.adams.getPosItemCategories.replace('{limit}', limit).replace('{page}', page).replace('{sorts}', sorts).replace('{search}', search),
                 token = stgAuth.getTokenFromHeader(req),
-                accept = urlSpace.headers.adams.accept.v1,
-                envPath = process.env.NODE_ENV ? process.env.NODE_ENV : 'pos';
+                accept = urlSpace.headers.adams.accept.v1;
 
 
-            /*  utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+              utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
                   res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                   res.send(data);
-                  logger.info('get book of records route response - ', data);
+                  logger.info('get POS Item Categories route response - ', data);
               }, function (error) {
-                  logger.info('get book of records route error - ', error);
+                  logger.info('get POS Item Categories route error - ', error);
                   var status = (error.http_status) ? error.http_status : 500;
                   res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                   res.status(status).send(error);
-              });*/
-
-            var posAllItemCategories =
-                {
-                    "metadata":
-                        {
-                            "resultCount": 5,
-                            "status": "success",
-                            "http_status_code": "200"
-                        },
-                    "data":
-                        [
-                            {
-                                "item_category_name": "Additions > Breakfast Additions"
-                            },
-                            {
-                                "item_category_name": "Additions > Coffee Additions"
-                            },
-                            {
-                                "item_category_name": "Additions > Grill Additions"
-                            },
-                            {
-                                "item_category_name": "Additions > Combo Additions"
-                            },
-                            {
-                                "item_category_name": "Additions > Pizza Additions"
-                            }
-                        ]
-                };
-
-            res.send(posAllItemCategories);
+              });
 
         });
 
@@ -588,7 +314,7 @@ var posRoutes = function (config, stgAuth) {
                 accept = urlSpace.headers.adams.accept.v1,
                 contentType = urlSpace.headers.contentType.json;
 
-            /*utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType)
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType)
                 .then(function (data) {
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.send(data);
@@ -596,21 +322,21 @@ var posRoutes = function (config, stgAuth) {
                     var status = (error.http_status) ? error.http_status : 500;
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.status(status).send(error);
-                });*/
+                });
 
-            res.send('true');
+            /*res.send('true');*/
         });
 
     /* Update POS Item Category*/
     posRoutes.route(urlSpace.urls.local.updatePosItemCategory)
         .put(function (req, res) {
             var body = req.body,
-                url = config.urls.adams + urlSpace.urls.adams.updatePosItemCategory,
+                url = config.urls.adams + urlSpace.urls.adams.updatePosItemCategory.replace('{item_category_code}', body.item_category_code),
                 token = stgAuth.getTokenFromHeader(req),
                 accept = urlSpace.headers.adams.accept.v1,
                 contentType = urlSpace.headers.contentType.json;
 
-            /*utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
                 .then(function (data) {
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.send(data);
@@ -619,9 +345,9 @@ var posRoutes = function (config, stgAuth) {
                     var status = (error.http_status) ? error.http_status : 500;
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.status(status).send(error);
-                });*/
+                });
 
-            res.send('true');
+            /*res.send('true');*/
         });
 
     // POS Item Classes
@@ -630,50 +356,24 @@ var posRoutes = function (config, stgAuth) {
     posRoutes.route(urlSpace.urls.local.getPosItemClasses)
         .get(function(req, res) {
 
-            var fields = req.query.fields,
-                limit = req.query.limit,
+            var limit = req.query.limit,
                 page = req.query.page,
                 search = req.query.search,
                 sorts = req.query.sorts,
                 url = config.urls.adams + urlSpace.urls.adams.getPosItemClasses.replace('{limit}', limit).replace('{page}', page).replace('{sorts}', sorts).replace('{search}', search),
                 token = stgAuth.getTokenFromHeader(req),
-                accept = urlSpace.headers.adams.accept.v1,
-                envPath = process.env.NODE_ENV ? process.env.NODE_ENV : 'pos';
+                accept = urlSpace.headers.adams.accept.v1;
 
-
-            /*  utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+              utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
                   res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                   res.send(data);
-                  logger.info('get book of records route response - ', data);
+                  logger.info('get POS Item Classes route response - ', data);
               }, function (error) {
-                  logger.info('get book of records route error - ', error);
+                  logger.info('get POS Item Classes route error - ', error);
                   var status = (error.http_status) ? error.http_status : 500;
                   res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                   res.status(status).send(error);
-              });*/
-
-            var posItemClasses =
-                {
-                    "metadata":
-                        {
-                            "resultCount": 5,
-                            "status": "success",
-                            "http_status_code": "200"
-                        },
-                    "data":
-                        [
-                            {
-                                "item_class_name": "Prepared Item"
-                            },
-                            {
-                                "item_class_name": "Prepackaged Item"
-                            },
-                            {
-                                "item_class_name": "Webtrition Item"
-                            }
-                        ]
-                };
-            res.send(posItemClasses);
+              });
 
         });
 
@@ -686,7 +386,7 @@ var posRoutes = function (config, stgAuth) {
                 accept = urlSpace.headers.adams.accept.v1,
                 contentType = urlSpace.headers.contentType.json;
 
-            /*utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType)
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'POST', body, contentType)
                 .then(function (data) {
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.send(data);
@@ -694,21 +394,21 @@ var posRoutes = function (config, stgAuth) {
                     var status = (error.http_status) ? error.http_status : 500;
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.status(status).send(error);
-                });*/
+                });
 
-            res.send('true');
+            /*res.send('true');*/
         });
 
     /* Update POS Item Classes*/
     posRoutes.route(urlSpace.urls.local.updatePosItemClass)
         .put(function (req, res) {
             var body = req.body,
-                url = config.urls.adams + urlSpace.urls.adams.updatePosItemClass,
+                url = config.urls.adams + urlSpace.urls.adams.updatePosItemClass.replace('{item_class_code}', body.item_class_code),
                 token = stgAuth.getTokenFromHeader(req),
                 accept = urlSpace.headers.adams.accept.v1,
                 contentType = urlSpace.headers.contentType.json;
 
-            /*utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
                 .then(function (data) {
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.send(data);
@@ -717,7 +417,155 @@ var posRoutes = function (config, stgAuth) {
                     var status = (error.http_status) ? error.http_status : 500;
                     res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
                     res.status(status).send(error);
-                });*/
+                });
+
+            res.send('true');
+        });
+
+
+    // POS System Categories
+
+    /* Get POS System Categories */
+    posRoutes.route(urlSpace.urls.local.getSystemCategories)
+        .get(function (req, res) {
+            var url = config.urls.adams + urlSpace.urls.adams.getSystemCategories,
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get POS System Categories route response - ', data);
+            }, function (error) {
+                logger.info('get POS System Categories route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+        });
+
+    // POS Vendors
+
+    /* Get POS Vendors */
+
+    posRoutes.route(urlSpace.urls.local.getVendors)
+        .get(function (req, res) {
+            var url = config.urls.adams + urlSpace.urls.adams.getVendors,
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get POS vendors route response - ', data);
+            }, function (error) {
+                logger.info('get POS vendors route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+        });
+
+    // POS Vendor Types
+
+    /* Get POS Vendor Types */
+
+    posRoutes.route(urlSpace.urls.local.getTypesForVendor)
+        .get(function (req, res) {
+            var vendorName = req.params.vendor_name,
+                url = config.urls.adams + urlSpace.urls.adams.getTypesForVendor.replace('{vendor_name}', vendorName),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get POS types route response - ', data);
+            }, function (error) {
+                logger.info('get POS types route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+        });
+
+
+    //  POS System Category defaults
+
+    /*getTypeDetailsForSystemCategoryDefaultsAndVendor*/
+
+    posRoutes.route(urlSpace.urls.local.getTypeDetailsForSystemCategoryDefaultsAndVendor)
+        .get(function (req, res) {
+            var itemCategoryCode = 'POSEZXVHLJ'/*req.params.item_category_code*/,
+                url = config.urls.adams + urlSpace.urls.adams.getTypeDetailsForSystemCategoryDefaultsAndVendor
+                    .replace('{item_category_code}', itemCategoryCode),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'GET').then(function (data) {
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.send(data);
+                logger.info('get POS types route response - ', data);
+            }, function (error) {
+                logger.info('get POS types route error - ', error);
+                var status = (error.http_status) ? error.http_status : 500;
+                res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                res.status(status).send(error);
+            });
+        });
+
+    /*updateRevenueCategoryDefaults*/
+
+    posRoutes.route(urlSpace.urls.local.updateRevenueCategoryDefaults)
+        .put(function (req, res) {
+            var body = req.body,
+                url = config.urls.adams + urlSpace.urls.adams.updateRevenueCategoryDefaults
+                    .replace('{revenue_category_code}', body.revenue_category_code)
+                    .replace('{system_category_name}', body.system_category_name)
+                    .replace('{vendor_name}', body.vendor_name)
+                    .replace('{vendor_category_type_name}', body.vendor_category_type_name),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1,
+                contentType = urlSpace.headers.contentType.json;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
+                .then(function (data) {
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.send(data);
+                }, function (error) {
+                    logger.info('update Revenue Categories error ', error);
+                    var status = (error.http_status) ? error.http_status : 500;
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.status(status).send(error);
+                });
+
+            res.send('true');
+        });
+
+    /*updateItemCategoryDefaults*/
+
+    posRoutes.route(urlSpace.urls.local.updateItemCategoryDefaults)
+        .put(function (req, res) {
+            var body = req.body,
+                url = config.urls.adams + urlSpace.urls.adams.updateItemCategoryDefaults
+                    .replace('{item_category_code}', body.item_category_code)
+                    .replace('{system_category_name}', body.system_category_name)
+                    .replace('{vendor_name}', body.vendor_name)
+                    .replace('{vendor_category_type_name}', body.vendor_category_type_name),
+                token = stgAuth.getTokenFromHeader(req),
+                accept = urlSpace.headers.adams.accept.v1,
+                contentType = urlSpace.headers.contentType.json;
+
+            utils.makeApiCallWithOAuthToken(url, token, accept, 'PUT', body, contentType)
+                .then(function (data) {
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.send(data);
+                }, function (error) {
+                    logger.info('update Item Categories error ', error);
+                    var status = (error.http_status) ? error.http_status : 500;
+                    res.setHeader(urlSpace.headers.contentType.name, urlSpace.headers.contentType.json);
+                    res.status(status).send(error);
+                });
 
             res.send('true');
         });

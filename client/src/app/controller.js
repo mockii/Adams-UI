@@ -64,6 +64,10 @@
                     {
                         state: "teams",
                         pageName: "Teams"
+                    },
+                    {
+                        state: "commPreferences",
+                        pageName: "Comm Preferences"
                     }
                 ];
             }

@@ -9,7 +9,8 @@ describe('POS item details module', function() {
         $q,
         pointOfSaleItemDetailsService={},
         addItem = 'additem',
-        editItem = 'edititem';
+        editItem = 'edititem',
+        copyItem = 'copyitem';
 
     beforeEach(function() {
         module('common.url');
@@ -88,6 +89,25 @@ describe('POS item details module', function() {
 
         it('should resolve edit item pos id', inject(function($state, $injector) {
             $injector.invoke($state.get(editItem).resolve['pos_item']);
+        }));
+    });
+
+    describe('copy item', function () {
+        it('should resolve copy deps', inject(function($state, $injector, $httpBackend, $ocLazyLoad) {
+
+            $injector.invoke($state.get(copyItem).resolve['deps'])
+                .then(function (res) {
+                    console.log(' *res ', res.data);
+                })
+                .catch(function (err) {
+                    console.log(' *err ', err);
+                });
+            expect($state.get(copyItem).resolve['deps'][0]).toEqual('$ocLazyLoad');
+            expect($state.get(copyItem).resolve['deps'][1]($ocLazyLoad)).toBeDefined();
+        }));
+
+        it('should resolve copy item pos id', inject(function($state, $injector) {
+            $injector.invoke($state.get(copyItem).resolve['pos_item']);
         }));
     });
 

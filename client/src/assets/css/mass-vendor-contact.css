@@ -1,0 +1,69 @@
+
+.mass-vendor-contact-modal .modal-lg {
+    width: 85%;
+}
+
+.mass-vendor-contact-modal .available-vendors-grid .ui-grid {
+    height: 400px !important;
+}
+
+
+.mass-vendor-contact-modal .available-vendor-contacts-table-wrapper table,
+.mass-vendor-contact-modal .selected-contacts-table table,
+.mass-vendor-contact-modal .available-vendor-contacts-table table,
+.mass-vendor-contact-modal .selected-contacts-table table {
+    width: 100%;
+}
+
+.mass-vendor-contact-modal .available-vendor-contacts-table thead,
+.mass-vendor-contact-modal .available-vendor-contacts-table tbody,
+.mass-vendor-contact-modal .available-vendor-contacts-table tr,
+.mass-vendor-contact-modal .available-vendor-contacts-table td,
+.mass-vendor-contact-modal .available-vendor-contacts-table th,
+.mass-vendor-contact-modal .selected-contacts-table thead,
+.mass-vendor-contact-modal .selected-contacts-table tbody,
+.mass-vendor-contact-modal .selected-contacts-table tr,
+.mass-vendor-contact-modal .selected-contacts-table td,
+.mass-vendor-contact-modal .selected-contacts-table th {
+    display: block;
+}
+
+.mass-vendor-contact-modal .selected-contacts-table tr:after,
+.mass-vendor-contact-modal .available-vendor-contacts-table tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.mass-vendor-contact-modal .selected-contacts-table thead th,
+.mass-vendor-contact-modal .available-vendor-contacts-table thead th {
+    height: 35px;
+}
+
+.mass-vendor-contact-modal .selected-contacts-table tbody,
+.mass-vendor-contact-modal .available-vendor-contacts-table tbody {
+    width: inherit;
+    height: 365px;
+    overflow-y: auto;
+}
+
+.mass-vendor-contact-modal .available-vendor-contacts-table tbody td,
+.mass-vendor-contact-modal .available-vendor-contacts-table thead th,
+.mass-vendor-contact-modal .selected-contacts-table tbody td,
+.mass-vendor-contact-modal .selected-contacts-table thead th {
+    width: 100%;
+    float: left;
+}
+
+.mass-vendor-contact-modal .selected-contacts-table .table.table-bordered thead > tr > th,
+.mass-vendor-contact-modal .available-vendor-contacts-table .table.table-bordered thead > tr > th {
+    border-bottom: 1px solid #ddd !important;
+}
+
+
+
+.mass-vendor-contact-modal .selected-contacts-table .delete-button {
+    cursor: pointer;
+    /*margin-top: 20px;*/
+}

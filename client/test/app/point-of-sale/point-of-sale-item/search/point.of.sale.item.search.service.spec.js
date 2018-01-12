@@ -60,20 +60,20 @@ describe('POS Item Search testing', function () {
 
 
     it('should get pos items', function () {
-        var url = urlSpace.urls.local.getPosItems;
+        var url = urlSpace.urls.local.getPosItems + '?limit=&page=&search={}&sorts=';
 
         $httpBackend.expectGET(url).respond(posItems);
-        pointOfSaleItemSearchService.getPosItems().then(function(response) {
+        pointOfSaleItemSearchService.getPosItems('','','',{}).then(function(response) {
             expect(response).toEqual(posItems);
         });
         $httpBackend.flush();
     });
 
     it('should throw error get pos items', function(){
-        var url = urlSpace.urls.local.getPosItems;
+        var url = urlSpace.urls.local.getPosItems + '?limit=&page=&search={}&sorts=';
 
         $httpBackend.expectGET(url).respond(400, {});
-        pointOfSaleItemSearchService.getPosItems().then(function(response) {
+        pointOfSaleItemSearchService.getPosItems('','','',{}).then(function(response) {
             expect(response).toEqual([]);
         });
         $httpBackend.flush();
@@ -81,9 +81,9 @@ describe('POS Item Search testing', function () {
     });
 
     it('should abort promise get pos items', function(){
-        var url = urlSpace.urls.local.getPosItems;
+        var url = urlSpace.urls.local.getPosItems + '?limit=&page=&search={}&sorts=';
         $httpBackend.expectGET(url).respond(posItems);
-        pointOfSaleItemSearchService.getPosItems().abort();
+        pointOfSaleItemSearchService.getPosItems('','','',{}).abort();
     });
 
 });

@@ -36,6 +36,7 @@ describe('AddAssociatesController', function () {
         mockAssociatesSearchService3 = {},
         mockUserAdministrationService = {},
         mockUserAdministrationService2 = {},
+        mockApplicationConfigurationService ={},
         CompassToastr,
         // mockCompassToastr = {},
         mockModal,
@@ -68,6 +69,7 @@ describe('AddAssociatesController', function () {
             $provide.value('AssociatesSearchService', mockAssociatesSearchService3);
             $provide.value('UserAdministrationService', mockUserAdministrationService);
             $provide.value('UserAdministrationService', mockUserAdministrationService2);
+            $provide.value('ApplicationConfigurationService', mockApplicationConfigurationService);
             $provide.value('BlockUI', mockBlockUI);
             $provide.value('Utils', mockUtils);
             $provide.value('STGLogService', logService);
@@ -776,6 +778,10 @@ describe('AddAssociatesController', function () {
             return deferred.promise;
         };
 
+        mockApplicationConfigurationService.getApplicationName = function () {
+            return 'ADAMS';
+        };
+
         /*$state = {
             go: function () {
                 return;
@@ -850,7 +856,8 @@ describe('AddAssociatesController', function () {
             blockUI: mockBlockUI,
             timeTrackingSystem: timeTrackingSystem,
             $document: $document,
-            Utils: mockUtils
+            Utils: mockUtils,
+            ApplicationConfigurationService : mockApplicationConfigurationService
         });
         Ctrl2 = $controller('AddAssociatesController', {
             $rootScope: $rootScope,
@@ -869,7 +876,8 @@ describe('AddAssociatesController', function () {
             UserAdministrationService: mockUserAdministrationService2,
             blockUI: mockBlockUI,
             timeTrackingSystem: timeTrackingSystem,
-            $document: $document
+            $document: $document,
+            ApplicationConfigurationService : mockApplicationConfigurationService
         });
         Ctrl3 = $controller('AddAssociatesController', {
             $rootScope: $rootScope,
@@ -888,7 +896,8 @@ describe('AddAssociatesController', function () {
             UserAdministrationService: mockUserAdministrationService,
             blockUI: mockBlockUI,
             timeTrackingSystem: timeTrackingSystem,
-            $document: $document
+            $document: $document,
+            ApplicationConfigurationService : mockApplicationConfigurationService
         });
         Ctrl4 = $controller('AddAssociatesController', {
             $rootScope: $rootScope,
@@ -907,7 +916,8 @@ describe('AddAssociatesController', function () {
             UserAdministrationService: mockUserAdministrationService,
             blockUI: mockBlockUI,
             timeTrackingSystem: timeTrackingSystem,
-            $document: $document
+            $document: $document,
+            ApplicationConfigurationService : mockApplicationConfigurationService
         });
         Ctrl5 = $controller('AddAssociatesController', {
             $rootScope: $rootScope,
@@ -926,7 +936,8 @@ describe('AddAssociatesController', function () {
             UserAdministrationService: mockUserAdministrationService,
             blockUI: mockBlockUI,
             timeTrackingSystem: '',
-            $document: $document
+            $document: $document,
+            ApplicationConfigurationService : mockApplicationConfigurationService
         });
         Ctrl6 = $controller('AddAssociatesController', {
             $rootScope: $rootScope,
@@ -945,7 +956,8 @@ describe('AddAssociatesController', function () {
             UserAdministrationService: mockUserAdministrationService,
             blockUI: mockBlockUI,
             timeTrackingSystem: '',
-            $document: $document
+            $document: $document,
+            ApplicationConfigurationService : mockApplicationConfigurationService
         });
     }));
 

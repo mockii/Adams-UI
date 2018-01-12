@@ -8,79 +8,77 @@
         .controller('BookOfRecordController', ['$rootScope', '$scope', 'BookOfRecordService', 'ContactInfoService', '$uibModal', '$state',
                         '$timeout', '$sce', '$log', 'StgStatesService', '$window', 'CompassToastr', 'ModalDialogService',
             function ($rootScope, $scope, BookOfRecordService, ContactInfoService, $uibModal, $state, $timeout, $sce, $log, StgStatesService, $window, CompassToastr, ModalDialogService) {
-                var bookOfRecordController = this,
-                    bookOfRecordDeferred;
-                
+                var bookOfRecordController = this;
+
+
                 function initialize() {
                     bookOfRecordController.gridOptions = defineBookOfRecordGridOptions();
-
                 }
 
                 bookOfRecordController.getGridData = function (pageSize, pageNumber, sort, searchInput) {
-
                     return BookOfRecordService.getAllBookOfRecordDetails(pageSize, pageNumber, searchInput, sort);
                 };
 
                 $scope.$on('uiGridLoadDetails', function ($event, gridOptions, gridApi) {
                     // emitted gridOptions and gridApi from Directive controller
                     gridApi.grid.appScope.emailBORVendorContacts = bookOfRecordController.emailBORVendorContacts;
-
                     gridApi.grid.appScope.showBORViewContactsSearchData = bookOfRecordController.showBORViewContactsSearchData;
-
                     gridApi.grid.appScope.navigateToVendorDetail = bookOfRecordController.navigateToVendorDetail;
-
                     gridApi.grid.appScope.navigateToCostCenterDetail = bookOfRecordController.navigateToCostCenterDetail;
-
                 });
 
                 bookOfRecordController.emailBORVendorContacts = function (searchData) {
-
                     bookOfRecordController.vendorNumber = searchData.vendor_number;
                     bookOfRecordController.vendorName = searchData.vendor_name_1;
                     bookOfRecordController.vendorSourceSystemId = searchData.vendor_source_system_id;
-
                     bookOfRecordController.emailVendorContacts();
-
                 };
 
                 bookOfRecordController.showBORViewContactsSearchData = function (searchData) {
-
                     bookOfRecordController.vendorNumber = searchData.vendor_number;
                     bookOfRecordController.vendorSourceSystemId = searchData.vendor_source_system_id;
-
                     bookOfRecordController.openViewContactInfo();
+                };
 
+                bookOfRecordController.openMassVendorContactModal = function() {
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'vendors/mass-vendor-contact/mass-vendor-contact-modal.tpl.html',
+                        controller: 'MassVendorContactModalController as massVendorContactModalController',
+                        size: 'lg',
+                        backdrop: 'static',
+                        windowClass: 'mass-vendor-contact-modal'
+                    });
 
+                    modalInstance.result.then(function (result) {
+                        $window.location.href = "mailto:"+ result.selectedContacts.join(';');
+                    });
                 };
 
                 bookOfRecordController.emailVendorContacts = function() {
 
-                    var pageSize = '';
-                    var pageNumber = '';
-                    var sort = '';
-                    var searchInput = {};
+                    var pageSize = '',
+                        pageNumber = '',
+                        sort = '',
+                        searchInput = {};
 
                     ContactInfoService.getContactInfoData(pageSize, pageNumber, sort, bookOfRecordController.vendorNumber, bookOfRecordController.vendorSourceSystemId, searchInput)
                         .then(function(response) {
-
                             var emailIds = BookOfRecordService.getEmailIdsOfVendorContacts(response.data);
 
-                             if(emailIds.length > 0){
-                                 $window.location.href = "mailto:"+ emailIds.join(';');
-                             }else{
-                                 ModalDialogService.alert({
-                                     bodyHTML: 'No contacts found to notify ' + bookOfRecordController.vendorName,
-                                     title: 'No contacts found',
-                                     size: 'sm'
-                                 });
-                             }
+                            if (emailIds.length > 0) {
+                                $window.location.href = "mailto:"+ emailIds.join(';');
+                            }else{
+                                ModalDialogService.alert({
+                                    bodyHTML: 'No contacts found to notify ' + bookOfRecordController.vendorName,
+                                    title: 'No contacts found',
+                                    size: 'sm'
+                                });
+                            }
 
                         }, function(error){
                             CompassToastr.error('There was an error in getting vendor contact details. Please try again later!');
                         });
-
                 };
-
 
                 bookOfRecordController.openViewContactInfo = function() {
                     $uibModal.open({
@@ -98,20 +96,17 @@
                 };
 
                 bookOfRecordController.navigateToVendorDetail = function(vendorSearchData) {
-                    StgStatesService.goToState('vendordetails', {vendor_number: vendorSearchData.vendor_number,
-                                                                 vendor_source_system_id: vendorSearchData.vendor_source_system_id});
-
+                    StgStatesService.goToState('vendordetails', {
+                        vendor_number: vendorSearchData.vendor_number,
+                        vendor_source_system_id: vendorSearchData.vendor_source_system_id});
                 };
 
                 bookOfRecordController.navigateToCostCenterDetail = function(costCenterSearchData) {
-
                     StgStatesService.goToState('costcenterdetails', {
                         costCenter_number: costCenterSearchData.cost_center_name,
                         costCenter_source_system_id: costCenterSearchData.cost_center_source_system_id
                     });
-
                 };
-
 
 
 
@@ -232,7 +227,6 @@
                                     placeholder: ''
                                 }
                             },
-
                             {
                                 field: 'vendor_number',
                                 displayName: "Vendor Number",
@@ -275,7 +269,6 @@
                                     placeholder: ''
                                 }
                             },
-
                             {
                                 field: 'comment',
                                 displayName: "Comments",
@@ -284,7 +277,6 @@
                                     placeholder: ''
                                 }
                             },
-
                             {
                                 field: 'category_code',
                                 displayName: "AP Category Code",
@@ -301,7 +293,6 @@
                                     placeholder: ''
                                 }
                             },
-
                             {
                                 field: 'diversity_code',
                                 displayName: "MBE",
@@ -310,15 +301,14 @@
                                     placeholder: ''
                                 }
                             },
-
                             {
                                 field: 'address',
                                 headerCellTemplate: '<div ng-class="{ \'sortable\': sortable }">' +
-                                                        '<div class="ui-grid-vertical-bar">&nbsp;</div>' +
-                                                        '<div class="ui-grid-cell-contents" col-index="renderIndex" title="Contracted &quot;remit to&quot; address,\n (not actual local address)."><span>Payment Address <i class="fa fa-info-circle"></i></span><span ui-grid-visible="col.sort.direction" ng-class="{ \'ui-grid-icon-up-dir\': col.sort.direction == asc, \'ui-grid-icon-down-dir\': col.sort.direction == desc, \'ui-grid-icon-blank\': !col.sort.direction }">&nbsp;</span></div>' +
-                                                        '<div class="ui-grid-column-menu-button" ng-if="grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false" class="ui-grid-column-menu-button" ng-click="toggleMenu($event)"><i class="ui-grid-icon-angle-down">&nbsp;</i></div><div ng-if="filterable" class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><input type="text" class="ui-grid-filter-input" ng-model="colFilter.term" ng-click="$event.stopPropagation()" ng-attr-placeholder="{{colFilter.placeholder || \'\'}}" />' +
-                                                            '<div class="ui-grid-filter-button" ng-click="colFilter.term = null"><i class="ui-grid-icon-cancel" ng-show="!!colFilter.term">&nbsp;</i> <!-- use !! because angular interprets \'f\' as false --></div>' +
-                                                        '</div>' +
+                                                    '<div class="ui-grid-vertical-bar">&nbsp;</div>' +
+                                                    '<div class="ui-grid-cell-contents" col-index="renderIndex" title="Contracted &quot;remit to&quot; address,\n (not actual local address)."><span>Payment Address <i class="fa fa-info-circle"></i></span><span ui-grid-visible="col.sort.direction" ng-class="{ \'ui-grid-icon-up-dir\': col.sort.direction == asc, \'ui-grid-icon-down-dir\': col.sort.direction == desc, \'ui-grid-icon-blank\': !col.sort.direction }">&nbsp;</span></div>' +
+                                                    '<div class="ui-grid-column-menu-button" ng-if="grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false" class="ui-grid-column-menu-button" ng-click="toggleMenu($event)"><i class="ui-grid-icon-angle-down">&nbsp;</i></div><div ng-if="filterable" class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><input type="text" class="ui-grid-filter-input" ng-model="colFilter.term" ng-click="$event.stopPropagation()" ng-attr-placeholder="{{colFilter.placeholder || \'\'}}" />' +
+                                                    '<div class="ui-grid-filter-button" ng-click="colFilter.term = null"><i class="ui-grid-icon-cancel" ng-show="!!colFilter.term">&nbsp;</i> <!-- use !! because angular interprets \'f\' as false --></div>' +
+                                                    '</div>' +
                                                     '</div>',
                                 width: 225,
                                 filter: {
@@ -356,5 +346,4 @@
 
                 initialize();
             }]);
-
 })();

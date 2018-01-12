@@ -2,7 +2,8 @@
 
 (function () {
     angular.module('adams.locations.search.service', ['common.modules.logging', 'common.services.RBAC'])
-        .factory('LocationsSearchService', ['$rootScope', '$http', 'ADAMS_URL_SPACE', '$q', '$log', 'RBACService', function($rootScope, $http, ADAMS_URL_SPACE, $q, $log, RBACService) {
+        .factory('LocationsSearchService', ['$rootScope', '$http', 'ADAMS_URL_SPACE', '$q', '$log', 'RBACService', 'ApplicationConfigurationService',
+            function($rootScope, $http, ADAMS_URL_SPACE, $q, $log, RBACService, ApplicationConfigurationService) {
             //$log.debug('Locations Search Response debug');
             var locationsSearchService = {};
 
@@ -12,7 +13,7 @@
 
             locationsSearchService.getAllLocationsSearchDetails = function(limit, page, locationsSearchInput, sort) {
                 var locationsSearchDeferred = $q.defer(),
-                    appName = $rootScope.applicationConfiguration.application.name,
+                    appName = ApplicationConfigurationService.getApplicationName(),
                     url = ADAMS_URL_SPACE.urls.local.getLocationsByUser + '?limit=' + limit + '&page=' + page  + '&locationsSearchInput=' + encodeURIComponent(JSON.stringify(locationsSearchInput)) + '&sorts=' + sort + '&appName=' + appName + '&roleName=' + locationsSearchService.getCurrentProfile().current_role.role_name;
                 var request = $http({
                     method: "get",

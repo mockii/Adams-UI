@@ -4,9 +4,8 @@
             var costCenterMarketMappingService = {};
 
 
-            costCenterMarketMappingService.getDefaultMarket = function(costCenterNumber, sourceSystemId) {
-                var search={default_market: true},
-                    url = ADAMS_URL_SPACE.urls.local.costCenterAndListMarkets + '?limit=' + 10 + '&page=' + 1 + '&sorts=' + null + '&costCenterNumber=' + costCenterNumber + '&sourceSystemId=' + sourceSystemId + '&search=' + JSON.stringify(search);
+            costCenterMarketMappingService.getDefaultMarket = function(costCenterNumber, sourceSystemId, searchInput) {
+                var url = ADAMS_URL_SPACE.urls.local.costCenterAndListMarkets + '?limit=' + 10 + '&page=' + 1 + '&sorts=' + null + '&costCenterNumber=' + costCenterNumber + '&sourceSystemId=' + sourceSystemId + '&search=' + JSON.stringify(searchInput);
                 return $http.get(url)
                     .then(function(response) {
                         return response.data.data[0];

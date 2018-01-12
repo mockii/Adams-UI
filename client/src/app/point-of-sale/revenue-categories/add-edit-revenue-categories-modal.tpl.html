@@ -3,36 +3,47 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="addEditRevenueCategoriesModalController.close()"></button>
-        <h3 class="modal-title">{{addEditRevenueCategoriesModalController.action}} Revenue Categories</h3>
+        <h3 class="modal-title">{{addEditRevenueCategoriesModalController.action}} Revenue Category</h3>
     </div>
 
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-12">
-                <form role="form">
+            <div class="form-horizontal col-md-12">
+                <form role="form" name="revenueCategoryForm">
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-4">Revenue Category Name</label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" ng-model="addEditRevenueCategoriesModalController.revenueCategoriesRowData.long_name">
+                            <label class="control-label col-md-4">
+                                Revenue Category Name<span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 input-icon right">
+                                <input type="text" class="form-control"
+                                       ng-model="addEditRevenueCategoriesModalController.revenueCategoryName"
+                                       stg-form-validation validation-type="required" required>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-4">Type</label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" ng-model="addEditRevenueCategoriesModalController.revenueCategoriesRowData.pos_id">
+                            <label class="control-label col-md-4">
+                                Type
+                            </label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control"
+                                       ng-model="addEditRevenueCategoriesModalController.revenueCategoryType">
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-4">Description</label>
-                            <div class="col-lg-7">
-                                <textarea rows="6" class="form-control" ng-model="addEditRevenueCategoriesModalController.revenueCategoriesRowData.item_class"></textarea>
+                            <label class="control-label col-md-4">
+                                Description
+                            </label>
+                            <div class="col-md-7">
+                                <textarea rows="6" class="form-control"
+                                          ng-model="addEditRevenueCategoriesModalController.revenueCategoryDescription">
+                                </textarea>
                             </div>
                         </div>
                     </div>
@@ -43,7 +54,11 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="addEditRevenueCategoriesModalController.close()">Cancel</button>
-        <button type="button" class="btn blue" ng-click="addEditRevenueCategoriesModalController.save()">Save</button>
+        <button type="button" class="btn blue"
+                ng-click="addEditRevenueCategoriesModalController.save()"
+                ng-disabled="revenueCategoryForm.$invalid ||  revenueCategoryForm.$pristine">
+            Save
+        </button>
     </div>
 </div>
 

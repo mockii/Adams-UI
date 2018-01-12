@@ -19,6 +19,7 @@ describe('LocationsOperatingHoursController', function() {
         mockLocationsDetailsService1 = {},
         getLocationDetailsByLocationCodeResponse,
         TEST_WEEK_DAYS_ARRAY,
+        locationsGridArray,
         $state;
 
 
@@ -51,6 +52,7 @@ describe('LocationsOperatingHoursController', function() {
 
         // locationsHourData = {"metadata":{"version":"1.0.0","status":"Success","http_status_code":"OK","resultCount":"1"},"data":[{"location_code":"LBFNWCU4","location_name":"sdfsdf","location_description":null,"address1":"asd","address2":"xcvxv","city":"sdfsdf","state":"AZ","zip":"00000","active":true,"longitude_latitude":"","location_hours":[{"name":"asdasd","day":"MONDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"THURSDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"TUESDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"WEDNESDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"}],"created_by":null,"created_date":null,"modified_by":null,"modified_date":null}],"error":[]};
         locationsHourData = {"id":2,"name":"test1","times":"03:00 AM - 05:00 AM","days_of_week":"SUNDAY"};
+        locationsGridArray = {};
         getLocationDetailsByLocationCodeResponse = {"location_code":"LBFNWCU4","location_name":"sdfsdf","location_description":null,"address1":"asd","address2":"xcvxv","city":"sdfsdf","state":"AZ","zip":"00000","active":true,"longitude_latitude":"","location_hours":[{"name":"asdasd","day":"MONDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"THURSDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"TUESDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"WEDNESDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"FRIDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"SATURDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"SUNDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"},{"name":"asdasd","day":"SOMEDAY","open_hour":"1:00 AM","close_hour":"3:00 AM"}],"created_by":null,"created_date":null,"modified_by":null,"modified_date":null};
 
         $state = {
@@ -111,12 +113,13 @@ describe('LocationsOperatingHoursController', function() {
             $scope: $scope,
             $state: $state,
             $uibModalInstance: $uibModalInstance,
-            locationsSearchData: locationsSearchData,
+            ModalDialogService: mockModalDialogService,
             compassToastr: CompassToastr,
-            locationsHourData: locationsHourData,
-            actionStatus: 'edit',
             LocationsDetailsService: mockLocationsDetailsService,
-            ModalDialogService: mockModalDialogService
+            locationsSearchData: locationsSearchData,
+            locationsHourData: locationsHourData,
+            locationsGridArray: locationsGridArray,
+            actionStatus: 'edit'
         });
 
         Ctrl1 = $controller('LocationsOperatingHoursController', {
@@ -128,6 +131,7 @@ describe('LocationsOperatingHoursController', function() {
             LocationsDetailsService: mockLocationsDetailsService1,
             locationsSearchData: locationsSearchData,
             locationsHourData: locationsHourData,
+            locationsGridArray: locationsGridArray,
             actionStatus: 'add'
         });
 
@@ -140,6 +144,7 @@ describe('LocationsOperatingHoursController', function() {
             LocationsDetailsService: mockLocationsDetailsService,
             locationsSearchData: locationsSearchData,
             locationsHourData: locationsHourData,
+            locationsGridArray: locationsGridArray,
             actionStatus: ''
         });
     }));
@@ -233,6 +238,112 @@ describe('LocationsOperatingHoursController', function() {
         Ctrl1.saveLocationsOperatingHours();
         $scope.$apply();
         expect(Ctrl1.saveLocationsOperatingHours).toHaveBeenCalled();
+    });
+
+
+
+    //
+
+    it('should call saveLocationsOperatingHours ', function() {
+        spyOn(Ctrl, 'saveLocationsOperatingHours').and.callThrough();
+        Ctrl.actionStatus = 'edit';
+        Ctrl.locationHourName = 'test1';
+        Ctrl.actualOpenHour = '08:00 AM';
+        Ctrl.actualCloseHour = '09:00 AM';
+        Ctrl.locationOpenTimeHour = '08 AM';
+        Ctrl.locationCloseTimeHour = '09:00 AM';
+        Ctrl.previousLocationHourName =  'SSSS';
+        Ctrl.locationsSearchDetailsData = {"location_code":"10001","location_name":"test2","location_description":"","address1":"IBM Dr","address2":"","city":"Charlotte","state":"NC","zip":"28262","active":true,"longitude_latitude":"35.3057512,-80.77477250000004","location_hours":[{"name":"asdasd","day":"MONDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"MONDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"test1","day":"SUNDAY","open_hour":"3:00 AM","close_hour":"5:00 AM"},{"name":"asdasd","day":"TUESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"TUESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"asdasd","day":"WEDNESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"WEDNESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"}],"created_by":null,"created_date":null,"modified_by":null,"modified_date":null};
+        Ctrl.weekDaysData = [{"day":"MONDAY","id":0,"selected":true,"$$hashKey":"object:809"},{"day":"TUESDAY","id":1,"selected":true,"$$hashKey":"object:810"},{"day":"WEDNESDAY","id":2,"selected":false,"$$hashKey":"object:811"},{"day":"THURSDAY","id":3,"selected":false,"$$hashKey":"object:812"},{"day":"FRIDAY","id":4,"selected":false,"$$hashKey":"object:813"},{"day":"SATURDAY","id":5,"selected":false,"$$hashKey":"object:814"},{"day":"SUNDAY","id":6,"selected":true,"$$hashKey":"object:815"}];
+        Ctrl.saveLocationsOperatingHours();
+        $scope.$apply();
+        expect(Ctrl.saveLocationsOperatingHours).toHaveBeenCalled();
+    });
+
+    it('should call saveLocationsOperatingHours ', function() {
+        spyOn(Ctrl, 'saveLocationsOperatingHours').and.callThrough();
+        Ctrl.actionStatus = 'edit';
+        Ctrl.locationHourName = 'SSSS';
+        Ctrl.locationOpenTimeHour = '08 AM';
+        Ctrl.locationCloseTimeHour = '09:00 AM';
+        Ctrl.previousLocationHourName =  'SSSS';
+        Ctrl.locationsSearchDetailsData = {"location_code":"10001","location_name":"test2","location_description":"","address1":"IBM Dr","address2":"","city":"Charlotte","state":"NC","zip":"28262","active":true,"longitude_latitude":"35.3057512,-80.77477250000004","location_hours":[{"name":"asdasd","day":"MONDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"MONDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"test1","day":"SUNDAY","open_hour":"3:00 AM","close_hour":"5:00 AM"},{"name":"asdasd","day":"TUESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"TUESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"asdasd","day":"WEDNESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"WEDNESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"}],"created_by":null,"created_date":null,"modified_by":null,"modified_date":null};
+        Ctrl.weekDaysData = [{"day":"MONDAY","id":0,"selected":true,"$$hashKey":"object:809"},{"day":"TUESDAY","id":1,"selected":true,"$$hashKey":"object:810"},{"day":"WEDNESDAY","id":2,"selected":false,"$$hashKey":"object:811"},{"day":"THURSDAY","id":3,"selected":false,"$$hashKey":"object:812"},{"day":"FRIDAY","id":4,"selected":false,"$$hashKey":"object:813"},{"day":"SATURDAY","id":5,"selected":false,"$$hashKey":"object:814"},{"day":"SUNDAY","id":6,"selected":true,"$$hashKey":"object:815"}];
+        Ctrl.saveLocationsOperatingHours();
+        $scope.$apply();
+        expect(Ctrl.saveLocationsOperatingHours).toHaveBeenCalled();
+    });
+
+    it('should call saveLocationsOperatingHours ', function() {
+        spyOn(Ctrl, 'saveLocationsOperatingHours').and.callThrough();
+        Ctrl.actionStatus = 'edit';
+        Ctrl.locationHourName = 'SSSS';
+        Ctrl.locationOpenTimeHour = null;
+        Ctrl.locationCloseTimeHour = '09:00 AM';
+        Ctrl.previousLocationHourName =  'SSSS';
+        Ctrl.locationsSearchDetailsData = {"location_code":"10001","location_name":"test2","location_description":"","address1":"IBM Dr","address2":"","city":"Charlotte","state":"NC","zip":"28262","active":true,"longitude_latitude":"35.3057512,-80.77477250000004","location_hours":[{"name":"asdasd","day":"MONDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"MONDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"test1","day":"SUNDAY","open_hour":"3:00 AM","close_hour":"5:00 AM"},{"name":"asdasd","day":"TUESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"TUESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"asdasd","day":"WEDNESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"WEDNESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"}],"created_by":null,"created_date":null,"modified_by":null,"modified_date":null};
+        Ctrl.weekDaysData = [{"day":"MONDAY","id":0,"selected":true,"$$hashKey":"object:809"},{"day":"TUESDAY","id":1,"selected":true,"$$hashKey":"object:810"},{"day":"WEDNESDAY","id":2,"selected":false,"$$hashKey":"object:811"},{"day":"THURSDAY","id":3,"selected":false,"$$hashKey":"object:812"},{"day":"FRIDAY","id":4,"selected":false,"$$hashKey":"object:813"},{"day":"SATURDAY","id":5,"selected":false,"$$hashKey":"object:814"},{"day":"SUNDAY","id":6,"selected":true,"$$hashKey":"object:815"}];
+        Ctrl.saveLocationsOperatingHours();
+        $scope.$apply();
+        expect(Ctrl.saveLocationsOperatingHours).toHaveBeenCalled();
+    });
+
+    it('should call saveLocationsOperatingHours ', function() {
+        spyOn(Ctrl, 'saveLocationsOperatingHours').and.callThrough();
+        Ctrl.actionStatus = 'edit';
+        Ctrl.locationHourName = 'SSSS';
+        Ctrl.locationOpenTimeHour = null;
+        Ctrl.locationCloseTimeHour = '09:00 AM';
+        Ctrl.previousLocationHourName =  null;
+        Ctrl.locationsSearchDetailsData = {"location_code":"10001","location_name":"test2","location_description":"","address1":"IBM Dr","address2":"","city":"Charlotte","state":"NC","zip":"28262","active":true,"longitude_latitude":"35.3057512,-80.77477250000004","location_hours":[{"name":"asdasd","day":"MONDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"MONDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"test1","day":"SUNDAY","open_hour":"3:00 AM","close_hour":"5:00 AM"},{"name":"asdasd","day":"TUESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"TUESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"},{"name":"asdasd","day":"WEDNESDAY","open_hour":"2:00 AM","close_hour":"3:00 AM"},{"name":"SSSS","day":"WEDNESDAY","open_hour":"8:00 AM","close_hour":"9:00 AM"}],"created_by":null,"created_date":null,"modified_by":null,"modified_date":null};
+        Ctrl.weekDaysData = [{"day":"MONDAY","id":0,"selected":true,"$$hashKey":"object:809"},{"day":"TUESDAY","id":1,"selected":true,"$$hashKey":"object:810"},{"day":"WEDNESDAY","id":2,"selected":false,"$$hashKey":"object:811"},{"day":"THURSDAY","id":3,"selected":false,"$$hashKey":"object:812"},{"day":"FRIDAY","id":4,"selected":false,"$$hashKey":"object:813"},{"day":"SATURDAY","id":5,"selected":false,"$$hashKey":"object:814"},{"day":"SUNDAY","id":6,"selected":true,"$$hashKey":"object:815"}];
+        Ctrl.saveLocationsOperatingHours();
+        $scope.$apply();
+        expect(Ctrl.saveLocationsOperatingHours).toHaveBeenCalled();
+    });
+
+    it('should call weekDayChanged ', function() {
+        spyOn(Ctrl1, 'weekDayChanged').and.callThrough();
+        Ctrl1.weekDaysData = [{"day":"MONDAY","id":0,"selected":true,"$$hashKey":"object:809"},{"day":"TUESDAY","id":1,"selected":true,"$$hashKey":"object:810"},{"day":"WEDNESDAY","id":2,"selected":false,"$$hashKey":"object:811"},{"day":"THURSDAY","id":3,"selected":false,"$$hashKey":"object:812"},{"day":"FRIDAY","id":4,"selected":false,"$$hashKey":"object:813"},{"day":"SATURDAY","id":5,"selected":false,"$$hashKey":"object:814"},{"day":"SUNDAY","id":6,"selected":true,"$$hashKey":"object:815"}];
+        Ctrl1.weekDayChanged();
+        $scope.$apply();
+        expect(Ctrl1.weekDayChanged).toHaveBeenCalled();
+    });
+
+    it('should call pristineLocationNameCheck', function() {
+        spyOn(Ctrl1, 'pristineLocationNameCheck').and.callThrough();
+        Ctrl1.locationHourName = null;
+        Ctrl1.pristineLocationNameCheck();
+        $scope.$apply();
+        expect(Ctrl1.pristineLocationNameCheck).toHaveBeenCalled();
+    });
+
+    it('should call pristineLocationNameCheck', function() {
+        spyOn(Ctrl1, 'pristineLocationNameCheck').and.callThrough();
+        Ctrl1.locationHourName = 'test1';
+        Ctrl1.locationOpenTimeHour = '02:00 AM';
+        Ctrl1.locationCloseTimeHour = '03:00 AM';
+        Ctrl1.pristineLocationNameCheck();
+        $scope.$apply();
+        expect(Ctrl1.pristineLocationNameCheck).toHaveBeenCalled();
+    });
+
+    it('should call pristineLocationHourCheck', function() {
+        spyOn(Ctrl1, 'pristineLocationHourCheck').and.callThrough();
+        Ctrl1.locationHourName = null;
+        Ctrl1.pristineLocationHourCheck();
+        $scope.$apply();
+        expect(Ctrl1.pristineLocationHourCheck).toHaveBeenCalled();
+    });
+
+    it('should call pristineLocationHourCheck', function() {
+        spyOn(Ctrl1, 'pristineLocationHourCheck').and.callThrough();
+        Ctrl1.locationHourName = 'test1';
+        Ctrl1.locationOpenTimeHour = '02:00 AM';
+        Ctrl1.locationCloseTimeHour = '03:00 AM';
+        Ctrl1.pristineLocationHourCheck();
+        $scope.$apply();
+        expect(Ctrl1.pristineLocationHourCheck).toHaveBeenCalled();
     });
 
 });

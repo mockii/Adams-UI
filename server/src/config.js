@@ -210,8 +210,8 @@ module.exports = function(){
                     logPath: __dirname + '/logs'
                 },
                 urls: {
-                    // adams: 'https://adamsdev.compassmanager.com',
                     adams: 'https://adamsci.compassmanager.com',
+                    // adams: 'https://adamsdev.compassmanager.com',
                     // adams: 'http://cgl-5cg6496zfc:9080/master_data_web',
                     // adams: 'http://172.29.130.103:8080/master_data_web',
                     // adams: 'http://cgl-5cd63382hq:9080/master_data_web',

@@ -35,8 +35,9 @@
                                                     <input type="text" class="form-control" required name="address"
                                                            stg-google-maps-autocomplete stg-form-validation validation-type="required"
                                                            ng-model="locationsDetailsController.locationAddress"
+                                                           address1-only="true"
                                                            ng-change="locationsDetailsController.addressChange()"
-                                                           ng-blur="locationsDetailsController.onAddressFocusOut($event)"
+                                                           ng-blur="locationsDetailsController.onAddressFocusOut()"
                                                            result-data="locationsDetailsController.autoCompleteData"
                                                            mapElementById="map"
                                                            lattitude="locationsDetailsController.locationLattitude"
@@ -232,8 +233,8 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-12 col-xs-12 pull-right verify-address-button">
                                                     <button type="button" class="btn blue pull-right"
-                                                            ng-click="locationsDetailsController.verifyAddress(locationForm)"
-                                                            ng-disabled="locationsDetailsController.autoCompleteData">
+                                                            ng-click="locationsDetailsController.verifyAddress()"
+                                                            ng-disabled="locationsDetailsController.autoCompleteData || locationsDetailsController.lattitudeLongitude">
                                                         Verify Address
                                                     </button>
                                                 </div>
@@ -251,10 +252,10 @@
                             ng-click="locationsDetailsController.clearAndGoBack()">Cancel
                     </button>
                     <button type="button" class="btn blue"
+                            ng-disabled="locationForm.$invalid || locationForm.$pristine"
                             ng-click="locationsDetailsController.saveLocation(locationForm)"
                             >Save
                     </button>
-                    <!--ng-disabled="locationForm.$invalid || locationForm.$pristine"-->
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@ describe("Adams Controller", function () {
             spyOn(controller, "isHeaderHidden").and.callThrough();
             controller.isHeaderHidden();
             expect(controller).toBeDefined();
-            expect(controller.menuItems.length).toEqual(12);
+            expect(controller.menuItems.length).toEqual(13);
             expect(controller.isHeaderHidden).toHaveBeenCalled();
         });
 

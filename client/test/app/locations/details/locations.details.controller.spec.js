@@ -394,6 +394,17 @@ describe('LocationsDetailsController', function() {
             }
         };
 
+        $scope.locationForm={
+            $setPristine: function(){
+                return;
+            },
+            $setDirty: function(){
+                return;
+            }
+        };
+        $scope.locationForm.$pristine=true;
+        $scope.locationForm.$valid=true;
+
         mockLocationsDetailsService.getLocationDetailsByLocationCode = function (locationCode) {
             var deferred = $q.defer();
             deferred.resolve(getLocationDetailsByLocationCodeResponse);
@@ -864,9 +875,30 @@ describe('LocationsDetailsController', function() {
 
    it('should call addressChange', function() {
         spyOn(Ctrl, 'addressChange').and.callThrough();
-        Ctrl.addressChange(null);
+       Ctrl.locationAddress = 'asd';
+       Ctrl.locationAddress2 = 'xcvxv';
+       Ctrl.locationCity = 'sdfsdf';
+       Ctrl.locationZip  = '00000';
+       Ctrl.locationState = {};
+       Ctrl.locationState.abbreviation = 'NC';
+        Ctrl.addressChange();
         // $scope.$apply();
-        expect(Ctrl.addressChange).toHaveBeenCalledWith(null);
+        expect(Ctrl.addressChange).toHaveBeenCalled();
+    });
+
+
+   it('should call addressChange', function() {
+        spyOn(Ctrl, 'addressChange').and.callThrough();
+        Ctrl.addressChange();
+        // $scope.$apply();
+        expect(Ctrl.addressChange).toHaveBeenCalled();
+    });
+
+   it('should call addressChange', function() {
+        spyOn(Ctrl2, 'addressChange').and.callThrough();
+        Ctrl2.addressChange();
+        // $scope.$apply();
+        expect(Ctrl2.addressChange).toHaveBeenCalled();
     });
 
 
@@ -900,23 +932,24 @@ describe('LocationsDetailsController', function() {
 
    it('should call verifyAddress', function() {
         spyOn(Ctrl, 'verifyAddress').and.callThrough();
-        Ctrl.verifyAddress(null);
+        Ctrl.autoCompleteData = googleMapsAddress.result;
+        Ctrl.verifyAddress();
         $scope.$apply();
-        expect(Ctrl.verifyAddress).toHaveBeenCalledWith(null);
+        expect(Ctrl.verifyAddress).toHaveBeenCalled();
     });
 
    it('should call verifyAddress - reject', function() {
         spyOn(Ctrl1, 'verifyAddress').and.callThrough();
-        Ctrl1.verifyAddress(null);
+        Ctrl1.verifyAddress();
         $scope.$apply();
-        expect(Ctrl1.verifyAddress).toHaveBeenCalledWith(null);
+        expect(Ctrl1.verifyAddress).toHaveBeenCalled();
     });
 
    it('should call verifyAddress - reject', function() {
         spyOn(Ctrl3, 'verifyAddress').and.callThrough();
-        Ctrl3.verifyAddress(null);
+        Ctrl3.verifyAddress();
         $scope.$apply();
-        expect(Ctrl3.verifyAddress).toHaveBeenCalledWith(null);
+        expect(Ctrl3.verifyAddress).toHaveBeenCalled();
     });
 
     it('should call verifyAddress - reject', function() {
@@ -933,6 +966,7 @@ describe('LocationsDetailsController', function() {
         Ctrl.locationZip  = null;
         Ctrl.locationState = {};
         Ctrl.locationState.abbreviation = '--';
+       Ctrl.autoCompleteData = googleMapsAddress.result;
         Ctrl.verifyAddress(null);
         $scope.$apply();
         expect(Ctrl.verifyAddress).toHaveBeenCalledWith(null);
@@ -942,6 +976,7 @@ describe('LocationsDetailsController', function() {
         spyOn(Ctrl, 'verifyAddress').and.callThrough();
         Ctrl.locationState = {};
         Ctrl.locationState.abbreviation = null;
+       Ctrl.autoCompleteData = googleMapsAddress.result;
         Ctrl.verifyAddress(null);
         $scope.$apply();
         expect(Ctrl.verifyAddress).toHaveBeenCalledWith(null);
@@ -964,7 +999,12 @@ describe('LocationsDetailsController', function() {
     });
 
     it('should call googleMapsAutoCompleteData', function() {
-        $rootScope.$broadcast('googleMapsAutoCompleteData', null, {"streetName":{}, "streetNumber":{},"city":"Charlotte","county":"Mecklenburg County","state":"NC","country":"US","zip":"28217"});
+        $rootScope.$broadcast('googleMapsAutoCompleteData', null, {"streetName":{}, "streetNumber":{},"city":"Charlotte","county":"Mecklenburg County","state":"NC","country":"US","zip":"28217", "lattitude": 35.0000, "longitude": -85.23435});
+        // expect(function(){}).toEqual(gridApi.grid.appScope.confirmDeleteMarketMapping)
+    });
+
+    it('should call googleMapsAutoCompleteData', function() {
+        $rootScope.$broadcast('googleMapsAutoCompleteData', null, null);
         // expect(function(){}).toEqual(gridApi.grid.appScope.confirmDeleteMarketMapping)
     });
 });

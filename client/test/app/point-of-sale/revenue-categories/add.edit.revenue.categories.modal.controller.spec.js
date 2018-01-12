@@ -13,7 +13,8 @@ describe('POS revenue categories modal controller', function () {
         mockPosRevenueCategoriesService1 = {},
         $rootScope;
 
-    beforeEach(module('adams.add.edit.revenue.categories.modal.controller'));beforeEach(module('adams.common.url'));
+    beforeEach(module('adams.add.edit.revenue.categories.modal.controller'));
+    beforeEach(module('adams.common.url'));
     beforeEach(module('common.services.CompassToastr'));
     beforeEach(module('adams.common.constants'));
     beforeEach(module('adams.utils'));

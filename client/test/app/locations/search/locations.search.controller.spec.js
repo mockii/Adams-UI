@@ -80,7 +80,7 @@ describe('LocationsSearchController', function() {
             logService = STGLogService;
             compassToastr = CompassToastr;
             adamsConstants = ADAMS_CONSTANTS;
-            urlSpace = ADAMS_URL_SPACE;
+            urlSpace = any;
             constants = STATUS_CONSTANT;
             $utils = Utils;
             $uibModal = _$uibModal_;

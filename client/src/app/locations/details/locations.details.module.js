@@ -2,6 +2,7 @@
     angular.module('adams.locations.details', [
         'adams.locations.details.constants',
         'adams.locations.details.controller',
+        'adams.locations.select.address.controller',
         'adams.locations.details.service',
         'adams.locations.costcenters.controller',
         'adams.locations.costcenters.service',

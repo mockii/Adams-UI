@@ -55,6 +55,10 @@ i {
     color: #999999;
 }
 
+.data-not-found-row {
+    border: none !important;
+}
+
 .page-header .page-header-top .page-logo {
     padding-top: 0px;
 }

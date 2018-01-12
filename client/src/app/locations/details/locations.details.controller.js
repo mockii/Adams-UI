@@ -3,12 +3,16 @@
         .controller('LocationsDetailsController', ['$rootScope', '$scope', '$stateParams', '$location', 'action', 'LocationsDetailsService', 'Utils', 'CompassToastr', '$uibModal', 'WEEK_DAYS_ARRAY', 'ModalDialogService', 'LOCATIONS_STATES_CONSTANTS', 'StgStatesService', '$log', 'StgGoogleMapsService', 'GOOGLEMAPS_CONSTANTS', 'locationRowData', 'locationsSearchData',
             function ($rootScope, $scope, $stateParams, $location, action, LocationsDetailsService, Utils, CompassToastr, $uibModal, WEEK_DAYS_ARRAY, ModalDialogService, LOCATIONS_STATES_CONSTANTS, StgStatesService, $log, StgGoogleMapsService, GOOGLEMAPS_CONSTANTS, locationRowData, locationsSearchData) {
                 var locationsDetailsController = this,
-                    locationsOperatingHoursPromise;
+                    locationsOperatingHoursPromise,
+                    id = 0;
+
                 locationsDetailsController.action = action;
                 locationsDetailsController.locationRowData = locationRowData;
                 locationsDetailsController.locationsSearchData = locationsSearchData;
                 locationsDetailsController.lattitudeLongitude = '';
                 locationsDetailsController.addressChanged = false;
+                locationsDetailsController.gridArray = [];
+                locationsDetailsController.newArray = [];
 
                 if(locationsDetailsController.locationRowData){
                     locationsDetailsController.lattitudeLongitude = locationsDetailsController.locationRowData.longitude_latitude;
@@ -29,11 +33,13 @@
                     locationCode = locationCode === 'create' ? '' : locationCode;
                     $scope.locationCode = locationsDetailsController.locationCode = locationCode;
                     locationsDetailsController.hasLocationCode = $scope.locationCode ? true : false;
+                    locationsDetailsController.locationStates = LOCATIONS_STATES_CONSTANTS;
                     if (locationsDetailsController.action === 'edit'){
                         $scope.locationsSearchData = locationsDetailsController.locationsSearchData;
-                        locationsDetailsController.gridArray = locationsDetailsController.buildOperatingHoursData();
+                        locationsDetailsController.buildOperatingHoursData();
                     } else if(locationsDetailsController.action === 'add'){
                             locationsDetailsController.autoCompleteData = null;
+                            locationsDetailsController.locationState = locationsDetailsController.locationStates[0];
                             locationsDetailsController.stateFilterChanged(locationsDetailsController.locationState);
                         }
                     locationsDetailsController.initializeLocationForm();
@@ -47,7 +53,6 @@
                     locationsDetailsController.locationZip = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.zip : '';
                     locationsDetailsController.locationStatus = locationsDetailsController.locationsSearchData ? locationsDetailsController.locationsSearchData.active : true;
 
-                    locationsDetailsController.locationStates = LOCATIONS_STATES_CONSTANTS;
                     locationsDetailsController.locationState = locationsDetailsController.locationsSearchData ?
                         LOCATIONS_STATES_CONSTANTS.find(function(state){return state.abbreviation === locationsDetailsController.locationsSearchData.state;}) :
                         locationsDetailsController.locationStates[0];
@@ -55,6 +60,13 @@
                 };
 
                 locationsDetailsController.stateFilterChanged = function(state){
+                    if(!state){
+                        locationsDetailsController.locationState = locationsDetailsController.locationStates[0];
+                    }
+                    if(locationsDetailsController.autoCompleteData || locationsDetailsController.lattitudeLongitude){
+                        locationsDetailsController.autoCompleteData = null;
+                        locationsDetailsController.lattitudeLongitude = null;
+                    }
                     $log.log(state);
                 };
 
@@ -116,14 +128,7 @@
                         LocationsDetailsService.getLocationDetailsByLocationCode(locationsDetailsController.locationCode)
                             .then(function(response){
                                     locationsDetailsController.locationsSearchData = response;
-                                    $stateParams.action = locationsDetailsController.action = 'edit';
-                                    StgStatesService.goToState('locationsDetails', {
-                                        'locationSearchData': locationsDetailsController.locationsSearchData,
-                                        'locationCode': locationsDetailsController.locationsSearchData.location_code,
-                                        'action': locationsDetailsController.action,
-                                        'backState': 'locations',
-                                        'locationRowData': null
-                                    });
+                                    CompassToastr.success("Location has been updated.");
                                 },
                                 function(error){
                                     $log.error("An error occurred while fetching locations", error);
@@ -132,51 +137,70 @@
                 }
 
                 locationsDetailsController.buildOperatingHoursData = function() {
-                    var gridArray = [],
-                        matchedWeekDays = [],
-                        unMatchedWeekDays = [],
-                        id = 0;
+                    locationsDetailsController.newArray = [];
+                    locationsDetailsController.gridArray = [];
                     locationsDetailsController.locationsSearchData.location_hours.forEach(function(locationHour){
-                        if(locationsDetailsController.containsMatchingWeekDayHourAndName(locationHour.name, locationHour.open_hour, locationHour.close_hour)){
-                            matchedWeekDays.push(locationHour);
-                        } else {
-                            unMatchedWeekDays.push(locationHour);
-                        }
+                        addToNewArray(locationHour);
                     });
+                    concatDays();
+                    sortGridData();
+                };
 
-                    if(matchedWeekDays.length > 0){
-
-                        var groupByNameWeekDays = groupByName(matchedWeekDays, 'name');
-                        Object.keys(groupByNameWeekDays).forEach(function(key){
-
-                            var valueArray = groupByNameWeekDays[key],
-                                matchedLocationHourName = valueArray[0].name,
-                                openHour = locationsDetailsController.getCorrectedTime(valueArray[0].open_hour),
-                                closeHour = locationsDetailsController.getCorrectedTime(valueArray[0].close_hour),
-                                matchedLocationHour = openHour + ' - ' + closeHour,
-                                concatenatedDays = '',
-                                concatDaysArray = [];
-
-                            valueArray.forEach(function(locationHour){
-                                concatDaysArray.push(locationHour.day);
-                            });
-                            concatenatedDays = concatDaysArray.sort(function sortByDay(a, b) {
-                                return WEEK_DAYS_ARRAY.indexOf(a) > WEEK_DAYS_ARRAY.indexOf(b);
-                            }).join(', ');
-
-                            gridArray.push({id:id++, name: matchedLocationHourName, times: matchedLocationHour, days_of_week: concatenatedDays});
-                        });
+                function addToNewArray(locationHour) {
+                    if (doesNewArrayHaveLocationHour(locationHour)) {
+                        addDayToNewArrayItem(locationHour);
+                    } else {
+                        addNewArrayItemFromLocationHour(locationHour);
                     }
+                }
 
-                    if(unMatchedWeekDays.length > 0){
-                        unMatchedWeekDays.forEach(function(locationHour){
-                            var totalTime = locationsDetailsController.getCorrectedTime(locationHour.open_hour) + ' - ' +
-                                locationsDetailsController.getCorrectedTime(locationHour.close_hour);
-                            gridArray.push({id: id++, name:locationHour.name, times: totalTime, days_of_week: locationHour.day});
-                        });
+                function doesNewArrayHaveLocationHour(locationHour) {
+                    return getLocationHourFromNewArray(locationHour) ? true : false;
+                }
+
+                function addDayToNewArrayItem(locationHour) {
+                    var item = getLocationHourFromNewArray(locationHour);
+                    item.days.push(locationHour.day);
+                }
+
+                function addNewArrayItemFromLocationHour(locationHour) {
+                    var newItem = {
+                        name: locationHour.name,
+                        open_hour: locationsDetailsController.getCorrectedTime(locationHour.open_hour),
+                        close_hour: locationsDetailsController.getCorrectedTime(locationHour.close_hour),
+                        days: []
+                    };
+
+                    newItem.days.push(locationHour.day);
+                    locationsDetailsController.newArray.push(newItem);
+                }
+
+                function getLocationHourFromNewArray(locationHour) {
+                    for(var i=0; i < locationsDetailsController.newArray.length; i++) {
+                        if (locationHour.name === locationsDetailsController.newArray[i].name &&
+                            locationsDetailsController.getCorrectedTime(locationHour.open_hour) === locationsDetailsController.newArray[i].open_hour &&
+                            locationsDetailsController.getCorrectedTime(locationHour.close_hour) === locationsDetailsController.newArray[i].close_hour) {
+
+                            return locationsDetailsController.newArray[i];
+                        }
                     }
+                    return null;
+                }
 
-                    return gridArray.sort(function(a, b) {
+                function concatDays(){
+                    angular.forEach(locationsDetailsController.newArray, function(item){
+                       var concatenatedDays = item.days.sort(function sortByDay(a, b) {
+                           return WEEK_DAYS_ARRAY.indexOf(a) > WEEK_DAYS_ARRAY.indexOf(b);
+                       }).join(', ');
+                       var openHour = locationsDetailsController.getCorrectedTime(item.open_hour),
+                           closeHour = locationsDetailsController.getCorrectedTime(item.close_hour),
+                           locationHourTimes = openHour +  ' - ' + closeHour;
+                        locationsDetailsController.gridArray.push({id:id++, name: item.name, times: locationHourTimes, days_of_week: concatenatedDays});
+                    });
+                }
+
+                function sortGridData(){
+                    locationsDetailsController.gridArray =  locationsDetailsController.gridArray.sort(function(a, b) {
                         var x = a.name,
                             y = b.name;
 
@@ -191,7 +215,7 @@
 
                         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                     });
-                };
+                }
 
                 locationsDetailsController.getCorrectedTime = function(time){
                     if(!time) { return ''; }
@@ -207,30 +231,12 @@
                     return updatedHourWithSeconds + " " + time.split(' ')[1];
                 };
 
-                locationsDetailsController.containsMatchingWeekDayHourAndName = function(name, openHour, closeHour){
-
-                    var count = 0,
-                        locationHours = locationsDetailsController.locationsSearchData.location_hours;
-
-                    for(var i = 0; i < locationHours.length; i++){
-                        var correctedOpenHour = locationsDetailsController.getCorrectedTime(locationHours[i].open_hour),
-                            correctedCloseHour = locationsDetailsController.getCorrectedTime(locationHours[i].close_hour);
-                        if(locationHours[i].name === name &&
-                            correctedOpenHour === locationsDetailsController.getCorrectedTime(openHour) &&
-                            correctedCloseHour === locationsDetailsController.getCorrectedTime(closeHour)){
-                            count++;
-                            if(count > 1) { break; }  else { continue; }
-                        }
-                    }
-                    return count > 1 ? true : false;
-                };
-
-                function groupByName(arrayToGroup, key){
+                /*function groupByName(arrayToGroup, key){
                     return arrayToGroup.reduce(function(rv, x) {
                         (rv[x[key]] = rv[x[key]] || []).push(x);
                         return rv;
                     }, {});
-                }
+                }*/
 
                 locationsDetailsController.deleteLocationsOperatingHours = function (locationsRow, event) {
                     var times = locationsRow.times.split('-'),
@@ -245,6 +251,39 @@
                         locationsDetailsController.locationsSearchData.location_hours.splice(indexToSplice, 1);
                     });
 
+                    var itemToSearch = {
+                        name: name,
+                        open_hour: openTime,
+                        close_hour: closeTime,
+                        days: daysOfWeek
+                    };
+
+                    var newArrayIndex = -1;
+                    if(locationsDetailsController.newArray && locationsDetailsController.newArray.length > 0){
+                        for (var i = 0; i < locationsDetailsController.newArray.length; i++) {
+                            if(itemToSearch.name === locationsDetailsController.newArray[i].name &&
+                                itemToSearch.open_hour === locationsDetailsController.newArray[i].open_hour &&
+                                itemToSearch.close_hour === locationsDetailsController.newArray[i].close_hour){
+                                newArrayIndex = i;
+                                break;
+                            }
+                        }
+                    }
+
+                    locationsDetailsController.newArray.splice(newArrayIndex, 1);
+
+                    var getGridArrayIndex = -1;
+                    if(locationsDetailsController.gridArray && locationsDetailsController.gridArray.length > 0){
+                        for (var j = 0; j < locationsDetailsController.gridArray.length; j++) {
+                            if(locationsRow.id === locationsDetailsController.gridArray[j].id){
+                                getGridArrayIndex = j;
+                                break;
+                            }
+                        }
+                    }
+
+                    locationsDetailsController.gridArray.splice(getGridArrayIndex, 1);
+
                     Utils.startBlockUI("locations-operating-hours-grid");
                     LocationsDetailsService.updateLocationDetailsByLocationCode(locationsDetailsController.locationsSearchData, '')
                         .then(function(response){
@@ -255,7 +294,7 @@
                                 initialize();
                             } else {
                                 Utils.stopBlockUI("locations-operating-hours-grid");
-                                CompassToastr.error("There occured an error while deleting Locations operating hours for location "+ locationsRow.name);
+                                CompassToastr.error("There occurred an error while deleting Locations operating hours for location "+ locationsRow.name);
                             }
                         }, function(error){
                             Utils.stopBlockUI("locations-operating-hours-grid");
@@ -351,11 +390,28 @@
                     return locationsOperatingHoursPromise;
                 }
 
-                locationsDetailsController.addressChange = function(event){
-                    locationsDetailsController.addressChanged = true;
+                locationsDetailsController.addressChange = function(){
+                    if($scope.locationForm) {
+                        $scope.locationForm.$setPristine(false);
+                    }
+                    locationsDetailsController.addressChanged = hasAddressChanged();
                 };
 
-                locationsDetailsController.onAddressFocusOut = function(event){
+                function hasAddressChanged(){
+                    if(!locationsSearchData){
+                        return false;
+                    }
+                    if(locationsSearchData.address1 !== locationsDetailsController.locationAddress ||
+                        locationsSearchData.address2 !== locationsDetailsController.locationAddress2 ||
+                        locationsSearchData.city !== locationsDetailsController.locationCity ||
+                        locationsSearchData.state !== locationsDetailsController.locationState.abbreviation ||
+                        locationsSearchData.zip !== locationsDetailsController.locationZip){
+                        return true;
+                    }
+                    return false;
+                }
+
+                locationsDetailsController.onAddressFocusOut = function(){
                     if((locationsDetailsController.autoCompleteData || locationsDetailsController.lattitudeLongitude) && locationsDetailsController.addressChanged){
                         locationsDetailsController.autoCompleteData = null;
                         locationsDetailsController.lattitudeLongitude = '';
@@ -363,27 +419,68 @@
                 };
 
                 $rootScope.$on('googleMapsAutoCompleteData', function ($event, autoCompleteData, formattedAddressData) {
+                    if(!autoCompleteData && !formattedAddressData){
+                        return;
+                    }
                     locationsDetailsController.autoCompleteData = autoCompleteData;
-                    if(locationsDetailsController.autoCompleteData && formattedAddressData){
-                        locationsDetailsController.locationAddress = ((formattedAddressData.streetNumber || '') + " " + (formattedAddressData.streetName || '')).trimLeft();
-                        locationsDetailsController.locationAddress2 = "";
-                        locationsDetailsController.locationCity = formattedAddressData.city || '';
-                        locationsDetailsController.locationCounty = formattedAddressData.county || '';
-                        locationsDetailsController.locationState = LOCATIONS_STATES_CONSTANTS.find(function(state){return state.abbreviation === formattedAddressData.state;}) ||
-                            locationsDetailsController.locationStates[0];
-                        locationsDetailsController.country = formattedAddressData.country || '';
-                        locationsDetailsController.locationZip = formattedAddressData.zip || '';
-                        locationsDetailsController.locationLattitude = locationsDetailsController.autoCompleteData.geometry.location.lat();
-                        locationsDetailsController.locationLongitude = locationsDetailsController.autoCompleteData.geometry.location.lng();
-                        $scope.$apply();
+                    setLocationModel(formattedAddressData);
+                    if($scope.locationForm) {
+                        $scope.locationForm.$setDirty();
                     }
                 });
 
-                locationsDetailsController.verifyAddress = function(locationForm){
+                function setLocationModel(formattedAddressData){
+                    locationsDetailsController.locationAddress = ((formattedAddressData.streetNumber || '') + " " + (formattedAddressData.streetName || '')).trimLeft();
+                    locationsDetailsController.locationAddress2 = "";
+                    locationsDetailsController.locationCity = formattedAddressData.city || '';
+                    locationsDetailsController.locationCounty = formattedAddressData.county || '';
+                    locationsDetailsController.locationState = LOCATIONS_STATES_CONSTANTS.find(function(state){return state.abbreviation === formattedAddressData.state;}) ||
+                        locationsDetailsController.locationStates[0];
+                    locationsDetailsController.country = formattedAddressData.country || '';
+                    locationsDetailsController.locationZip = formattedAddressData.zip || '';
+                    locationsDetailsController.locationLattitude = formattedAddressData.lattitude || locationsDetailsController.autoCompleteData.geometry.location.lat();
+                    locationsDetailsController.locationLongitude = formattedAddressData.longitude || locationsDetailsController.autoCompleteData.geometry.location.lng();
+                    locationsDetailsController.lattitudeLongitude = locationsDetailsController.locationLattitude + ', ' + locationsDetailsController.locationLongitude;
+                }
+
+                function selectAddressModal(formattedAddresses){
+                    $uibModal.open({
+                        templateUrl: 'locations/details/select-address.tpl.html',
+                        controller: 'SelectAddressController as selectAddressController',
+                        size: 'md',
+                        backdrop: 'static',
+                        resolve: {
+                            formattedAddresses: function(){
+                                return formattedAddresses;
+                            }
+                        }
+                    }).result.then(function (response) {
+                        if (response === 'true') {
+                            // dialog cancelled deliberately. Do not save
+                        } else {
+                            setLocationModel(response);
+                            $rootScope.$broadcast('verifyAddressChange', getAddressComponentByPlaceId(response.placeId));
+                        }
+                    }, function(error){
+                        if(error === "escape key press"){
+                            return;
+                        }
+                    });
+                }
+
+                function getAddressComponentByPlaceId(placeId){
+                    for(var i=0; locationsDetailsController.unFormattedAddresses.length > 0; i++){
+                        if(locationsDetailsController.unFormattedAddresses[i].place_id  === placeId){
+                            return locationsDetailsController.unFormattedAddresses[i];
+                        }
+                    }
+                    return null;
+                }
+
+                locationsDetailsController.verifyAddress = function(){
                     var address = (locationsDetailsController.locationAddress || ''),
                         city = locationsDetailsController.locationCity || '',
-                        state = locationsDetailsController.locationState.abbreviation === '--' ? '' :
-                            (locationsDetailsController.locationState.abbreviation || ''),
+                        state = locationsDetailsController.locationState.abbreviation || '',
                         zip = locationsDetailsController.locationZip || '',
                         completeAddress = [address, city, state, zip].join(" ");
 
@@ -392,9 +489,15 @@
                             if(response === null || (response.results && response.results.length === 0) || response.status === GOOGLEMAPS_CONSTANTS.ZERO_RESULTS) {
                                 CompassToastr.warning("No addresses were found for the given address.");
                                 locationsDetailsController.autoCompleteData = null;
-                            } else {
+                            } else if(response.results && response.results.length > 1){
+                                // select a address from the list
+                                locationsDetailsController.unFormattedAddresses = response.results;
+                                locationsDetailsController.formattedAddresses = response.formattedAddresses;
+                                selectAddressModal(locationsDetailsController.formattedAddresses);
+                            }
+                            else {
+                                setLocationModel(response);
                                 CompassToastr.success("Address has been verified.");
-                                locationsDetailsController.autoCompleteData = response;
                             }
                         }, function(error){
                             CompassToastr.error("An error occurred while verifying the provided address." + address);

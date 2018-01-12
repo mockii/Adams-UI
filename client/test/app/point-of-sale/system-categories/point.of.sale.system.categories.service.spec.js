@@ -46,20 +46,20 @@ describe('POS System Categories testing', function () {
 
 
     it('should get pos items', function () {
-        var url = urlSpace.urls.local.getTypeDetailsForSystemCategoryAndVendor.replace('{system_category}',systemCategory).replace('{vendor_name}',vendorName).replace('{type}', type);
+        var url = urlSpace.urls.local.getTypeDetailsForSystemCategoryAndVendor.replace('{system_category}',systemCategory).replace('{vendor_name}',vendorName).replace('{type}', type) + "?limit=&page=&search={}&sorts=";
 
         $httpBackend.expectGET(url).respond(typeDetails);
-        pointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type).then(function(response) {
+        pointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type,'','','',{}).then(function(response) {
             expect(response).toEqual(typeDetails);
         });
         $httpBackend.flush();
     });
 
     it('should throw error get pos items', function(){
-        var url = urlSpace.urls.local.getTypeDetailsForSystemCategoryAndVendor.replace('{system_category}',systemCategory).replace('{vendor_name}',vendorName).replace('{type}', type);
+        var url = urlSpace.urls.local.getTypeDetailsForSystemCategoryAndVendor.replace('{system_category}',systemCategory).replace('{vendor_name}',vendorName).replace('{type}', type) + "?limit=&page=&search={}&sorts=";
 
         $httpBackend.expectGET(url).respond(400, {});
-        pointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type).then(function(response) {
+        pointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type,'','','',{}).then(function(response) {
             expect(response).toEqual([]);
         });
         $httpBackend.flush();
@@ -67,9 +67,9 @@ describe('POS System Categories testing', function () {
     });
 
     it('should abort promise get pos items', function(){
-        var url = urlSpace.urls.local.getTypeDetailsForSystemCategoryAndVendor.replace('{system_category}',systemCategory).replace('{vendor_name}',vendorName).replace('{type}', type);
+        var url = urlSpace.urls.local.getTypeDetailsForSystemCategoryAndVendor.replace('{system_category}',systemCategory).replace('{vendor_name}',vendorName).replace('{type}', type) + "?limit=&page=&search={}&sorts=";
         $httpBackend.expectGET(url).respond(typeDetails);
-        pointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type).abort();
+        pointOfSaleSystemCategoriesService.getTypeDetailsForSystemCategoryAndVendor(systemCategory, vendorName, type,'','','',{}).abort();
     });
 
 });

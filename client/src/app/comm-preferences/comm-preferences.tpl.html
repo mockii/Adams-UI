@@ -1,0 +1,56 @@
+<div block-ui="user-info" class="row">
+    <div class="col-lg-12">
+        <div class="portlet light">
+            <div class="portlet-body">
+                <form name="commForm">
+                    <div class="form-horizontal">
+                        <div class="form-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="tab-paragraph"> Most all of our system have the ability to send communications to you via the email address linked to your account. </p>
+                                    <p class="tab-paragraph"> Some of our systems have the ability to send text messages. Are you willing to receive text messages where applicable? </p>
+                                    <label class="switch">
+                                        <input class="switch-input" name="notify"
+                                               ng-checked="commPreferencesController.commPreferences.receive_text"
+                                               ng-click="commPreferencesController.commPreferences.receive_text = !commPreferencesController.commPreferences.receive_text"
+                                               type="checkbox"/>
+                                        <span class="switch-label" data-on="YES" data-off="NO"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 25px;">
+                                <div class="col-md-6">
+                                    <p class="tab-paragraph"> Please provide the phone number you would like to receive text messages on: </p>
+                                    <div class="form-group col-lg-4 input-icon right">
+                                        <input name="phone"
+                                               type="text"
+                                               class="form-control"
+                                               ng-model="commPreferencesController.commPreferences.communication_medium"
+                                               ng-disabled="!commPreferencesController.commPreferences.receive_text"
+                                               ng-required="commPreferencesController.commPreferences.receive_text"
+                                               maxlength="50"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                    <button type="button" class="btn btn-default" ng-click="commPreferencesController.cancel()"> Cancel </button>
+                                    <button type="button" class="btn blue"
+                                            ng-disabled="commForm.$invalid"
+                                            ng-click="commPreferencesController.updateUser()"> Save </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

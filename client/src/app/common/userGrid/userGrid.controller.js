@@ -3,13 +3,13 @@
 (function () {
 
     angular.module('adams.common.user.grid.controller', [])
-        .controller('UserGridController', ['$rootScope', '$scope', 'UserAdministrationService', '$uibModalInstance', 'ADAMS_CONSTANTS', 'ModalDialogService', '$timeout',
-            function($rootScope, $scope, UserAdministrationService, $uibModalInstance, ADAMS_CONSTANTS, ModalDialogService, $timeout) {
+        .controller('UserGridController', ['$rootScope', '$scope', 'UserAdministrationService', '$uibModalInstance', 'ADAMS_CONSTANTS', 'ModalDialogService', '$timeout', 'ApplicationConfigurationService',
+            function($rootScope, $scope, UserAdministrationService, $uibModalInstance, ADAMS_CONSTANTS, ModalDialogService, $timeout, ApplicationConfigurationService) {
                 var userGridController = this;
 
                 function initialize() {
                     userGridController.mySelectedRows = '';
-                    userGridController.appName = $rootScope.applicationConfiguration.application.name;
+                    userGridController.appName = ApplicationConfigurationService.getApplicationName();
                     userGridController.loginRoleName = UserAdministrationService.getRoleName();
                     userGridController.gridOptions = defineUserSearchGridOptions();
                 }

@@ -19,6 +19,7 @@ describe('UserGridController', function() {
         $httpBackend,
         userData,
         mockModalDialogService,
+        mockApplicationConfigurationService ={},
         mockModal;
 
     beforeEach(module('ui.bootstrap'));
@@ -29,6 +30,7 @@ describe('UserGridController', function() {
     beforeEach(function () {
         module(function ($provide) {
             $provide.value('RBACService', mockRBACService);
+            $provide.value('ApplicationConfigurationService', mockApplicationConfigurationService);
         });
     });
 
@@ -145,6 +147,9 @@ describe('UserGridController', function() {
             return deferred.promise;
         };
 
+        mockApplicationConfigurationService.getApplicationName = function () {
+            return 'ADAMS';
+        };
 
         Ctrl = $controller('UserGridController', {
             $rootScope: $rootScope,
@@ -153,6 +158,7 @@ describe('UserGridController', function() {
             $uibModalInstance : mockModal,
             ModalDialogService: mockModalDialogService,
             UserAdministrationService: mockUserAdministrationService,
+            ApplicationConfigurationService : mockApplicationConfigurationService,
             ADAMS_CONSTANTS: adamsConstants});
     }));
 

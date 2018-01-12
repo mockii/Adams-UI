@@ -2,7 +2,6 @@
     <div class="form-horizontal">
         <div class="form-body">
 
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -23,15 +22,15 @@
                 </div>
             </div>
 
-            <hr>
-
-            <button type="button" class="btn btn-default"
-                    ng-click="vendorCommentsController.cancel()"> Cancel </button>
-            <button type="button" class="btn blue"
-                    ng-click="vendorCommentsController.save()"
-                    ng-disabled="vendorCommentsForm.$invalid || vendorCommentsForm.$pristine"> Save </button>
+            <div stg-secured-object="Vendor Comments">
+                <hr>
+                <button type="button" class="btn btn-default"
+                        ng-click="vendorCommentsController.cancel()"> Cancel </button>
+                <button type="button" class="btn blue"
+                        ng-click="vendorCommentsController.save()"
+                        ng-disabled="vendorCommentsForm.$invalid || vendorCommentsForm.$pristine"> Save </button>
+            </div>
 
         </div>
-
     </div>
 </form>

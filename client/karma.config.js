@@ -30,8 +30,9 @@ module.exports = function(config) {
             'dist/scripts/angular-scrollable-table/*.js',
             'src/**/*.js',
             'src/**/*.tpl.html',
-            'test/**/*.spec.js'
-            // 'test/app/common/directives/toolTip.spec.js'
+            'test/**/*.js',
+            'test/**/*.spec.js',
+            // 'test/app/locations/details/locations.operating.hours.controller.spec.js'
         ],
 
 

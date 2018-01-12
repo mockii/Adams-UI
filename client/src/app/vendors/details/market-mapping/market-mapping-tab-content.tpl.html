@@ -2,8 +2,10 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="portlet light">
 
-            <a class="btn blue" ng-click="marketMappingController.openAddUserMapping()"> Add <i class="fa fa-plus"></i>
-            </a>
+            <a class="btn blue"
+               ng-click="marketMappingController.openAddUserMapping()"
+               stg-secured-object="Vendor Market Mapping"
+            >Add <i class="fa fa-plus"></i></a>
 
             <div class="portlet-body">
                 <div stg-ui-grid get-grid-options="marketMappingController.gridOptions" get-grid-data="marketMappingController.getGridData">

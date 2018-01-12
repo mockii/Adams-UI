@@ -1,7 +1,7 @@
 (function () {
     angular.module('adams.vendor.mapping.controller', ['ui.grid.pinning', 'common.modules.logging'])
-        .controller('VendorMappingController', ['$scope', '$state', '$location', 'StgStatesService', 'uiGridConstants', 'VendorMappingService', 'CompassToastr', '$uibModal', 'costCenterSearchData', '$timeout', 'Utils', '$log', 'STATUS_CONSTANT',
-            function ($scope, $state, $location, StgStatesService, uiGridConstants, VendorMappingService, CompassToastr, $uibModal, costCenterSearchData, $timeout, Utils, $log, STATUS_CONSTANT) {
+        .controller('VendorMappingController', ['$scope', '$state', '$location', '$window', 'StgStatesService', 'uiGridConstants', 'VendorMappingService', 'CompassToastr', '$uibModal', 'costCenterSearchData', '$timeout', 'Utils', '$log', 'STATUS_CONSTANT',
+            function ($scope, $state, $location, $window, StgStatesService, uiGridConstants, VendorMappingService, CompassToastr, $uibModal, costCenterSearchData, $timeout, Utils, $log, STATUS_CONSTANT) {
                 var vendorMappingController = this,
                     searchProperty = "associated",
                     vendorUpdatePromise;
@@ -146,7 +146,7 @@
                         }
                         // delete if exist
                         if (Utils.checkIfSearchObjectPresent(searchProperty, searchInput.search)) {
-                            var index = searchInput.search.findIndex(Utils.getSearchIndex, searchProperty);
+                            var index = Utils.getSearchObjectIndex(searchProperty, searchInput.search);
                             searchInput.search.splice(index, 1);
                         }
                         if(vendorMappingController.searchPropertyValue !== ""){
@@ -187,6 +187,29 @@
                     addVendorMappingModal.result.then(function (res, err) {
                         // Refresh the Grid. Callback
                         $scope.$broadcast('uiGridParameterChange');
+                    });
+                };
+
+
+                vendorMappingController.openMassVendorContactModal = function() {
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'vendors/mass-vendor-contact/mass-vendor-contact-modal.tpl.html',
+                        controller: 'MassVendorContactModalController as massVendorContactModalController',
+                        size: 'lg',
+                        backdrop: 'static',
+                        windowClass: 'mass-vendor-contact-modal',
+                        resolve: {
+                            costCenter: function() {
+                                return {
+                                    costCenterNumber: vendorMappingController.costCenterNumber,
+                                    costCenterSourceSystemId: vendorMappingController.costCenterSourceSystemId
+                                };
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function (result) {
+                        $window.location.href = "mailto:"+ result.selectedContacts.join(';');
                     });
                 };
 
@@ -261,7 +284,6 @@
                                 filter: {
                                     placeholder: ''
                                 }
-
                             },
                             {
                                 field: 'edi_pay_status',
@@ -273,7 +295,6 @@
                                     type: uiGridConstants.filter.SELECT,
                                     selectOptions: [{value: true, label: 'true'}, {value: false, label: 'false'}]
                                 }
-
                             },
                             {
                                 field: 'edi_live_date',
@@ -282,12 +303,11 @@
                                 cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
                                 minWidth: 150,
                                 enableFiltering: false
-
                             },
                             {
                                 field: 'associated',
                                 displayName: "Associated",
-                                cellTemplate: '<label class="switch"><input class="switch-input" ng-checked="row.entity.associated" ng-click="grid.appScope.changeVendorAssociation(row, $event)" type="checkbox"/><span class="switch-label" data-on="YES" data-off="NO"></span><span class="switch-handle"></span></label>',
+                                cellTemplate: '<label class="switch" stg-secured-object="Vendor Cost Center Association"><input class="switch-input" ng-checked="row.entity.associated" ng-click="grid.appScope.changeVendorAssociation(row, $event)" type="checkbox"/><span class="switch-label" data-on="YES" data-off="NO"></span><span class="switch-handle"></span></label>',
                                 cellClass: 'switchClass',
                                 minWidth: 100,
                                 enableFiltering: false

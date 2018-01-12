@@ -60,6 +60,7 @@ describe("adams", function () {
     });
 
     it('should call run on module run', inject(function($rootScope, $httpBackend) {
+        $httpBackend.expectGET("/ui/api/pos/system_categories").respond({'data':{}});
         $httpBackend.expectGET("/ui/api/application/configuration").respond({});
         $httpBackend.flush();
     }));

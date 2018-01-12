@@ -4,8 +4,11 @@ describe('POS item classes modal controller', function () {
 
     var addEditItemClassesModalController,
         addEditItemClassesModalController1,
+        addEditItemClassesModalController2,
         $scope,
         itemClassesRowData = {},
+        itemClassesRowData1 = {},
+        itemClassesGridData = {},
         logService = {},
         $q,
         $uibModalInstance,
@@ -13,7 +16,8 @@ describe('POS item classes modal controller', function () {
         mockPosItemClassesService1 = {},
         $rootScope;
 
-    beforeEach(module('adams.add.edit.item.classes.modal.controller'));beforeEach(module('adams.common.url'));
+    beforeEach(module('adams.add.edit.item.classes.modal.controller'));
+    beforeEach(module('adams.common.url'));
     beforeEach(module('common.services.CompassToastr'));
     beforeEach(module('adams.common.constants'));
     beforeEach(module('adams.utils'));
@@ -32,37 +36,31 @@ describe('POS item classes modal controller', function () {
         logService = STGLogService;
         $uibModalInstance = jasmine.createSpyObj('$uibModalInstance', ['close', 'dismiss']);
 
-        itemClassesRowData = {
-            "item_category_code"	: "string",
-            "name"					: "string",
-            "description"			: "string",
-            "type"					: "string",
-            "active"				: true,
-            "created_by"			: "",
-            "created_date"			: "epoch time",
-            "modified_by"			: "string",
-            "modified_date"			: "epoch time"
-        };
+        itemClassesRowData = {"name":"Class1","description":"Class1 desc","active":true,"created_by":null,"created_date":null,"modified_by":null,"modified_date":null,"item_class_code":"701","range_start":21,"range_end":25};
 
-        mockPosItemClassesService.addPosItemClass = function(){
+        itemClassesRowData1 = {"name":"Class1","description":"Class1 desc","active":true,"created_by":null,"created_date":null,"modified_by":null,"modified_date":null,"item_class_code":"701","range_start":2,"range_end":5};
+
+        itemClassesGridData = [{"name":"Class1","description":"Class1 desc","active":true,"created_by":null,"created_date":null,"modified_by":null,"modified_date":null,"item_class_code":"701","range_start":1,"range_end":10},{"name":"Class2","description":"Class2 desc","active":true,"created_by":null,"created_date":null,"modified_by":null,"modified_date":null,"item_class_code":"702","range_start":11,"range_end":20}];
+
+        mockPosItemClassesService.addPosItemClass = function(itemClassesRowData){
             var deferred = $q.defer();
             deferred.resolve('Success');
             return deferred.promise;
         };
 
-        mockPosItemClassesService.updatePosItemClass = function(){
+        mockPosItemClassesService.updatePosItemClass = function(itemClassesRowData){
             var deferred = $q.defer();
             deferred.resolve('Success');
             return deferred.promise;
         };
 
-        mockPosItemClassesService1.addPosItemClass = function(){
+        mockPosItemClassesService1.addPosItemClass = function(itemClassesRowData){
             var deferred = $q.defer();
             deferred.reject('error');
             return deferred.promise;
         };
 
-        mockPosItemClassesService1.updatePosItemClass = function(){
+        mockPosItemClassesService1.updatePosItemClass = function(itemClassesRowData){
             var deferred = $q.defer();
             deferred.reject('error');
             return deferred.promise;
@@ -73,9 +71,10 @@ describe('POS item classes modal controller', function () {
                 $rootScope: $rootScope,
                 $scope: $scope,
                 $uibModalInstance: $uibModalInstance,
-                itemClassesRowData: itemClassesRowData,
+                PosItemClassesService: mockPosItemClassesService,
                 action: '',
-                PosItemClassesService: mockPosItemClassesService
+                itemClassesRowData: itemClassesRowData,
+                itemClassesGridData: itemClassesGridData
             }
         );
 
@@ -84,15 +83,29 @@ describe('POS item classes modal controller', function () {
                 $rootScope: $rootScope,
                 $scope: $scope,
                 $uibModalInstance: $uibModalInstance,
-                itemClassesRowData: itemClassesRowData,
+                PosItemClassesService: mockPosItemClassesService,
                 action: '',
-                PosItemClassesService: mockPosItemClassesService1
+                itemClassesRowData: itemClassesRowData1,
+                itemClassesGridData: itemClassesGridData
+            }
+        );
+
+        addEditItemClassesModalController2 = $controller('AddEditItemClassesModalController',
+            {
+                $rootScope: $rootScope,
+                $scope: $scope,
+                $uibModalInstance: $uibModalInstance,
+                PosItemClassesService: mockPosItemClassesService1,
+                action: '',
+                itemClassesRowData: itemClassesRowData,
+                itemClassesGridData: itemClassesGridData
             }
         );
     }));
 
     it('should exist', function () {
         expect(addEditItemClassesModalController).toBeDefined();
+        expect(addEditItemClassesModalController1).toBeDefined();
     });
 
     it('should dismiss the modal with result "dismiss" when dismissed', function () {
@@ -116,7 +129,7 @@ describe('POS item classes modal controller', function () {
         expect(addEditItemClassesModalController.save).toHaveBeenCalled();
     });
 
-    it('should call save', function() {
+    it('should call save - containsRange', function() {
         spyOn(addEditItemClassesModalController1, 'save').and.callThrough();
         addEditItemClassesModalController1.action = 'Add';
         addEditItemClassesModalController1.save();
@@ -124,11 +137,19 @@ describe('POS item classes modal controller', function () {
         expect(addEditItemClassesModalController1.save).toHaveBeenCalled();
     });
 
-    it('should call save', function() {
-        spyOn(addEditItemClassesModalController1, 'save').and.callThrough();
-        addEditItemClassesModalController1.action = 'Edit';
-        addEditItemClassesModalController1.save();
+    it('should call save and throw add error', function() {
+        spyOn(addEditItemClassesModalController2, 'save').and.callThrough();
+        addEditItemClassesModalController2.action = 'Add';
+        addEditItemClassesModalController2.save();
         $scope.$apply();
-        expect(addEditItemClassesModalController1.save).toHaveBeenCalled();
+        expect(addEditItemClassesModalController2.save).toHaveBeenCalled();
+    });
+
+    it('should call save and throw edit error', function() {
+        spyOn(addEditItemClassesModalController2, 'save').and.callThrough();
+        addEditItemClassesModalController2.action = 'Edit';
+        addEditItemClassesModalController2.save();
+        $scope.$apply();
+        expect(addEditItemClassesModalController2.save).toHaveBeenCalled();
     });
 });

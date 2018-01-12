@@ -1,7 +1,8 @@
 (function () {
     'use strict';
     angular.module('adams.locations.costcenters.service', ['common.services.RBAC'])
-        .factory('LocationsCostCenterMappingService', ['$rootScope', '$http', 'RBACService', 'ADAMS_URL_SPACE', '$q', function ($rootScope, $http, RBACService, ADAMS_URL_SPACE, $q) {
+        .factory('LocationsCostCenterMappingService', ['$rootScope', '$http', 'RBACService', 'ADAMS_URL_SPACE', '$q', 'ApplicationConfigurationService',
+            function ($rootScope, $http, RBACService, ADAMS_URL_SPACE, $q, ApplicationConfigurationService) {
             var locationsCostCenterMappingService = {};
 
             locationsCostCenterMappingService.getCurrentProfile = function() {
@@ -43,7 +44,7 @@
 
             locationsCostCenterMappingService.getCostCentersByUserName = function (limit, page, sort, costCenterSearchInput) {
                 var costCenterMappingDeferred = $q.defer(),
-                    appName = $rootScope.applicationConfiguration.application.name,
+                    appName = ApplicationConfigurationService.getApplicationName(),
                     url = ADAMS_URL_SPACE.urls.local.getCostCentersByUserName + '?limit=' + limit + '&page=' + page + '&sorts=' + sort + '&costCenterSearchInput=' + JSON.stringify(costCenterSearchInput) + '&appName=' + appName + '&roleName=' + locationsCostCenterMappingService.getCurrentProfile().current_role.role_name;
 
                 var request = $http({

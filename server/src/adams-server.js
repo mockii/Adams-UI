@@ -82,7 +82,8 @@ var userAdminRouter = require('./routes/useradmin-routes')(config, stgAuth),
     bookOfRecordRoutes = require('./routes/book-of-record-routes')(config, stgAuth),
     accessControlRoutes = require('./routes/access-control-routes')(config, stgAuth),
     locationsRoutes = require('./routes/locations-routes')(config, stgAuth),
-    posRoutes = require('./routes/pos-routes')(config, stgAuth);
+    posRoutes = require('./routes/pos-routes')(config, stgAuth),
+    commPreferencesRoutes = require('./routes/comm-preferences-routes')(config, stgAuth);
 
 
 logger.info('registering routers with Express', config.server.rootContext);
@@ -95,6 +96,7 @@ app.use(config.server.rootContext, bookOfRecordRoutes);
 app.use(config.server.rootContext, accessControlRoutes);
 app.use(config.server.rootContext, locationsRoutes);
 app.use(config.server.rootContext, posRoutes);
+app.use(config.server.rootContext, commPreferencesRoutes);
 
 // catch whichever file needs to contain "common.settings.oauth"
 function setupConfigFile(req, res, next) {
