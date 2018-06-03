@@ -23,7 +23,7 @@
     "replacestream": "4.0.2",
     "request": "2.79.0",
     "simple-oauth2": "0.2.1",
-    //"stgwebutils-server-oauth": "^*",
+    /*"stgwebutils-server-oauth": "^*",*/
     "tunnel": "0.0.3",
     "log4js": "0.6.33",
     "pmx": "0.6.1"
