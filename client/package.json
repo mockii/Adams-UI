@@ -48,7 +48,6 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "ng-html2js": "^2.0.0",
     "phantomjs-prebuilt": "^2.1.7",
-    //"stgwebutils-client-libs": "*",
     "watchify": "^3.7.0",
     "ng-image-gallery": "2.1.2",
     "angular-scrollable-table": "^1.1.2"
